@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<OutputType>Library</OutputType>
+		<AppDesignerFolder>Properties</AppDesignerFolder>
+		<RootNamespace>LuckyPills</RootNamespace>
+		<AssemblyName>LuckyPills</AssemblyName>
+		<LangVersion>12.0</LangVersion>
+		<FileAlignment>512</FileAlignment>
+		<Deterministic>true</Deterministic>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<PlatformTarget>x64</PlatformTarget>
+		<Configurations>Debug;Release</Configurations>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<AssemblyName>LuckyPills</AssemblyName>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="Assembly-CSharp">
+			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\Assembly-CSharp.dll</HintPath>
+		</Reference>
+		<Reference Include="Assembly-CSharp-firstpass">
+			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+		</Reference>
+		<Reference Include="LabAPI">
+			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\LabAPI.dll</HintPath>
+		</Reference>
+		<Reference Include="Mirror">
+			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\Mirror.dll</HintPath>
+		</Reference>
+		<Reference Include="Pooling">
+			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\Pooling.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine">
+			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\UnityEngine.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule">
+			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.PhysicsModule">
+			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+		</Reference>
+		<Reference Include="mscorlib">
+			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\mscorlib.dll</HintPath>
+		</Reference>
+		<Reference Include="NorthwoodLib">
+			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\NorthwoodLib.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	
+
+</Project>
