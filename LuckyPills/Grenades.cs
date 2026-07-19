@@ -29,9 +29,9 @@ internal static class Grenades {
 		Vector3 startVel = ThrowableNetworkHandler.GetLimitedVelocity(new Vector3(0, 0, 0));
 
 		ThrownProjectile thrownProjectile = UnityEngine.Object.Instantiate(grenadeTemplate.Projectile, thrower.PlayerCameraReference.position, thrower.PlayerCameraReference.rotation);
-		PickupSyncInfo info = new PickupSyncInfo() {
+		PickupSyncInfo info = new() {
 			ItemId = grenadeType,
-			Locked = true
+			Locked = true,
 		};
 		thrownProjectile.Info = info;
 		thrownProjectile.PreviousOwner = new Footprinting.Footprint(thrower);

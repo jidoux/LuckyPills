@@ -3,9 +3,9 @@
 internal record Giant : PillEffect {
 	protected override bool IsEnabled { get; } = true;
 	protected override string DisplayText { get; } = "You've been turned into a giant for {duration} seconds";
-	protected override Duration Duration { get; } = new(8, 15);
+	protected override Duration PossibleDurationRangeInclusive { get; } = new(8f, 15f);
 
-	protected override void OnEnabled(Player player, int duration) {
+	protected override void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		player.Scale = new UnityEngine.Vector3(2f, 2f, 2f);
 	}
