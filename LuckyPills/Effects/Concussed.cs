@@ -8,5 +8,6 @@ internal record Concussed : PillEffect {
 	protected override void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		player.EnableEffect<CustomPlayerEffects.Concussed>(intensity: byte.MaxValue, duration: duration, addDuration: true);
+		player.EnableEffect<CustomPlayerEffects.Blurred>(intensity: byte.MaxValue, duration: duration, addDuration: true);
 	}
 }

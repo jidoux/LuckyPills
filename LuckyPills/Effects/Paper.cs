@@ -3,7 +3,7 @@
 internal record Paper : PillEffect {
 	protected override bool IsEnabled { get; } = true;
 	protected override string DisplayText { get; } = "You've been turned into paper for {duration} seconds";
-	protected override Duration PossibleDurationRangeInclusive { get; } = new(10f, 30f);
+	protected override Duration PossibleDurationRangeInclusive { get; } = new(12f, 36f);
 
 	protected override void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");

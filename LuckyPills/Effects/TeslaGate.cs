@@ -1,8 +1,6 @@
-﻿using System.Numerics;
+﻿namespace LuckyPills.Effects;
 
-namespace LuckyPills.Effects;
-
-internal record TeslaGate : PillEffect, IDebugPickPills {
+internal record TeslaGate : PillEffect {
 	private readonly List<Tesla> _allTeslaGates = Map.Teslas?.ToList() ?? [];
 
 	// Its essential to cause IsEnabled to be false if the map has no tesla gates for whatever reason.

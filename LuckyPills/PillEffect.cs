@@ -1,4 +1,4 @@
-﻿#define DEBUGGING_SPECIFIC_PILL_EFFECTS_WITH_INTERFACE // comment this out when you dont want to only use pill effects deriving from IDebugPickPills
+﻿//#define DEBUGGING_SPECIFIC_PILL_EFFECTS_WITH_INTERFACE // comment this out when you dont want to only use pill effects deriving from IDebugPickPills
 
 namespace LuckyPills;
 

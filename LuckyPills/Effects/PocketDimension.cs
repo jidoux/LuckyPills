@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal record PocketDimension : PillEffect, IDebugPickPills {
+internal record PocketDimension : PillEffect {
 	protected override bool IsEnabled { get; } = true;
 	protected override string DisplayText { get; } = "You've been sent to the pocket dimension";
 	protected override Duration PossibleDurationRangeInclusive { get; } = new(5f, 10f);

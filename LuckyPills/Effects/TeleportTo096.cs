@@ -2,7 +2,7 @@
 
 namespace LuckyPills.Effects;
 
-internal record TeleportTo096 : PillEffect, IDebugPickPills {
+internal record TeleportTo096 : PillEffect {
 
 	protected override bool IsEnabled => (Player.List.FirstOrDefault(x => x.Role == RoleTypeId.Scp096) is not null && true); // TODO the 2nd thing here should be loaded from config imo
 	protected override string DisplayText => "You've been teleported to SCP-096";

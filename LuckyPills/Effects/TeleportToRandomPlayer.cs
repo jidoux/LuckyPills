@@ -1,14 +1,17 @@
 ﻿namespace LuckyPills.Effects;
 
-internal record TeleportToRandomPlayer : PillEffect, IDebugPickPills {
+internal record TeleportToRandomPlayer : PillEffect {
 
-	protected override bool IsEnabled => (Player.List.Where(x => !x.Role.ToString().StartsWith("scp", StringComparison.OrdinalIgnoreCase)).ToList().Count > 1 && true); // TODO the 2nd thing here should be loaded from config imo
+	// NOTE: For some reason there's always a role with type of none, in the game.. at least during my testing, idk why.
+	protected override bool IsEnabled =>
+		(Player.List.Where(x => !x.Role.ToString().StartsWith("scp", StringComparison.OrdinalIgnoreCase)
+		&& x.Role != PlayerRoles.RoleTypeId.None).ToList().Count > 1 && true); // TODO the 2nd thing here should be loaded from config imo
 	protected override string DisplayText => "You've been teleported to a random non-SCP";
 
 	protected override void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		Player? randomPlayer = Player.List
-			.Where(x => x != player && !x.Role.ToString().StartsWith("scp", StringComparison.OrdinalIgnoreCase))
+			.Where(x => x != player && !x.Role.ToString().StartsWith("scp", StringComparison.OrdinalIgnoreCase) && x.Role != PlayerRoles.RoleTypeId.None)
 			.OrderBy(x => UnityEngine.Random.value)
 			.FirstOrDefault();
 		if (randomPlayer is null) {
