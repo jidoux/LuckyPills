@@ -1,17 +1,27 @@
 ﻿namespace LuckyPills.Effects;
 
-internal record NoClip : PillEffect {
-	protected override bool IsEnabled { get; } = true;
-	protected override string DisplayText { get; } = "You've been given Noclip for {duration} seconds";
-	protected override Duration PossibleDurationRangeInclusive { get; } = new(4f, 10f);
+// this one is kinda absurd... sometimes its fine, but you can easily get hard-stuck...
+internal sealed record NoClip : NoClipConfig, IPillEffect {
+	public new bool IsEnabled => base.IsEnabled;
+	public string DisplayText => "You've been given Noclip for {duration} seconds";
+	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
+	public new float RarityMultiplier => base.RarityMultiplier;
+	public EffectCapabilities Capabilities => EffectCapabilities.None; // Yeah not touching this one ahahaha
 
-	protected override void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		player.IsNoclipEnabled = true;
 	}
 
-	protected override void OnDisabled(Player player) {
+	public void OnDisabled(Player player) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-		player.IsNoclipEnabled = false;
+		player.IsNoclipEnabled = false; // TODO if player dies in noclip is this a problem? OR can player not die in noclip
 	}
+}
+
+internal record NoClipConfig {
+	public bool IsEnabled { get; set; } = false;
+	public float MinDuration { get; set; } = 5f;
+	public float MaxDuration { get; set; } = 12f;
+	public float RarityMultiplier { get; set; } = 0.1f;
 }

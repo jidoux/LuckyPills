@@ -5,6 +5,8 @@ using Mirror;
 using UnityEngine;
 using ThrowableItem = InventorySystem.Items.ThrowableProjectiles.ThrowableItem;
 
+namespace LuckyPills;
+
 internal static class Grenades {
 	public static IEnumerator<float> RunGrenadeVomit(Player player, float duration, float grenadesPerSecond, ItemType itemType) {
 		float delayTime = 1f / grenadesPerSecond;

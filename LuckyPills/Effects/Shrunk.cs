@@ -1,17 +1,26 @@
 ﻿namespace LuckyPills.Effects;
 
-internal record Shrunk : PillEffect {
-	protected override bool IsEnabled { get; } = true;
-	protected override string DisplayText { get; } = "You've been shrunk for {duration} seconds";
-	protected override Duration PossibleDurationRangeInclusive { get; } = new(8f, 15f);
+internal sealed record Shrunk : ShrunkConfig, IPillEffect {
+	public new bool IsEnabled => base.IsEnabled;
+	public string DisplayText => "You've been shrunk for {duration} seconds";
+	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
+	public new float RarityMultiplier => base.RarityMultiplier;
+	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
-	protected override void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-		player.Scale = new UnityEngine.Vector3(0.2f, 0.2f, 0.2f);
+		player.Scale = new Vector3(0.2f, 0.2f, 0.2f);
 	}
 
-	protected override void OnDisabled(Player player) {
+	public void OnDisabled(Player player) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-		player.Scale = UnityEngine.Vector3.one;
+		player.Scale = Vector3.one;
 	}
+}
+
+internal record ShrunkConfig {
+	public bool IsEnabled { get; set; } = true;
+	public float MinDuration { get; set; } = 8f;
+	public float MaxDuration { get; set; } = 16f;
+	public float RarityMultiplier { get; set; } = 1f;
 }

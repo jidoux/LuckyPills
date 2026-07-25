@@ -20,12 +20,13 @@
 // also 17 electrocute you zip with the efrect of a tesla game
 // also 18 make you become a mobile tesla gate
 // alsao 19 make one that makes you the puter for hte rest of the game and makes you max level
-//internal record DeathCounter : PillEffect {
+//internal record DeathCounter : IPillEffect {
 //	private const int _grenadesPerSecond = 10; // I'd prefer having this here rather than grenades class for potential fine tuning.
 
-//	protected override bool IsEnabled { get; } = true;
+//	protected override bool IsEnabled => true;
 //	protected override string DisplayText { get; } = "You've been given bomb vomit for {duration} seconds";
 //	protected override Duration PossibleDurationRangeInclusive { get; } = new(10f, 20f);
+// protected override float RarityMultiplier => 1f;
 
 //	protected override void OnEnabled(Player player, float duration) {
 //		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");

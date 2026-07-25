@@ -1,21 +1,21 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record Invigorated : InvigoratedConfig, IPillEffect {
+internal sealed record Phasing : PhasingConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
-	public string DisplayText => "You've been invigorated for {duration} seconds";
+	public string DisplayText => "You've can phase through doors for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-		player.EnableEffect<CustomPlayerEffects.Invigorated>(intensity: byte.MaxValue, duration: duration, addDuration: true);
+		player.EnableEffect<CustomPlayerEffects.Ghostly>(intensity: 1, duration: duration, addDuration: true);
 	}
 }
 
-internal record InvigoratedConfig {
+internal record PhasingConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 40f;
-	public float MaxDuration { get; set; } = 100f;
+	public float MinDuration { get; set; } = 30f;
+	public float MaxDuration { get; set; } = 60f;
 	public float RarityMultiplier { get; set; } = 1f;
 }

@@ -1,18 +1,27 @@
 ﻿namespace LuckyPills.Effects;
 
-internal record Australian : PillEffect {
-	protected override bool IsEnabled { get; } = true;
-	protected override string DisplayText { get; } = "You've been converted to australian for {duration} seconds";
-	protected override Duration PossibleDurationRangeInclusive { get; } = new(12f, 36f);
+internal sealed record Australian : AustralianConfig, IPillEffect {
+	public new bool IsEnabled => base.IsEnabled;
+	public string DisplayText => "You've been converted to australian for {duration} seconds";
+	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
+	public new float RarityMultiplier => base.RarityMultiplier;
+	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
-	protected override void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-		player.Scale = new UnityEngine.Vector3(1f, -1f, 1f); // TODO this doesnt make them float up a bit, right? It might... fine tune mby, idk.
+		player.Scale = new Vector3(1f, -1f, 1f); // TODO this doesnt make them float up a bit, right? It might... fine tune mby, idk.
 	}
 
-	protected override void OnDisabled(Player player) {
+	public void OnDisabled(Player player) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-		player.Position += UnityEngine.Vector3.up;
-		player.Scale = UnityEngine.Vector3.one;
+		player.Position += Vector3.up;
+		player.Scale = Vector3.one;
 	}
+}
+
+internal record AustralianConfig {
+	public bool IsEnabled { get; set; } = true;
+	public float MinDuration { get; set; } = 12f;
+	public float MaxDuration { get; set; } = 36f;
+	public float RarityMultiplier { get; set; } = 1f;
 }

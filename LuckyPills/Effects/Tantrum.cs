@@ -1,21 +1,20 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record Poisoned : PoisonedConfig, IPillEffect {
+internal sealed record Tantrum : TantrumConfig, IPillEffect, IDebugPickPills {
 	public new bool IsEnabled => base.IsEnabled;
-	public string DisplayText => "You've poisoned yourself for {duration} seconds";
-	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
+	public string DisplayText => "Oh...";
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-		player.EnableEffect<CustomPlayerEffects.Poisoned>(intensity: byte.MaxValue, duration: duration, addDuration: true);
+		var spawnedThing = TantrumHazard.Spawn(position: player.Position, rotation: Quaternion.identity, scale: Vector3.one * 2);
+		spawnedThing.IsActive = true;
+		spawnedThing.PlaySizzle = true;
 	}
 }
 
-internal record PoisonedConfig {
+internal record TantrumConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 10f;
-	public float MaxDuration { get; set; } = 20f;
 	public float RarityMultiplier { get; set; } = 1f;
 }

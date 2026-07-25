@@ -2,18 +2,24 @@
 
 namespace LuckyPills.Effects;
 
-internal record TeleportTo096 : PillEffect {
+internal sealed record TeleportTo096 : TeleportTo096Config, IPillEffect {
+	public new bool IsEnabled => Player.List.FirstOrDefault(x => x.Role == RoleTypeId.Scp096) is not null && base.IsEnabled;
+	public string DisplayText => "You've been teleported to SCP-096";
+	public new float RarityMultiplier => base.RarityMultiplier;
+	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
-	protected override bool IsEnabled => (Player.List.FirstOrDefault(x => x.Role == RoleTypeId.Scp096) is not null && true); // TODO the 2nd thing here should be loaded from config imo
-	protected override string DisplayText => "You've been teleported to SCP-096";
-
-	protected override void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		Player? playerWhoIsScp096 = Player.List.FirstOrDefault(x => x.Role == RoleTypeId.Scp096);
 		if (playerWhoIsScp096 is null) {
 			Logger.Warn("TeleportTo096 pill triggered when there is no SCP-096. Could be because SCP-096 just died, or an error in the code.");
 			return;
 		}
-		player.Position = playerWhoIsScp096.Position + UnityEngine.Vector3.up;
+		player.Position = playerWhoIsScp096.Position + Vector3.up; // not sure if the +1 is needed for this.. some other teleports sent you thru the floor.
 	}
+}
+
+internal record TeleportTo096Config {
+	public bool IsEnabled { get; set; } = true;
+	public float RarityMultiplier { get; set; } = 1f;
 }

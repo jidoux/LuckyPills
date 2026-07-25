@@ -1,19 +1,33 @@
-﻿//namespace LuckyPills.Effects;
+﻿namespace LuckyPills.Effects;
 
-// //TODO - implement this when you figure out how to . Also do a tantrum one if you can figure that out.
-//internal record TheFog : PillEffect, IDebugPickPills {
-//	protected override bool IsEnabled { get; } = true;
-//	protected override string DisplayText { get; } = "You've created the fog";
+internal sealed record TheFog : TheFogConfig, IPillEffect, IDebugPickPills {
+	public new bool IsEnabled => base.IsEnabled;
+	public string DisplayText => "You've created the fog";
+	public new float RarityMultiplier => base.RarityMultiplier;
+	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll;
 
-//	protected override void OnEnabled(Player player, float duration) {
-//		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-//		ItemType itemType = ItemType.SCP244a;
-//		if (UnityEngine.Random.Range(0.0f, 1.0f) > 0.5) {
-//			itemType = ItemType.SCP244b;
-//		}
-//		player.Gravity = new UnityEngine.Vector3
+	public void OnEnabled(Player player, float duration) {
+		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
+		//ItemType itemType = ItemType.SCP244a;
+		//if (Random.Range(0.0f, 1.0f) > 0.5) {
+		//	itemType = ItemType.SCP244b;
+		//}
 
-//		ExplosiveGrenadeProjectile.SpawnActive(player.Position, itemType, timeOverride: 0.001);
+		var item = Scp244Item.Get(new InventorySystem.Items.Usables.Scp244.Scp244Item());
+		if (item is not null) {
+			item.DropItem();
+			item.Use();
+		}
+		//Pickup? pickup = Pickup.Create(type: itemType, position: player.Position, rotation: Quaternion.identity, scale: Vector3.one);
+		//if (pickup != null) {
+		//pickup.IsInUse = true;
+		//}
+		// TODO - make this work ok?
+		//pickup?.GameObject.gameObject.SetActive(true);
+	}
+}
 
-//	}
-//}
+internal record TheFogConfig {
+	public bool IsEnabled { get; set; } = true;
+	public float RarityMultiplier { get; set; } = 1f;
+}

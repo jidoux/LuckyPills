@@ -1,17 +1,26 @@
 ﻿namespace LuckyPills.Effects;
 
-internal record Flattened : PillEffect {
-	protected override bool IsEnabled { get; } = true;
-	protected override string DisplayText { get; } = "You've been flattened for {duration} seconds";
-	protected override Duration PossibleDurationRangeInclusive { get; } = new(10f, 30f);
+internal sealed record Flattened : FlattenedConfig, IPillEffect {
+	public new bool IsEnabled => base.IsEnabled;
+	public string DisplayText => "You've been flattened for {duration} seconds";
+	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
+	public new float RarityMultiplier => base.RarityMultiplier;
+	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
-	protected override void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-		player.Scale = new UnityEngine.Vector3(1f, 0.25f, 1f);
+		player.Scale = new Vector3(1f, 0.25f, 1f);
 	}
 
-	protected override void OnDisabled(Player player) {
+	public void OnDisabled(Player player) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-		player.Scale = UnityEngine.Vector3.one;
+		player.Scale = Vector3.one;
 	}
+}
+
+internal record FlattenedConfig {
+	public bool IsEnabled { get; set; } = true;
+	public float MinDuration { get; set; } = 10f;
+	public float MaxDuration { get; set; } = 30f;
+	public float RarityMultiplier { get; set; } = 1f;
 }

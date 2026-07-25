@@ -1,5 +1,8 @@
 ﻿global using LabApi.Features.Wrappers;
 global using Logger = LabApi.Features.Console.Logger;
+global using UnityEngine;
+global using Random = UnityEngine.Random;
+global using static LuckyPills.PillEffectOrchestrator;
 using LabApi.Events.CustomHandlers;
 using LabApi.Features;
 using LabApi.Loader.Features.Plugins;

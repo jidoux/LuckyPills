@@ -1,11 +1,19 @@
 ﻿namespace LuckyPills.Effects;
 
-internal record HumeShield : PillEffect {
-	protected override bool IsEnabled { get; } = true;
-	protected override string DisplayText { get; } = "You've been given some shield";
+internal sealed record HumeShield : HumeShieldConfig, IPillEffect {
+	public new bool IsEnabled => base.IsEnabled;
+	public string DisplayText => "You've been given some shield";
+	public new float RarityMultiplier => base.RarityMultiplier;
+	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
-	protected override void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-		player.HumeShield += 100f;
+		player.HumeShield += base.AmountOfShieldToGive;
 	}
+}
+
+internal record HumeShieldConfig {
+	public bool IsEnabled { get; set; } = true;
+	public float RarityMultiplier { get; set; } = 1f;
+	public float AmountOfShieldToGive { get; set; } = 100f;
 }
