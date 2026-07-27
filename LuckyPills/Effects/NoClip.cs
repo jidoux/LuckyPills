@@ -19,9 +19,9 @@ internal sealed record NoClip : NoClipConfig, IPillEffect {
 	}
 }
 
-internal record NoClipConfig {
-	public bool IsEnabled { get; set; } = false;
-	public float MinDuration { get; set; } = 5f;
-	public float MaxDuration { get; set; } = 12f;
-	public float RarityMultiplier { get; set; } = 0.1f;
+internal record NoClipConfig { // TODO fix this whole config values... bad defaults but fun values for now
+	public bool IsEnabled { get; set; } = true;
+	public float MinDuration { get; set; } = 20f;
+	public float MaxDuration { get; set; } = 30f;
+	public float RarityMultiplier { get; set; } = 0.5f;
 }

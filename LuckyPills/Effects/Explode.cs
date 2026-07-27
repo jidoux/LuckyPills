@@ -8,7 +8,8 @@ internal sealed record Explode : ExplodeConfig, IPillEffect {
 
 	public void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-		ExplosiveGrenadeProjectile.SpawnActive(player.Position, ItemType.GrenadeHE, timeOverride: 0.001);
+		ExplosiveGrenadeProjectile.SpawnActive(player.Position, ItemType.GrenadeHE, owner: player, timeOverride: 0f);
+		ExplosiveGrenadeProjectile.SpawnActive(player.Position, ItemType.SCP2176, owner: player, timeOverride: 0f);
 	}
 }
 

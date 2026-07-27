@@ -78,4 +78,8 @@ internal static class PillEffectOrchestrator {
 		CandidateForGiveAll = 1 << 1,
 		GoodEffect = 1 << 2,
 	}
+
+	internal readonly record struct Duration(float Minimum, float Maximum) {
+		public float Random => UnityEngine.Random.Range(Minimum, Maximum);
+	}
 }

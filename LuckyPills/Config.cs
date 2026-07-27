@@ -2,7 +2,7 @@
 
 namespace LuckyPills;
 
-internal class Config {
+internal sealed class Config {
 	public AmnesiaConfig Amnesia { get; set; } = new();
 	public AustralianConfig Australian { get; set; } = new();
 	public BallVomitConfig BallVomit { get; set; } = new();
@@ -10,6 +10,8 @@ internal class Config {
 	public BlindedConfig Blinded { get; set; } = new();
 	public BombVomitConfig BombVomit { get; set; } = new();
 	public ConcussedConfig Concussed { get; set; } = new();
+	public DeathCounterConfig DeathCounter { get; set; } = new();
+	public DismembermentConfig Dismemberment { get; set; } = new();
 	public EnsnaredConfig Ensnared { get; set; } = new();
 	public ExplodeConfig Explode { get; set; } = new();
 	public FillInventoryWithPillsConfig FillInventoryWithPills { get; set; } = new();
@@ -17,6 +19,7 @@ internal class Config {
 	public FlashVomitConfig FlashVomit { get; set; } = new();
 	public FlattenedConfig Flattened { get; set; } = new();
 	public GiantConfig Giant { get; set; } = new();
+	public GiveOPItemConfig GiveOPItem { get; set; } = new();
 	public GodConfig God { get; set; } = new();
 	public HemorrhageConfig Hemorrhage { get; set; } = new();
 	public HumeShieldConfig HumeShield { get; set; } = new();
@@ -24,6 +27,7 @@ internal class Config {
 	public InvisibleConfig Invisible { get; set; } = new();
 	public LightBulbVomitConfig LightBulbVomit { get; set; } = new();
 	public LowGravityConfig LowGravity { get; set; } = new();
+	public MassFogConfig MassFog { get; set; } = new();
 	public MutateConfig Mutate { get; set; } = new();
 	public NoClipConfig NoClip { get; set; } = new();
 	public PaperConfig Paper { get; set; } = new();
@@ -32,6 +36,7 @@ internal class Config {
 	public PoisonedConfig Poisoned { get; set; } = new();
 	public ShrunkConfig Shrunk { get; set; } = new();
 	public SinkholeConfig Sinkhole { get; set; } = new();
+	public SodaEffectConfig SodaEffect { get; set; } = new();
 	public SuperSpeedConfig SuperSpeed { get; set; } = new();
 	public TantrumConfig Tantrum { get; set; } = new();
 	public TeleportTo096Config TeleportTo096 { get; set; } = new();

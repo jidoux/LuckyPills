@@ -9,7 +9,7 @@ internal sealed record FlashVomit : FlashVomitConfig, IPillEffect {
 
 	public void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-		MEC.Timing.RunCoroutine(Grenades.RunGrenadeVomit(player, duration, base.GrenadesPerSecond, ItemType.GrenadeFlash));
+		MEC.Timing.RunCoroutine(SharedCode.RunGrenadeVomit(player, duration, base.GrenadesPerSecond, ItemType.GrenadeFlash));
 	}
 }
 

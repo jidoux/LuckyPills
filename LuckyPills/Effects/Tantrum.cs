@@ -8,13 +8,13 @@ internal sealed record Tantrum : TantrumConfig, IPillEffect, IDebugPickPills {
 
 	public void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-		var spawnedThing = TantrumHazard.Spawn(position: player.Position, rotation: Quaternion.identity, scale: Vector3.one * 2);
-		spawnedThing.IsActive = true;
-		spawnedThing.PlaySizzle = true;
+		TantrumHazard.Spawn(position: player.Position, rotation: Quaternion.identity, scale: Vector3.one * base.TantrumSizeMultiplier);
+		// TODO will this slow player down orr?
 	}
 }
 
 internal record TantrumConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
+	public float TantrumSizeMultiplier = 2f;
 }

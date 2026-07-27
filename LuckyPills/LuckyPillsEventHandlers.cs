@@ -3,7 +3,7 @@ using LabApi.Events.CustomHandlers;
 
 namespace LuckyPills; 
 
-internal class LuckyPillsEventHandlers : CustomEventsHandler {
+internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
 	public override void OnPlayerUsingItem(PlayerUsingItemEventArgs ev) {
 		try {
 			if (ev.UsableItem.Type != ItemType.Painkillers) {

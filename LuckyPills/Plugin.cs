@@ -11,7 +11,7 @@ using LabApi.Loader.Features.Plugins.Enums;
 namespace LuckyPills;
 
 internal class LuckyPillsEntryPoint : Plugin<Config> {
-	public static Plugin Singleton { get; private set; } = null!; // Used to access the config internally/globally.
+	public static Plugin Singleton { get; private set; } = null!; // Used in case I need to access the config internally/globally.
 
 	public override string Name => "LuckyPills";
 
@@ -20,7 +20,7 @@ internal class LuckyPillsEntryPoint : Plugin<Config> {
 	public override string Author => "burnout__";
 
 	// The current version of the plugin
-	public override Version Version => new Version(1, 0, 0, 0);
+	public override Version Version => new(1, 0, 0, 0);
 
 	// The required version of LabAPI (usually the version the plugin was built with)
 	public override Version RequiredApiVersion => new(LabApiProperties.CompiledVersion);
