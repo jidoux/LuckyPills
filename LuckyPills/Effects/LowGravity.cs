@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record LowGravity : LowGravityConfig, IPillEffect {
+internal sealed class LowGravity : LowGravityConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been given low gravity for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -18,7 +18,7 @@ internal sealed record LowGravity : LowGravityConfig, IPillEffect {
 	}
 }
 
-internal record LowGravityConfig {
+internal class LowGravityConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 10f;
 	public float MaxDuration { get; set; } = 20f;

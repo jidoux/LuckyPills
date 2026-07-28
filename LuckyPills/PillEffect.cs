@@ -22,13 +22,9 @@ internal interface IPillEffect {
 
 internal static class PillEffectOrchestrator {
 #if DEBUGGING_SPECIFIC_PILL_EFFECTS_WITH_INTERFACE && DEBUG
-	private static readonly IEnumerable<IPillEffect> _allPillEffects = typeof(IPillEffect).Assembly.GetTypes()
-				.Where(x => typeof(IDebugPickPills).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
-				.Select(x => (IPillEffect)Activator.CreateInstance(x)!);
+	private static readonly IEnumerable<IPillEffect> _allPillEffects = SharedCode.GetAllPillEffects(useDebugPickPills: true);
 #else
-			private static readonly IEnumerable<IPillEffect> _allPillEffects = typeof(IPillEffect).Assembly.GetTypes()
-					.Where(x => typeof(IPillEffect).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
-					.Select(x => (IPillEffect)Activator.CreateInstance(x)!);
+	private static readonly IEnumerable<IPillEffect> _allPillEffects = SharedCode.GetAllPillEffects();
 #endif
 
 	public static void RunRandom(Player player) {
@@ -79,7 +75,7 @@ internal static class PillEffectOrchestrator {
 		GoodEffect = 1 << 2,
 	}
 
-	internal readonly record struct Duration(float Minimum, float Maximum) {
+	internal readonly struct Duration(float Minimum, float Maximum) {
 		public float Random => UnityEngine.Random.Range(Minimum, Maximum);
 	}
 }

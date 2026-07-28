@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record Poisoned : PoisonedConfig, IPillEffect {
+internal sealed class Poisoned : PoisonedConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've poisoned yourself for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -13,7 +13,7 @@ internal sealed record Poisoned : PoisonedConfig, IPillEffect {
 	}
 }
 
-internal record PoisonedConfig {
+internal class PoisonedConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 10f;
 	public float MaxDuration { get; set; } = 20f;

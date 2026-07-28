@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record God : GodConfig, IPillEffect {
+internal sealed class God : GodConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been given god mode for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -18,7 +18,7 @@ internal sealed record God : GodConfig, IPillEffect {
 	}
 }
 
-internal record GodConfig {
+internal class GodConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 10f;
 	public float MaxDuration { get; set; } = 25f;

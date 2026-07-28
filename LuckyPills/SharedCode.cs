@@ -69,4 +69,13 @@ internal static class SharedCode {
 		}
 		thrownProjectile.ServerActivate();
 	}
+
+	public static IEnumerable<IPillEffect> GetAllPillEffects(bool useDebugPickPills = false)
+		=> useDebugPickPills
+			? typeof(IPillEffect).Assembly.GetTypes()
+				.Where(x => typeof(IDebugPickPills).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
+				.Select(x => (IPillEffect)Activator.CreateInstance(x)!)
+			: typeof(IPillEffect).Assembly.GetTypes()
+				.Where(x => typeof(IPillEffect).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
+				.Select(x => (IPillEffect)Activator.CreateInstance(x)!);
 }

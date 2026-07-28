@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record Tantrum : TantrumConfig, IPillEffect, IDebugPickPills {
+internal sealed class Tantrum : TantrumConfig, IPillEffect, IDebugPickPills {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "Oh...";
 	public new float RarityMultiplier => base.RarityMultiplier;
@@ -8,12 +8,16 @@ internal sealed record Tantrum : TantrumConfig, IPillEffect, IDebugPickPills {
 
 	public void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-		TantrumHazard.Spawn(position: player.Position, rotation: Quaternion.identity, scale: Vector3.one * base.TantrumSizeMultiplier);
-		// TODO will this slow player down orr?
+		float sizeMultiplier = base.TantrumSizeMultiplier;
+		if (Random.Range(0, 100) == 1) { // Rare chance to make it humongous (spelled that word first try too!)
+			sizeMultiplier *= 100f;
+		}
+		TantrumHazard.Spawn(position: player.Position, rotation: Quaternion.identity, scale: Vector3.one * sizeMultiplier);
+		// TODO make it slow the player
 	}
 }
 
-internal record TantrumConfig {
+internal class TantrumConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 	public float TantrumSizeMultiplier = 2f;

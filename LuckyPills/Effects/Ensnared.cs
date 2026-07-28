@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record Ensnared : EnsnaredConfig, IPillEffect {
+internal sealed class Ensnared : EnsnaredConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been ensnared for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -13,7 +13,7 @@ internal sealed record Ensnared : EnsnaredConfig, IPillEffect {
 	}
 }
 
-internal record EnsnaredConfig {
+internal class EnsnaredConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 5f;
 	public float MaxDuration { get; set; } = 10f;

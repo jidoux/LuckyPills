@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record WallHacks : WallHacksConfig, IPillEffect {
+internal sealed class WallHacks : WallHacksConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been given wall hacks for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -13,7 +13,7 @@ internal sealed record WallHacks : WallHacksConfig, IPillEffect {
 	}
 }
 
-internal record WallHacksConfig {
+internal class WallHacksConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 60f;
 	public float MaxDuration { get; set; } = 120f;

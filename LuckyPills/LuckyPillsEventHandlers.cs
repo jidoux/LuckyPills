@@ -23,7 +23,8 @@ internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
 
 	}
 
-	public override void OnPlayerDeath(PlayerDeathEventArgs ev) {
+	// TODO test this, also see fi there would eb additional things which need ot be here ie god mode, noclip, gravity
+	public override void OnPlayerDying(PlayerDyingEventArgs ev) {
 		try {
 			// During testing there were situations where player scale changed, and they wouldn't change back
 			ev.Player.Scale = Vector3.one;

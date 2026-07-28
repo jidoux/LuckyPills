@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record FlashVomit : FlashVomitConfig, IPillEffect {
+internal sealed class FlashVomit : FlashVomitConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been given flash vomit for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -13,7 +13,7 @@ internal sealed record FlashVomit : FlashVomitConfig, IPillEffect {
 	}
 }
 
-internal record FlashVomitConfig {
+internal class FlashVomitConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 10f;
 	public float MaxDuration { get; set; } = 20f;

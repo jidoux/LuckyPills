@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record Sinkhole : SinkholeConfig, IPillEffect {
+internal sealed class Sinkhole : SinkholeConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been given a sinkhole effect for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -13,7 +13,7 @@ internal sealed record Sinkhole : SinkholeConfig, IPillEffect {
 	}
 }
 
-internal record SinkholeConfig {
+internal class SinkholeConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 10f;
 	public float MaxDuration { get; set; } = 20f;

@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record Flashed : FlashedConfig, IPillEffect {
+internal sealed class Flashed : FlashedConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been flashed";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -13,7 +13,7 @@ internal sealed record Flashed : FlashedConfig, IPillEffect {
 	}
 }
 
-internal record FlashedConfig {
+internal class FlashedConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 5f;
 	public float MaxDuration { get; set; } = 5f;

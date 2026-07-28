@@ -2,7 +2,7 @@
 
 namespace LuckyPills.Effects;
 
-internal sealed record TeleportTo096 : TeleportTo096Config, IPillEffect {
+internal sealed class TeleportTo096 : TeleportTo096Config, IPillEffect, IDebugPickPills {
 	public new bool IsEnabled => Player.List.FirstOrDefault(x => x.Role == RoleTypeId.Scp096) is not null && base.IsEnabled;
 	public string DisplayText => "You've been teleported to SCP-096";
 	public new float RarityMultiplier => base.RarityMultiplier;
@@ -19,7 +19,7 @@ internal sealed record TeleportTo096 : TeleportTo096Config, IPillEffect {
 	}
 }
 
-internal record TeleportTo096Config {
+internal class TeleportTo096Config {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 }

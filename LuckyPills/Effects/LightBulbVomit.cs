@@ -1,11 +1,11 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record LightBulbVomit :  LightBulbVomitConfig, IPillEffect {
+internal sealed class LightBulbVomit :  LightBulbVomitConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been given light bulb vomit for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.VomitEffect | EffectCapabilities.CandidateForGiveAll;
+	public EffectCapabilities Capabilities => EffectCapabilities.VomitEffect;
 
 	public void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
@@ -13,7 +13,7 @@ internal sealed record LightBulbVomit :  LightBulbVomitConfig, IPillEffect {
 	}
 }
 
-internal record LightBulbVomitConfig {
+internal class LightBulbVomitConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 10f;
 	public float MaxDuration { get; set; } = 20f;

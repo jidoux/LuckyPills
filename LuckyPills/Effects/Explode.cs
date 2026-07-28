@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record Explode : ExplodeConfig, IPillEffect {
+internal sealed class Explode : ExplodeConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've spontaneously combusted";
 	public new float RarityMultiplier => base.RarityMultiplier;
@@ -13,7 +13,7 @@ internal sealed record Explode : ExplodeConfig, IPillEffect {
 	}
 }
 
-internal record ExplodeConfig {
+internal class ExplodeConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 }

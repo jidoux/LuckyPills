@@ -2,7 +2,7 @@
 
 namespace LuckyPills;
 
-internal sealed record SodaEffect : SodaEffectConfig, IPillEffect, IDebugPickPills {
+internal sealed class SodaEffect : SodaEffectConfig, IPillEffect, IDebugPickPills {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been given the soda effect";
 	public new float RarityMultiplier => base.RarityMultiplier;
@@ -24,7 +24,7 @@ internal sealed record SodaEffect : SodaEffectConfig, IPillEffect, IDebugPickPil
 	}
 }
 
-internal record SodaEffectConfig {
+internal class SodaEffectConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 }

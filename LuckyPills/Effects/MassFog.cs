@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record MassFog : MassFogConfig, IPillEffect {
+internal sealed class MassFog : MassFogConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "Fog is spawning under you for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -24,7 +24,7 @@ internal sealed record MassFog : MassFogConfig, IPillEffect {
 	}
 }
 
-internal record MassFogConfig {
+internal class MassFogConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 15f;
 	public float MaxDuration { get; set; } = 38f;

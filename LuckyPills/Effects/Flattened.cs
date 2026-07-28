@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record Flattened : FlattenedConfig, IPillEffect {
+internal sealed class Flattened : FlattenedConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been flattened for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -18,7 +18,7 @@ internal sealed record Flattened : FlattenedConfig, IPillEffect {
 	}
 }
 
-internal record FlattenedConfig {
+internal class FlattenedConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 10f;
 	public float MaxDuration { get; set; } = 30f;

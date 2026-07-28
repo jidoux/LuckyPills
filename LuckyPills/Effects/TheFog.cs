@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record TheFog : TheFogConfig, IPillEffect {
+internal sealed class TheFog : TheFogConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've created the fog";
 	public new float RarityMultiplier => base.RarityMultiplier;
@@ -12,7 +12,7 @@ internal sealed record TheFog : TheFogConfig, IPillEffect {
 	}
 }
 
-internal record TheFogConfig {
+internal class TheFogConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 }

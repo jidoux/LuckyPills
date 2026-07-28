@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record Bleeding : BleedingConfig, IPillEffect {
+internal sealed class Bleeding : BleedingConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been given bleeding for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -14,7 +14,7 @@ internal sealed record Bleeding : BleedingConfig, IPillEffect {
 }
 
 
-internal record BleedingConfig {
+internal class BleedingConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 6f;
 	public float MaxDuration { get; set; } = 12f;

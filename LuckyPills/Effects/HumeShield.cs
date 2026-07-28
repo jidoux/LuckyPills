@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record HumeShield : HumeShieldConfig, IPillEffect {
+internal sealed class HumeShield : HumeShieldConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been given some shield";
 	public new float RarityMultiplier => base.RarityMultiplier;
@@ -12,7 +12,7 @@ internal sealed record HumeShield : HumeShieldConfig, IPillEffect {
 	}
 }
 
-internal record HumeShieldConfig {
+internal class HumeShieldConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 	public float AmountOfShieldToGive { get; set; } = 100f;

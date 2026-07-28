@@ -1,12 +1,12 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed class AllGoodEffects : AllGoodEffectsConfig, IPillEffect {
+internal sealed class AllVomitEffects : AllVomitEffectsConfig, IPillEffect {
 	private static readonly List<IPillEffect> _effectCache = SharedCode.GetAllPillEffects()
-		.Where(x => x.Capabilities.HasFlag(EffectCapabilities.GoodEffect))
+		.Where(x => x.Capabilities.HasFlag(EffectCapabilities.VomitEffect))
 		.ToList();
 
 	public new bool IsEnabled => base.IsEnabled;
-	public string DisplayText => "You've been given every good effect for {duration} seconds";
+	public string DisplayText => "You've been given every vomit effect for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
@@ -21,7 +21,7 @@ internal sealed class AllGoodEffects : AllGoodEffectsConfig, IPillEffect {
 	}
 }
 
-internal class AllGoodEffectsConfig {
+internal class AllVomitEffectsConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 20f;
 	public float MaxDuration { get; set; } = 30f;

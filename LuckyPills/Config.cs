@@ -3,6 +3,9 @@
 namespace LuckyPills;
 
 internal sealed class Config {
+	public AllEffectsConfig AllEffects { get; set; } = new();
+	public AllGoodEffectsConfig AllGoodEffects { get; set; } = new();
+	public AllVomitEffectsConfig AllVomitEffects { get; set; } = new();
 	public AmnesiaConfig Amnesia { get; set; } = new();
 	public AustralianConfig Australian { get; set; } = new();
 	public BallVomitConfig BallVomit { get; set; } = new();

@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record BallVomit : BallVomitConfig, IPillEffect {
+internal sealed class BallVomit : BallVomitConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been given ball vomit for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -9,11 +9,15 @@ internal sealed record BallVomit : BallVomitConfig, IPillEffect {
 
 	public void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-		MEC.Timing.RunCoroutine(SharedCode.RunGrenadeVomit(player, duration, base.GrenadesPerSecond, ItemType.SCP018));
+		int grenadesPerSecond = base.GrenadesPerSecond;
+		if (Random.Range(0, 100) == 1) { // Rare chance to spawn a whole lot more
+			grenadesPerSecond *= 10;
+		}
+		MEC.Timing.RunCoroutine(SharedCode.RunGrenadeVomit(player, duration, grenadesPerSecond, ItemType.SCP018));
 	}
 }
 
-internal record BallVomitConfig {
+internal class BallVomitConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 10f;
 	public float MaxDuration { get; set; } = 20f;

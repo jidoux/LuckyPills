@@ -2,7 +2,7 @@
 
 namespace LuckyPills.Effects;
 
-internal sealed record FillInventoryWithPills : FillInventoryWithPillsConfig, IPillEffect, IDebugPickPills {
+internal sealed class FillInventoryWithPills : FillInventoryWithPillsConfig, IPillEffect, IDebugPickPills {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "Your inventory has been filled with more pills";
 	public new float RarityMultiplier => base.RarityMultiplier;
@@ -16,7 +16,7 @@ internal sealed record FillInventoryWithPills : FillInventoryWithPillsConfig, IP
 	}
 }
 
-internal record FillInventoryWithPillsConfig {
+internal class FillInventoryWithPillsConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 }

@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record Australian : AustralianConfig, IPillEffect {
+internal sealed class Australian : AustralianConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been converted to australian for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -19,7 +19,7 @@ internal sealed record Australian : AustralianConfig, IPillEffect {
 	}
 }
 
-internal record AustralianConfig {
+internal class AustralianConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 12f;
 	public float MaxDuration { get; set; } = 36f;

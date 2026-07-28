@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record SuperSpeed : SuperSpeedConfig, IPillEffect {
+internal sealed class SuperSpeed : SuperSpeedConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been given super speed for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -13,7 +13,7 @@ internal sealed record SuperSpeed : SuperSpeedConfig, IPillEffect {
 	}
 }
 
-internal record SuperSpeedConfig {
+internal class SuperSpeedConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 10f;
 	public float MaxDuration { get; set; } = 20f;

@@ -1,10 +1,10 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record DeathCounter : DeathCounterConfig, IPillEffect {
+internal sealed class DeathCounter : DeathCounterConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => $"You will die in {base.SecondsToDeath} seconds";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
 		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
@@ -24,7 +24,7 @@ internal sealed record DeathCounter : DeathCounterConfig, IPillEffect {
 	}
 }
 
-internal record DeathCounterConfig {
+internal class DeathCounterConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 	public int SecondsToDeath { get; set; } = 30;

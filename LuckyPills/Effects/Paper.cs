@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record Paper : PaperConfig, IPillEffect {
+internal sealed class Paper : PaperConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been turned into paper for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -18,7 +18,7 @@ internal sealed record Paper : PaperConfig, IPillEffect {
 	}
 }
 
-internal record PaperConfig {
+internal class PaperConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 12f;
 	public float MaxDuration { get; set; } = 36f;

@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record Dismemberment : DismembermentConfig, IPillEffect {
+internal sealed class Dismemberment : DismembermentConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You have been dismembered...";
 	public new float RarityMultiplier => base.RarityMultiplier;
@@ -13,7 +13,7 @@ internal sealed record Dismemberment : DismembermentConfig, IPillEffect {
 	}
 }
 
-internal record DismembermentConfig {
+internal class DismembermentConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 0.5f;
 }

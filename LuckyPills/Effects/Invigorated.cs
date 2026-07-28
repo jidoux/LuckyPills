@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record Invigorated : InvigoratedConfig, IPillEffect {
+internal sealed class Invigorated : InvigoratedConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been invigorated for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -13,7 +13,7 @@ internal sealed record Invigorated : InvigoratedConfig, IPillEffect {
 	}
 }
 
-internal record InvigoratedConfig {
+internal class InvigoratedConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 40f;
 	public float MaxDuration { get; set; } = 100f;

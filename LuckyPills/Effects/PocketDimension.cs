@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record PocketDimension : PocketDimensionConfig, IPillEffect {
+internal sealed class PocketDimension : PocketDimensionConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been sent to the pocket dimension";
 	public new float RarityMultiplier => base.RarityMultiplier;
@@ -17,7 +17,7 @@ internal sealed record PocketDimension : PocketDimensionConfig, IPillEffect {
 	}
 }
 
-internal record PocketDimensionConfig {
+internal class PocketDimensionConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 }

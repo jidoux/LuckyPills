@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed record Phasing : PhasingConfig, IPillEffect {
+internal sealed class Phasing : PhasingConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've can phase through doors for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -13,7 +13,7 @@ internal sealed record Phasing : PhasingConfig, IPillEffect {
 	}
 }
 
-internal record PhasingConfig {
+internal class PhasingConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 30f;
 	public float MaxDuration { get; set; } = 60f;

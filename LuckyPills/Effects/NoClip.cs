@@ -1,7 +1,7 @@
 ﻿namespace LuckyPills.Effects;
 
 // this one is kinda absurd... sometimes its fine, but you can easily get hard-stuck...
-internal sealed record NoClip : NoClipConfig, IPillEffect {
+internal sealed class NoClip : NoClipConfig, IPillEffect {
 	public new bool IsEnabled => base.IsEnabled;
 	public string DisplayText => "You've been given Noclip for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -19,7 +19,7 @@ internal sealed record NoClip : NoClipConfig, IPillEffect {
 	}
 }
 
-internal record NoClipConfig { // TODO fix this whole config values... bad defaults but fun values for now
+internal class NoClipConfig { // TODO fix this whole config values... bad defaults but fun values for now
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 20f;
 	public float MaxDuration { get; set; } = 30f;

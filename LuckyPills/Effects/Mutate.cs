@@ -2,7 +2,7 @@
 
 namespace LuckyPills.Effects;
 
-internal sealed record Mutate : MutateConfig, IPillEffect {
+internal sealed class Mutate : MutateConfig, IPillEffect {
 	private readonly Dictionary<Player, RoleTypeId> _cachedRoles = [];
 
 	public new bool IsEnabled => base.IsEnabled;
@@ -29,7 +29,7 @@ internal sealed record Mutate : MutateConfig, IPillEffect {
 	}
 }
 
-internal record MutateConfig {
+internal class MutateConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 5f;
 	public float MaxDuration { get; set; } = 26f;
