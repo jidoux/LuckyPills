@@ -7,7 +7,6 @@ internal sealed class HumeShield : HumeShieldConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		player.HumeShield += base.AmountOfShieldToGive;
 	}
 }

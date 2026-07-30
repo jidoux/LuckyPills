@@ -7,7 +7,6 @@ internal sealed class DeathCounter : DeathCounterConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		MEC.Timing.RunCoroutine(DeathCountdown(player, base.SecondsToDeath));
 	}
 

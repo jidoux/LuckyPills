@@ -8,7 +8,6 @@ internal sealed class MassFog : MassFogConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		MEC.Timing.RunCoroutine(SpawnMassFog(player, duration, base.Scp244PerSecond));
 	}
 

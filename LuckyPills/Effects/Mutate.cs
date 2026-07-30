@@ -12,7 +12,6 @@ internal sealed class Mutate : MutateConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		if (!_cachedRoles.ContainsKey(player)) {
 			_cachedRoles.Add(player, player.Role);
 		}
@@ -21,7 +20,6 @@ internal sealed class Mutate : MutateConfig, IPillEffect {
 	}
 
 	public void OnDisabled(Player player) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		if (player.IsAlive && _cachedRoles.TryGetValue(player, out RoleTypeId role)) {
 			player.SetRole(role, RoleChangeReason.ItemUsage, RoleSpawnFlags.None);
 			_cachedRoles.Remove(player);

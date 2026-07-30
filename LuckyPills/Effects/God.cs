@@ -8,12 +8,10 @@ internal sealed class God : GodConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		player.IsGodModeEnabled = true;
 	}
 
 	public void OnDisabled(Player player) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		player.IsGodModeEnabled = false;
 	}
 }

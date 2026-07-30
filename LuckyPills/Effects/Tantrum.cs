@@ -7,7 +7,6 @@ internal sealed class Tantrum : TantrumConfig, IPillEffect, IDebugPickPills {
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		float sizeMultiplier = base.TantrumSizeMultiplier;
 		if (Random.Range(0, 100) == 1) { // Rare chance to make it humongous (spelled that word first try too!)
 			sizeMultiplier *= 100f;

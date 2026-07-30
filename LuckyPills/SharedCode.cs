@@ -78,4 +78,9 @@ internal static class SharedCode {
 			: typeof(IPillEffect).Assembly.GetTypes()
 				.Where(x => typeof(IPillEffect).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
 				.Select(x => (IPillEffect)Activator.CreateInstance(x)!);
+
+	public static void EnablePillEffect(IPillEffect effect, Player player, float duration) {
+		effect.OnEnabled(player, duration);
+		MEC.Timing.CallDelayed(duration, () => effect.OnDisabled(player));
+	}
 }

@@ -8,12 +8,10 @@ internal sealed class Australian : AustralianConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		player.Scale = new Vector3(1f, -1f, 1f); // TODO this doesnt make them float up a bit, right? It might... fine tune mby, idk.
 	}
 
 	public void OnDisabled(Player player) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		player.Position += Vector3.up;
 		player.Scale = Vector3.one;
 	}

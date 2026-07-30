@@ -9,7 +9,6 @@ internal sealed class TeleportTo096 : TeleportTo096Config, IPillEffect, IDebugPi
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		Player? playerWhoIsScp096 = Player.List.FirstOrDefault(x => x.Role == RoleTypeId.Scp096);
 		if (playerWhoIsScp096 is null) {
 			Logger.Warn("TeleportTo096 pill triggered when there is no SCP-096. Could be because SCP-096 just died, or an error in the code.");

@@ -8,7 +8,6 @@ internal sealed class Invisible : InvisibleConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		player.EnableEffect<CustomPlayerEffects.Invisible>(duration: duration, addDuration: true);
 	}
 }

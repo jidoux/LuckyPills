@@ -10,7 +10,6 @@ internal sealed class GiveOPItem : GiveOPItemConfig, IPillEffect, IDebugPickPill
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		ItemType[] itemPool = [
 			ItemType.MicroHID,
 			ItemType.ParticleDisruptor,
@@ -18,6 +17,7 @@ internal sealed class GiveOPItem : GiveOPItemConfig, IPillEffect, IDebugPickPill
 			ItemType.GunCom45,
 		];
 		player.Inventory.ServerAddItem(itemPool[Random.Range(0, itemPool.Length)], ItemAddReason.AdminCommand);
+		// TODO maybe make this force equip?
 	}
 }
 

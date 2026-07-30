@@ -7,7 +7,6 @@ internal sealed class Dismemberment : DismembermentConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		player.EnableEffect<CustomPlayerEffects.SeveredEyes>();
 		player.EnableEffect<CustomPlayerEffects.SeveredHands>();
 	}

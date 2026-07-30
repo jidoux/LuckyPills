@@ -1,7 +1,7 @@
 ﻿namespace LuckyPills.Effects;
 
 internal sealed class AllVomitEffects : AllVomitEffectsConfig, IPillEffect {
-	private static readonly List<IPillEffect> _effectCache = SharedCode.GetAllPillEffects()
+	private static readonly List<IPillEffect> _effectCandidates = SharedCode.GetAllPillEffects()
 		.Where(x => x.Capabilities.HasFlag(EffectCapabilities.VomitEffect))
 		.ToList();
 
@@ -12,11 +12,9 @@ internal sealed class AllVomitEffects : AllVomitEffectsConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-		IEnumerable<IPillEffect> effectsToUse = _effectCache.Where(x => x.IsEnabled);
+		IEnumerable<IPillEffect> effectsToUse = _effectCandidates.Where(x => x.IsEnabled);
 		foreach (IPillEffect effect in effectsToUse) {
-			effect.OnEnabled(player, duration);
-			MEC.Timing.CallDelayed(duration, () => effect.OnDisabled(player));
+			SharedCode.EnablePillEffect(effect, player, duration);
 		}
 	}
 }

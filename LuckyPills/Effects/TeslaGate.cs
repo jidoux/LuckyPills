@@ -7,12 +7,10 @@ internal sealed class TeslaGate : TeslaGateConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		Tesla? tesla = Map.Teslas.OrderBy(_ => Random.value).FirstOrDefault();
-
 		if (tesla is null) {
 			// May be possible with some crazy timing where this gets executed right when the map ends, but idk.
-			Logger.Error("No tesla gates found in the map. Odds are this should have been prevented before this point.");
+			Logger.Warn("No tesla gates found in the map. Odds are this should have been prevented before this point.");
 			return;
 		}
 		player.Position = tesla.Position + Vector3.up;

@@ -1,14 +1,13 @@
 ﻿namespace LuckyPills.Effects;
 
 internal sealed class BallVomit : BallVomitConfig, IPillEffect {
-	public new bool IsEnabled => base.IsEnabled;
+	public new bool IsEnabled =>  base.IsEnabled;
 	public string DisplayText => "You've been given ball vomit for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.VomitEffect | EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		int grenadesPerSecond = base.GrenadesPerSecond;
 		if (Random.Range(0, 100) == 1) { // Rare chance to spawn a whole lot more
 			grenadesPerSecond *= 10;

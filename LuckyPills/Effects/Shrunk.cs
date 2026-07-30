@@ -8,12 +8,10 @@ internal sealed class Shrunk : ShrunkConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		player.Scale = new Vector3(0.2f, 0.2f, 0.2f);
 	}
 
 	public void OnDisabled(Player player) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		player.Scale = Vector3.one;
 	}
 }

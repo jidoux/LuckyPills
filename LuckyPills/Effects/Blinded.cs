@@ -8,7 +8,6 @@ internal sealed class Blinded : BlindedConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		player.EnableEffect<CustomPlayerEffects.Blindness>(intensity: byte.MaxValue, duration: duration, addDuration: true);
 	}
 }

@@ -8,7 +8,6 @@ internal sealed class SuperSpeed : SuperSpeedConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		player.EnableEffect<CustomPlayerEffects.MovementBoost>(intensity: byte.MaxValue, duration: duration, addDuration: true);
 	}
 }

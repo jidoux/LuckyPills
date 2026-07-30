@@ -8,12 +8,10 @@ internal sealed class Flattened : FlattenedConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		player.Scale = new Vector3(1f, 0.25f, 1f);
 	}
 
 	public void OnDisabled(Player player) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		player.Scale = Vector3.one;
 	}
 }

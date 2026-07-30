@@ -7,7 +7,6 @@ internal sealed class PocketDimension : PocketDimensionConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
 		Room? pocketDimensionRoom = Room.Get(MapGeneration.RoomName.Pocket).FirstOrDefault();
 		if (pocketDimensionRoom is null) {
 			Logger.Error("PocketDimensionRoom is null... this is a problem");

@@ -9,8 +9,6 @@ internal sealed class SodaEffect : SodaEffectConfig, IPillEffect, IDebugPickPill
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
-		Logger.Debug($"{this.GetType().Name} {System.Reflection.MethodBase.GetCurrentMethod().Name}");
-
 		byte currentPlayerIntensity = 0;
 		if (player.TryGetEffect<Scp207>(out Scp207? effect)) {
 			currentPlayerIntensity = effect?.Intensity ?? 0; // my ide says this can return null somehow...
