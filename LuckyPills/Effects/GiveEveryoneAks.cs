@@ -3,8 +3,8 @@ using PlayerRoles;
 
 namespace LuckyPills.Effects;
 
-internal sealed class GiveEveryoneAks: GiveEveryoneAksConfig, IPillEffect, IDebugPickPills {
-	public new bool IsEnabled => base.IsEnabled;
+internal sealed class GiveEveryoneAks: GiveEveryoneAksConfig, IPillEffect {
+	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "You've given every player an AK";
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.None;

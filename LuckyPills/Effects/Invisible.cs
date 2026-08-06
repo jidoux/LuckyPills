@@ -1,14 +1,14 @@
 ﻿namespace LuckyPills.Effects;
 
 internal sealed class Invisible : InvisibleConfig, IPillEffect {
-	public new bool IsEnabled => base.IsEnabled;
+	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "You've been turned invisible for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
-		player.EnableEffect<CustomPlayerEffects.Invisible>(duration: duration, addDuration: true);
+		player.EnableEffect<CustomPlayerEffects.Fade>(intensity: byte.MaxValue, duration: duration, addDuration: true);
 	}
 }
 

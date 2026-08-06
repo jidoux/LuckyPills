@@ -2,8 +2,8 @@
 
 namespace LuckyPills;
 
-internal sealed class SodaEffect : SodaEffectConfig, IPillEffect, IDebugPickPills {
-	public new bool IsEnabled => base.IsEnabled;
+internal sealed class SodaEffect : SodaEffectConfig, IPillEffect {
+	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "You've been given the soda effect";
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;

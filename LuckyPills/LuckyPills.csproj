@@ -23,34 +23,37 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="Assembly-CSharp">
-			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\Assembly-CSharp.dll</HintPath>
+			<HintPath>$(SL_REFERENCES)\Assembly-CSharp.dll</HintPath>
 		</Reference>
 		<Reference Include="Assembly-CSharp-firstpass">
-			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+			<HintPath>$(SL_REFERENCES)\Assembly-CSharp-firstpass.dll</HintPath>
 		</Reference>
 		<Reference Include="LabAPI">
-			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\LabAPI.dll</HintPath>
+			<HintPath>$(SL_REFERENCES)\LabAPI.dll</HintPath>
 		</Reference>
 		<Reference Include="Mirror">
-			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\Mirror.dll</HintPath>
+			<HintPath>$(SL_REFERENCES)\Mirror.dll</HintPath>
 		</Reference>
 		<Reference Include="Pooling">
-			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\Pooling.dll</HintPath>
+			<HintPath>$(SL_REFERENCES)\Pooling.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine">
-			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\UnityEngine.dll</HintPath>
+			<HintPath>$(SL_REFERENCES)\UnityEngine.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.CoreModule">
-			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+			<HintPath>$(SL_REFERENCES)\UnityEngine.CoreModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.PhysicsModule">
-			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+			<HintPath>$(SL_REFERENCES)\UnityEngine.PhysicsModule.dll</HintPath>
+		</Reference>
+		<Reference Include="CommandSystem.Core">
+			<HintPath>$(SL_REFERENCES)\CommandSystem.Core.dll</HintPath>
 		</Reference>
 		<Reference Include="mscorlib">
-			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\mscorlib.dll</HintPath>
+			<HintPath>$(SL_REFERENCES)\mscorlib.dll</HintPath>
 		</Reference>
 		<Reference Include="NorthwoodLib">
-			<HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\NorthwoodLib.dll</HintPath>
+			<HintPath>$(SL_REFERENCES)\NorthwoodLib.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 	

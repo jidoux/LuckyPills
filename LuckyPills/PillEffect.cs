@@ -8,9 +8,9 @@ namespace LuckyPills;
 internal interface IDebugPickPills;
 
 internal interface IPillEffect {
-	public bool IsEnabled { get; }
+	public bool IsEnabled(Player player);
 	public string DisplayText { get; }
-	public virtual Duration PossibleDurationRangeInclusive => new(10f, 20f); // Arbitrary default; this is virtual due to interface segregation.
+	public virtual Duration PossibleDurationRangeInclusive => new(float.MaxValue, float.MaxValue); // Default to max duration; this is virtual due to interface segregation.
 	/// <summary>
 	/// 1 is the base priority, 0.1 would be 10 times rarer than base, etc.
 	/// </summary>
@@ -28,7 +28,7 @@ internal static class PillEffectOrchestrator {
 #endif
 
 	public static void RunRandom(Player player) {
-		IPillEffect? selectedEffect = GetRandomPillEffect();
+		IPillEffect? selectedEffect = GetRandomPillEffect(player);
 		if (selectedEffect is null) {
 			Logger.Warn("There are no enabled effects to select.");
 			return;
@@ -36,11 +36,15 @@ internal static class PillEffectOrchestrator {
 		float duration = selectedEffect.PossibleDurationRangeInclusive.Random;
 		selectedEffect.OnEnabled(player, duration);
 		player.SendHint(selectedEffect.DisplayText.Replace("{duration}", ((int)Math.Floor(duration)).ToString()));
-		MEC.Timing.CallDelayed(duration, () => selectedEffect.OnDisabled(player)); // Can sometimes just do nothing if OnDisabled isn't overriden.
+		#pragma warning disable S1244 // I figure this warning is pointless when comparing against Float.MaxValue as long as im not doing computations...
+		if (duration != float.MaxValue) {
+			MEC.Timing.CallDelayed(duration, () => selectedEffect.OnDisabled(player)); // Can sometimes just do nothing if OnDisabled isn't overriden.
+		}
+		#pragma warning restore S1244
 	}
 
-	private static IPillEffect? GetRandomPillEffect() {
-		List<IPillEffect> allEnabledPillEffects = _allPillEffects.Where(x => x.IsEnabled).ToList();
+	private static IPillEffect? GetRandomPillEffect(Player player) {
+		List<IPillEffect> allEnabledPillEffects = _allPillEffects.Where(x => x.IsEnabled(player)).ToList();
 		if (allEnabledPillEffects.Count == 0) {
 			return null; // Signal to the caller that some error occurred - think Result<T>
 		}

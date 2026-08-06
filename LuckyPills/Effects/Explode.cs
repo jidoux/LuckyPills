@@ -1,7 +1,7 @@
 ﻿namespace LuckyPills.Effects;
 
 internal sealed class Explode : ExplodeConfig, IPillEffect {
-	public new bool IsEnabled => base.IsEnabled;
+	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "You've spontaneously combusted";
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.None;

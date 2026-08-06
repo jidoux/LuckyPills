@@ -2,7 +2,7 @@
 
 // this one is kinda absurd... sometimes its fine, but you can easily get hard-stuck...
 internal sealed class NoClip : NoClipConfig, IPillEffect {
-	public new bool IsEnabled => base.IsEnabled;
+	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "You've been given Noclip for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;

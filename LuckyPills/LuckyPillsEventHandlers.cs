@@ -1,6 +1,7 @@
 ﻿using InventorySystem;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.CustomHandlers;
+using LuckyPills.Effects;
 
 namespace LuckyPills; 
 
@@ -53,6 +54,16 @@ internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
 				ev.Pickup.Destroy();
 				ev.Player.Inventory.ServerAddItem(ItemType.Painkillers, InventorySystem.Items.ItemAddReason.PickedUp);
 			}
+		}
+		catch (Exception ex) {
+			Logger.Error(ex);
+		}
+	}
+
+	// I figure this is safe to avoid any manipulation with the handcuffed effect.
+	public override void OnPlayerUncuffed(PlayerUncuffedEventArgs ev) {
+		try {
+			_allEffects.FirstOrDefault(x => x is Handcuffed && x.IsEnabled(ev.Player))?.OnDisabled(ev.Target);
 		}
 		catch (Exception ex) {
 			Logger.Error(ex);

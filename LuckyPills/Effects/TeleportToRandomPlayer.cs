@@ -2,12 +2,13 @@
 
 internal sealed class TeleportToRandomPlayer : TeleportToRandomPlayerConfig, IPillEffect {
 	// TODO continue testing this as its pretty iffy
-	public new bool IsEnabled => 
-		Player.List.Count(
+	public new bool IsEnabled(Player player) => 
+		Player.List.Any(
 			x => !x.Role.ToString().StartsWith("scp", StringComparison.OrdinalIgnoreCase)
 				&& x.Role != PlayerRoles.RoleTypeId.None
 				&& x.Role != PlayerRoles.RoleTypeId.Spectator
-		) > 1 // We need count > 1 as there needs to be at least 2 valid players (player taking the pill, and someone else).
+				&& x != player
+		)
 		&& base.IsEnabled;
 	public string DisplayText => "You've been teleported to a random non-SCP";
 	public new float RarityMultiplier => base.RarityMultiplier;

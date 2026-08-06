@@ -1,16 +1,17 @@
 ﻿namespace LuckyPills.Effects;
 
 internal sealed class GiveEveryoneBallVomit : GiveEveryoneBallVomitConfig, IPillEffect {
-	public new bool IsEnabled => new BallVomit().IsEnabled && base.IsEnabled;
+	private static readonly BallVomit _ballVomitInstance = new();
+
+	public new bool IsEnabled(Player player) => _ballVomitInstance.IsEnabled(player) && base.IsEnabled;
 	public string DisplayText => "You've given everyone ball vomit";
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		BallVomit ballVomit = new();
 		duration = 30f;
 		foreach (Player anyPlayerInMap in Player.List.Where(x => x.IsAlive)) {
-			SharedCode.EnablePillEffect(ballVomit, player, duration);
+			SharedCode.EnablePillEffect(_ballVomitInstance, player, duration);
 		}
 	}
 }

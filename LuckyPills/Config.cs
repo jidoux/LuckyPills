@@ -3,6 +3,7 @@
 namespace LuckyPills;
 
 internal sealed class Config {
+	public ActivateNukeConfig ActivateNuke { get; set; } = new();
 	public AllEffectsConfig AllEffects { get; set; } = new();
 	public AllGoodEffectsConfig AllGoodEffects { get; set; } = new();
 	public AllVomitEffectsConfig AllVomitEffects { get; set; } = new();
@@ -12,8 +13,10 @@ internal sealed class Config {
 	public BleedingConfig Bleeding { get; set; } = new();
 	public BlindedConfig Blinded { get; set; } = new();
 	public BombVomitConfig BombVomit { get; set; } = new();
+	public CardiacArrestConfig CardiacArrest { get; set; } = new();
 	public ConcussedConfig Concussed { get; set; } = new();
 	public DeathCounterConfig DeathCounter { get; set; } = new();
+	public DestroyAllDoorsConfig DestroyAllDoors { get; set; } = new();
 	public DismembermentConfig Dismemberment { get; set; } = new();
 	public EnsnaredConfig Ensnared { get; set; } = new();
 	public ExplodeConfig Explode { get; set; } = new();
@@ -22,22 +25,25 @@ internal sealed class Config {
 	public FlashedConfig Flashed { get; set; } = new();
 	public FlashVomitConfig FlashVomit { get; set; } = new();
 	public FlattenedConfig Flattened { get; set; } = new();
+	public GhostConfig Ghost { get; set; } = new();
 	public GiantConfig Giant { get; set; } = new();
 	public GiveEveryoneBallVomitConfig GiveEveryoneBallVomit { get; set; } = new();
 	public GiveOPItemConfig GiveOPItem { get; set; } = new();
 	public GodConfig God { get; set; } = new();
+	public HandcuffedConfig Handcuffed { get; set; } = new();
 	public HemorrhageConfig Hemorrhage { get; set; } = new();
 	public HumeShieldConfig HumeShield { get; set; } = new();
 	public InvigoratedConfig Invigorated { get; set; } = new();
 	public InvisibleConfig Invisible { get; set; } = new();
+	public KillPlayerYouSeeConfig KillPlayerYouSee { get; set; } = new();
 	public GiveEveryoneAksConfig GiveEveryoneAks { get; set; } = new();
 	public LightBulbVomitConfig LightBulbVomit { get; set; } = new();
 	public LowGravityConfig LowGravity { get; set; } = new();
 	public MassFogConfig MassFog { get; set; } = new();
 	public MutateConfig Mutate { get; set; } = new();
 	public NoClipConfig NoClip { get; set; } = new();
+	public NoJumpingConfig NoJumping { get; set; } = new();
 	public PaperConfig Paper { get; set; } = new();
-	public PhasingConfig Phasing { get; set; } = new();
 	public PocketDimensionConfig PocketDimension { get; set; } = new();
 	public PoisonedConfig Poisoned { get; set; } = new();
 	public ShrunkConfig Shrunk { get; set; } = new();
@@ -49,5 +55,6 @@ internal sealed class Config {
 	public TeleportToRandomPlayerConfig TeleportToRandomPlayer { get; set; } = new();
 	public TeslaGateConfig TeslaGate { get; set; } = new();
 	public TheFogConfig TheFog { get; set; } = new();
+	public TurnIntoComputerConfig TurnIntoComputer { get; set; } = new();
 	public WallHacksConfig WallHacks { get; set; } = new();
 }

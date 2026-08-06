@@ -1,17 +1,17 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed class TheFog : TheFogConfig, IPillEffect {
+internal sealed class ActivateNuke : ActivateNukeConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've created the fog";
+	public string DisplayText => "You've activate the nuclear warhead";
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		SharedCode.SpawnScp244(player.Position);
+		// TODO implement this
 	}
 }
 
-internal class TheFogConfig {
+internal class ActivateNukeConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 }

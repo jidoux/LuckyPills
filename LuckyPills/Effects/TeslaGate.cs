@@ -1,7 +1,7 @@
 ﻿namespace LuckyPills.Effects;
 
 internal sealed class TeslaGate : TeslaGateConfig, IPillEffect {
-	public new bool IsEnabled => Map.Teslas.Any() && base.IsEnabled;
+	public new bool IsEnabled(Player player) => Map.Teslas.Any() && base.IsEnabled;
 	public string DisplayText => "You've been sent to a tesla gate";
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.None;

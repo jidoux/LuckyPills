@@ -1,7 +1,7 @@
 ﻿namespace LuckyPills.Effects;
 
 internal sealed class Invigorated : InvigoratedConfig, IPillEffect {
-	public new bool IsEnabled => base.IsEnabled;
+	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "You've been invigorated for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;

@@ -2,17 +2,17 @@
 
 internal sealed class AllGoodEffects : AllGoodEffectsConfig, IPillEffect {
 	private static readonly List<IPillEffect> _effectCandidates = SharedCode.GetAllPillEffects()
-		.Where(x => x.Capabilities.HasFlag(EffectCapabilities.GoodEffect))
+		.Where(x => (x.Capabilities & EffectCapabilities.GoodEffect) == EffectCapabilities.GoodEffect)
 		.ToList();
 
-	public new bool IsEnabled => base.IsEnabled;
+	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "You've been given every good effect for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		IEnumerable<IPillEffect> effectsToUse = _effectCandidates.Where(x => x.IsEnabled);
+		IEnumerable<IPillEffect> effectsToUse = _effectCandidates.Where(x => x.IsEnabled(player));
 		foreach (IPillEffect effect in effectsToUse) {
 			SharedCode.EnablePillEffect(effect, player, duration);
 		}

@@ -3,7 +3,7 @@
 namespace LuckyPills.Effects;
 
 internal sealed class FillInventoryWithPills : FillInventoryWithPillsConfig, IPillEffect, IDebugPickPills {
-	public new bool IsEnabled => base.IsEnabled;
+	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "Your inventory has been filled with more pills";
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;

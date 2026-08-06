@@ -2,17 +2,17 @@
 
 internal sealed class AllVomitEffects : AllVomitEffectsConfig, IPillEffect {
 	private static readonly List<IPillEffect> _effectCandidates = SharedCode.GetAllPillEffects()
-		.Where(x => x.Capabilities.HasFlag(EffectCapabilities.VomitEffect))
+		.Where(x => (x.Capabilities & EffectCapabilities.VomitEffect) == EffectCapabilities.VomitEffect)
 		.ToList();
 
-	public new bool IsEnabled => base.IsEnabled;
+	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "You've been given every vomit effect for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		IEnumerable<IPillEffect> effectsToUse = _effectCandidates.Where(x => x.IsEnabled);
+		IEnumerable<IPillEffect> effectsToUse = _effectCandidates.Where(x => x.IsEnabled(player));
 		foreach (IPillEffect effect in effectsToUse) {
 			SharedCode.EnablePillEffect(effect, player, duration);
 		}

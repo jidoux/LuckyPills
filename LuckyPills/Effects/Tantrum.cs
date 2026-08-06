@@ -1,7 +1,7 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed class Tantrum : TantrumConfig, IPillEffect, IDebugPickPills {
-	public new bool IsEnabled => base.IsEnabled;
+internal sealed class Tantrum : TantrumConfig, IPillEffect {
+	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "Oh...";
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll;
