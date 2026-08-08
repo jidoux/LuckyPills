@@ -1,4 +1,4 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
 internal sealed class Giant : GiantConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
@@ -20,5 +20,5 @@ internal class GiantConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 8f;
 	public float MaxDuration { get; set; } = 15f;
-	public float RarityMultiplier { get; set; } = 1f;
+	public float RarityMultiplier { get; set; } = 0.9f;
 }

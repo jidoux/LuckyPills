@@ -1,12 +1,13 @@
-﻿using InventorySystem;
+using InventorySystem;
 using LabApi.Events.Arguments.PlayerEvents;
+using LabApi.Events.Arguments.Scp049Events;
 using LabApi.Events.CustomHandlers;
 using LuckyPills.Effects;
 
 namespace LuckyPills;
 
 internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
-	private static readonly List<IPillEffect> _allEffects = SharedCode.GetAllPillEffects().ToList();
+	private static readonly IReadOnlyCollection<IPillEffect> _allEffects = SharedCode.GetAllPillEffects().ToList();
 
 	public override void OnPlayerUsingItem(PlayerUsingItemEventArgs ev) {
 		try {
@@ -30,7 +31,9 @@ internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
 	public override void OnPlayerDying(PlayerDyingEventArgs ev) {
 		try {
 			// There were situations where players would die as a different size and respawn at that size.
-			_allEffects.ForEach(x => x.OnDisabled(ev.Player));
+			foreach (IPillEffect effect in _allEffects) {
+				effect.OnDisabled(ev.Player);
+			}
 		}
 		catch (Exception ex) {
 			Logger.Error(ex);
@@ -40,7 +43,9 @@ internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
 	public override void OnPlayerEscaping(PlayerEscapingEventArgs ev) {
 		try {
 			// Need to disable any possible active effects here as well.
-			_allEffects.ForEach(x => x.OnDisabled(ev.Player));
+			foreach (IPillEffect effect in _allEffects) {
+				effect.OnDisabled(ev.Player);
+			}
 		}
 		catch (Exception ex) {
 			Logger.Error(ex);
@@ -64,6 +69,19 @@ internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
 	public override void OnPlayerUncuffed(PlayerUncuffedEventArgs ev) {
 		try {
 			_allEffects.FirstOrDefault(x => x is Handcuffed && x.IsEnabled(ev.Player))?.OnDisabled(ev.Target);
+		}
+		catch (Exception ex) {
+			Logger.Error(ex);
+		}
+	}
+
+	public override void OnScp049ResurrectedBody(Scp049ResurrectedBodyEventArgs ev) {
+		try {
+			if (Plugin.Singleton.Config.SpawnMinionsWithPills) {
+				for (int i = 0; i < 8; i++) {
+					ev.Target.Inventory.ServerAddItem(ItemType.Painkillers, InventorySystem.Items.ItemAddReason.AdminCommand);
+				}
+			}
 		}
 		catch (Exception ex) {
 			Logger.Error(ex);

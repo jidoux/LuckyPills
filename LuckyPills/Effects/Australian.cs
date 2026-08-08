@@ -1,6 +1,6 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
-internal sealed class Australian : AustralianConfig, IPillEffect {
+internal sealed class Australian : AustralianConfig, IPillEffect, IDebugPickPills {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "You've been converted to australian for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
@@ -8,11 +8,10 @@ internal sealed class Australian : AustralianConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
-		player.Scale = new Vector3(1f, -1f, 1f); // TODO this doesnt make them float up a bit, right? It might... fine tune mby, idk.
+		player.Scale = new Vector3(1f, -1f, 1f);
 	}
 
 	public void OnDisabled(Player player) {
-		player.Position += Vector3.up;
 		player.Scale = Vector3.one;
 	}
 }

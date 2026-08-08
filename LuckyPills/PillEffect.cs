@@ -9,24 +9,27 @@ namespace LuckyPills;
 /// </summary>
 internal interface IDebugPickPills;
 
+/// <summary>
+/// All virtual fields are virtual due to interface segregation.
+/// </summary>
 internal interface IPillEffect {
 	public bool IsEnabled(Player player);
-	public string DisplayText { get; }
-	public virtual Duration PossibleDurationRangeInclusive => new(float.MaxValue, float.MaxValue); // Default to max duration; this is virtual due to interface segregation.
+	public virtual string DisplayText => "";
+	public virtual Duration PossibleDurationRangeInclusive => new(float.MaxValue, float.MaxValue); // Default to max duration.
 	/// <summary>
 	/// 1 is the base priority, 0.1 would be 10 times rarer than base, etc.
 	/// </summary>
 	public float RarityMultiplier => 1f;
 	public void OnEnabled(Player player, float duration);
-	public virtual void OnDisabled(Player player) { } // Virtual rather than abstract due to interface segregation principle.
+	public virtual void OnDisabled(Player player) { }
 	public EffectCapabilities Capabilities { get; }
 }
 
 internal static class PillEffectOrchestrator {
 #if DEBUGGING_SPECIFIC_PILL_EFFECTS_WITH_INTERFACE && DEBUG
-	private static readonly IEnumerable<IPillEffect> _allPillEffects = SharedCode.GetAllPillEffects(useDebugPickPills: true);
+	private static readonly IReadOnlyCollection<IPillEffect> _allPillEffects = SharedCode.GetAllPillEffects(useDebugPickPills: true).ToList();
 #else
-	private static readonly IEnumerable<IPillEffect> _allPillEffects = SharedCode.GetAllPillEffects();
+	private static readonly IReadOnlyCollection<IPillEffect> _allPillEffects = SharedCode.GetAllPillEffects().ToList();
 #endif
 
 	public static void RunRandom(Player player) {
@@ -37,7 +40,10 @@ internal static class PillEffectOrchestrator {
 		}
 		float duration = selectedEffect.PossibleDurationRangeInclusive.Random;
 		selectedEffect.OnEnabled(player, duration);
-		player.SendHint(selectedEffect.DisplayText.Replace("{duration}", ((int)Math.Floor(duration)).ToString(CultureInfo.InvariantCulture)));
+		string textToDisplay = selectedEffect.DisplayText.Replace("{duration}", ((int)Math.Floor(duration)).ToString(CultureInfo.InvariantCulture));
+		if (textToDisplay.Length > 0) {
+			player.SendHint(textToDisplay);
+		}
 #pragma warning disable S1244 // I figure this warning is pointless when comparing against Float.MaxValue as long as im not doing computations...
 		if (duration != float.MaxValue) {
 			MEC.Timing.CallDelayed(duration, () => selectedEffect.OnDisabled(player)); // Can sometimes just do nothing if OnDisabled isn't overriden.

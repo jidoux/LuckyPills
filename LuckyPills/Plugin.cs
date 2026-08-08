@@ -10,7 +10,7 @@ using LabApi.Loader.Features.Plugins.Enums;
 
 namespace LuckyPills;
 
-internal sealed class LuckyPillsEntryPoint : Plugin<Config> {
+internal sealed class Plugin : Plugin<Config> {
 	public static Plugin Singleton { get; private set; } = null!; // Used in case I need to access the config internally/globally.
 
 	public override string Name => "LuckyPills";

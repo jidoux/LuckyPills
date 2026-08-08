@@ -9,7 +9,7 @@
 		<AnalysisLevel>latest</AnalysisLevel>
 		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 		<OutputType>Library</OutputType>
 		<AppDesignerFolder>Properties</AppDesignerFolder>
 		<RootNamespace>LuckyPills</RootNamespace>
@@ -26,6 +26,13 @@
 	<PropertyGroup>
 		<AssemblyName>LuckyPills</AssemblyName>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="SonarAnalyzer.CSharp" Version="10.31.0.145097">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	</ItemGroup>
 	<ItemGroup>
 		<Reference Include="Assembly-CSharp">
 			<HintPath>$(SL_REFERENCES)\Assembly-CSharp.dll</HintPath>

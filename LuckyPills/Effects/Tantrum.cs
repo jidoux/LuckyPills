@@ -1,4 +1,8 @@
-﻿namespace LuckyPills.Effects;
+using Hazards;
+using Mirror;
+using RelativePositioning;
+
+namespace LuckyPills.Effects;
 
 internal sealed class Tantrum : TantrumConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
@@ -7,12 +11,14 @@ internal sealed class Tantrum : TantrumConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
-		float sizeMultiplier = base.TantrumSizeMultiplier;
-		if (Random.Range(0, 100) == 1) { // Rare chance to make it humongous (spelled that word first try too!)
-			sizeMultiplier *= 100f;
+		TantrumEnvironmentalHazard? tantrum = UnityEngine.Object.Instantiate(SharedCode.GetPrefab<TantrumEnvironmentalHazard>());
+		if (tantrum is null) {
+			Logger.Error("Failed to instantiate Tantrum hazard for Tantrum pill effect... something changed?? Idk. Cancelling...");
+			return;
 		}
-		TantrumHazard.Spawn(position: player.Position, rotation: Quaternion.identity, scale: Vector3.one * sizeMultiplier);
-		// TODO make it slow the player
+		tantrum.SynchronizedPosition = new RelativePosition(player.Position);
+
+		NetworkServer.Spawn(tantrum.gameObject);
 	}
 }
 

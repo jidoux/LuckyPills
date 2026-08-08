@@ -1,7 +1,7 @@
 namespace LuckyPills.Effects;
 
-internal sealed class Handcuffed : HandcuffedConfig, IPillEffect, IDebugPickPills {
-	private readonly List<Player> _cachedHandcuffedPlayers = [];
+internal sealed class Handcuffed : HandcuffedConfig, IPillEffect {
+	private readonly HashSet<Player> _cachedHandcuffedPlayers = [];
 
 	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "You've been handcuffed for {duration} seconds";
@@ -10,16 +10,17 @@ internal sealed class Handcuffed : HandcuffedConfig, IPillEffect, IDebugPickPill
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		if (player.IsDisarmed || !player.IsAlive || _cachedHandcuffedPlayers.Contains(player)) {
+		if (player.IsDisarmed || !player.IsAlive) {
 			// Just being defensive... not sure if these are even possible tbh.
 			return;
 		}
-		_cachedHandcuffedPlayers.Add(player);
-		player.IsDisarmed = true;
-		player.DropAllItems();
-		// TODO maybe figure out howto make it say the player was disarmed by themselves or  something idk.
-		//player.DisarmedBy = player;
-		//player.Inventory.SetDisarmedStatus(player.Inventory);
+		if (_cachedHandcuffedPlayers.Add(player)) {
+			player.IsDisarmed = true;
+			player.DropAllItems();
+			// TODO maybe figure out howto make it say the player was disarmed by themselves or  something idk.
+			//player.DisarmedBy = player;
+			//player.Inventory.SetDisarmedStatus(player.Inventory);
+		}
 	}
 
 	public void OnDisabled(Player player) {

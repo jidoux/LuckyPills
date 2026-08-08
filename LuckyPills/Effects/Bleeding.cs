@@ -1,6 +1,6 @@
 namespace LuckyPills.Effects;
 
-internal sealed class Bleeding : BleedingConfig, IPillEffect, IDebugPickPills {
+internal sealed class Bleeding : BleedingConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "You've been given bleeding for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);

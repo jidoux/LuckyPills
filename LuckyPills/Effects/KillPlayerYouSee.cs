@@ -1,13 +1,7 @@
 namespace LuckyPills.Effects;
 
 internal sealed class KillPlayerYouSee : KillPlayerYouSeeConfig, IPillEffect, IDebugPickPills {
-	// TODO this still doesnt seem to work and idk why but yeah.
-
-	private const int PlayerLayerMask = ~0;
-
-	public new bool IsEnabled(Player player) {
-		return base.IsEnabled && TryGetLookedAtPlayer(player, out Player? targetPlayer) && targetPlayer is not null;
-	}
+	public new bool IsEnabled(Player player) => base.IsEnabled && TryGetLookedAtPlayer(player, out Player? targetPlayer) && targetPlayer is not null;
 	public string DisplayText => "You've killed whoever you're looking at";
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll;
@@ -19,32 +13,29 @@ internal sealed class KillPlayerYouSee : KillPlayerYouSeeConfig, IPillEffect, ID
 		}
 
 		if (TryGetLookedAtPlayer(player, out Player? targetPlayer) && targetPlayer is not null) {
-			targetPlayer.Damage(float.MaxValue, "Died from an intense stare");
+			targetPlayer.Damage(float.MaxValue, "Smitten by Painkillers");
 			return; // If it succeeded, lets just return so I can log the failure case every time.
 		}
-		Logger.Debug($"{this.GetType().Name} didn't actually kill anyone... maybe the player turned quickly away from someone?? Idk.");
+		Logger.Info($"{this.GetType().Name} didn't actually kill anyone... maybe the player turned quickly away from someone?? Idk.");
 	}
 
 	private static bool TryGetLookedAtPlayer(Player player, out Player? target) {
 		target = null;
-
 		if (player.Camera is null) {
 			return false;
 		}
-
 		Vector3 origin = player.Camera.position + player.Camera.forward * 0.5f;
+		bool didHit = Physics.Raycast(origin, player.Camera.forward, out RaycastHit hit, maxDistance: 100f, layerMask: ~0, queryTriggerInteraction: QueryTriggerInteraction.Collide);
 
-		if (!Physics.Raycast(origin, player.Camera.forward, out RaycastHit hit, maxDistance: 100f, layerMask: PlayerLayerMask, queryTriggerInteraction: QueryTriggerInteraction.Collide)) {
+		if (!didHit) {
 			return false;
 		}
-
 		Player? hitPlayer = Player.Get(hit.collider.gameObject);
 		hitPlayer ??= hit.collider.GetComponentInParent<ReferenceHub>() is { } hub ? Player.Get(hub) : null;
 
 		if (hitPlayer is null || hitPlayer == player || !hitPlayer.IsAlive) {
 			return false;
 		}
-
 		target = hitPlayer;
 		return true;
 	}

@@ -1,4 +1,4 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
 internal sealed class WallHacks : WallHacksConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
@@ -8,7 +8,8 @@ internal sealed class WallHacks : WallHacksConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
-		player.EnableEffect<CustomPlayerEffects.Scp1344>(intensity: 1, duration: duration, addDuration: true);  // TODO is ths detecterd or no
+		// I have no clue what Scp1344Detected is... I gave it to a player and noticed nothing visually from my alt account.
+		player.EnableEffect<CustomPlayerEffects.Scp1344>(intensity: 1, duration: duration, addDuration: true);
 	}
 }
 

@@ -1,4 +1,4 @@
-﻿using LuckyPills.Effects;
+using LuckyPills.Effects;
 
 namespace LuckyPills;
 
@@ -46,6 +46,7 @@ internal sealed class Config {
 	public PaperConfig Paper { get; set; } = new();
 	public PocketDimensionConfig PocketDimension { get; set; } = new();
 	public PoisonedConfig Poisoned { get; set; } = new();
+	public ScrambleRolesAndItemsConfig ScrambleRolesAndItems { get; set; } = new();
 	public ShrunkConfig Shrunk { get; set; } = new();
 	public SinkholeConfig Sinkhole { get; set; } = new();
 	public SodaEffectConfig SodaEffect { get; set; } = new();
@@ -53,8 +54,9 @@ internal sealed class Config {
 	public TantrumConfig Tantrum { get; set; } = new();
 	public TeleportTo096Config TeleportTo096 { get; set; } = new();
 	public TeleportToRandomPlayerConfig TeleportToRandomPlayer { get; set; } = new();
-	public TeslaGateConfig TeslaGate { get; set; } = new();
+	public TeleportToTeslaGateConfig TeleportToTeslaGate { get; set; } = new();
 	public TheFogConfig TheFog { get; set; } = new();
 	public TurnIntoComputerConfig TurnIntoComputer { get; set; } = new();
 	public WallHacksConfig WallHacks { get; set; } = new();
+	public bool SpawnMinionsWithPills { get; set; } = true; // TODO set to false later I'd say.
 }

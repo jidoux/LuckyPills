@@ -1,6 +1,6 @@
-﻿using CustomPlayerEffects;
+using CustomPlayerEffects;
 
-namespace LuckyPills;
+namespace LuckyPills.Effects;
 
 internal sealed class SodaEffect : SodaEffectConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;

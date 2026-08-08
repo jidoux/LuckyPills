@@ -1,7 +1,7 @@
 namespace LuckyPills.Effects;
 
 internal sealed class AllVomitEffects : AllVomitEffectsConfig, IPillEffect {
-	private static readonly List<IPillEffect> _effectCandidates = SharedCode.GetAllPillEffects()
+	private static readonly IReadOnlyCollection<IPillEffect> _effectCandidates = SharedCode.GetAllPillEffects()
 		.Where(x => (x.Capabilities & EffectCapabilities.VomitEffect) == EffectCapabilities.VomitEffect)
 		.ToList();
 

@@ -1,7 +1,10 @@
-﻿using InventorySystem;
+using InventorySystem;
 using InventorySystem.Items.Pickups;
 using InventorySystem.Items.ThrowableProjectiles;
 using Mirror;
+using PlayerRoles;
+using PlayerRoles.PlayableScps.Scp079;
+using System.Diagnostics.CodeAnalysis;
 using ThrowableItem = InventorySystem.Items.ThrowableProjectiles.ThrowableItem;
 
 namespace LuckyPills;
@@ -82,5 +85,50 @@ internal static class SharedCode {
 	public static void EnablePillEffect(IPillEffect effect, Player player, float duration) {
 		effect.OnEnabled(player, duration);
 		MEC.Timing.CallDelayed(duration, () => effect.OnDisabled(player));
+	}
+
+	public static bool TryGetScp079TierManager(PlayerRoleBase playerRoleBase, [NotNullWhen(true)] out Scp079TierManager? scp079TierManager) {
+		if (playerRoleBase is Scp079Role scp079Role && scp079Role.SubroutineModule.TryGetSubroutine<Scp079TierManager>(out Scp079TierManager? tierManager) && tierManager is not null) {
+			scp079TierManager = tierManager;
+			return true;
+		}
+		scp079TierManager = null;
+		return false;
+	}
+
+	/// <summary>
+	/// Sets SCP-079's exp and levels it accordingly, whereas just increasing the exp by 1000 or whatever will
+	/// just make it level 2. May not work in the future if SCP-079 leveling thresholds change.
+	/// </summary>
+	public static void SetScp079ExpLevel(Scp079TierManager scp079TierManager, int expToSetTo) {
+		if (expToSetTo > 80) {
+			scp079TierManager.TotalExp += 80;
+			expToSetTo -= 80;
+		}
+		if (expToSetTo > 130) {
+			scp079TierManager.TotalExp += 130;
+			expToSetTo -= 130;
+		}
+		if (expToSetTo > 250) {
+			scp079TierManager.TotalExp += 250;
+			expToSetTo -= 250;
+		}
+		if (expToSetTo > 500) {
+			scp079TierManager.TotalExp += 500;
+			expToSetTo -= 500;
+		}
+		scp079TierManager.TotalExp += expToSetTo;
+	}
+
+	public static T? GetPrefab<T>() {
+		foreach (GameObject prefab in NetworkClient.prefabs.Values) {
+			if (!prefab.TryGetComponent(out T prefabToReturn)) {
+				continue;
+			}
+
+			return prefabToReturn;
+		}
+
+		return default;
 	}
 }

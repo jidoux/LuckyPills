@@ -1,4 +1,4 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
 internal sealed class EveryPickupTurnsIntoPainkillers : EveryPickupTurnsIntoPainkillersConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
@@ -14,7 +14,7 @@ internal sealed class EveryPickupTurnsIntoPainkillers : EveryPickupTurnsIntoPain
 	public void OnDisabled(Player player) {
 		// Looks like Player doesn't override Equals, so using the reference hub to determine what player was previously added.
 		// TODO validate that this works in every scenario, cuz idk.
-		GlobalVariables.PlayersWhoCanOnlyPickUpPillsForTheRestOfTheGame.RemoveAll(x => x.ReferenceHub.Equals(player.ReferenceHub));
+		GlobalVariables.PlayersWhoCanOnlyPickUpPillsForTheRestOfTheGame.RemoveWhere(x => x.ReferenceHub.Equals(player.ReferenceHub));
 	}
 }
 

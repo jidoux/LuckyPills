@@ -1,6 +1,6 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
-internal sealed class TeslaGate : TeslaGateConfig, IPillEffect {
+internal sealed class TeleportToTeslaGate : TeleportToTeslaGateConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => Map.Teslas.Count > 0 && base.IsEnabled;
 	public string DisplayText => "You've been sent to a tesla gate";
 	public new float RarityMultiplier => base.RarityMultiplier;
@@ -17,7 +17,7 @@ internal sealed class TeslaGate : TeslaGateConfig, IPillEffect {
 	}
 }
 
-internal class TeslaGateConfig {
+internal class TeleportToTeslaGateConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 }
