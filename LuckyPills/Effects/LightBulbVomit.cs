@@ -1,6 +1,6 @@
 ﻿namespace LuckyPills.Effects;
 
-internal sealed class LightBulbVomit :  LightBulbVomitConfig, IPillEffect {
+internal sealed class LightBulbVomit : LightBulbVomitConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "You've been given light bulb vomit for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);

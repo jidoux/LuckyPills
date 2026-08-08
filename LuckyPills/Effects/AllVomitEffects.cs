@@ -1,4 +1,4 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
 internal sealed class AllVomitEffects : AllVomitEffectsConfig, IPillEffect {
 	private static readonly List<IPillEffect> _effectCandidates = SharedCode.GetAllPillEffects()
@@ -23,5 +23,5 @@ internal class AllVomitEffectsConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 20f;
 	public float MaxDuration { get; set; } = 30f;
-	public float RarityMultiplier { get; set; } = 1f;
+	public float RarityMultiplier { get; set; } = 0.5f;
 }

@@ -1,4 +1,4 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
 internal sealed class Hemorrhage : HemorrhageConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
@@ -14,7 +14,7 @@ internal sealed class Hemorrhage : HemorrhageConfig, IPillEffect {
 
 internal class HemorrhageConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 15f;
-	public float MaxDuration { get; set; } = 30f;
+	public float MinDuration { get; set; } = 20f;
+	public float MaxDuration { get; set; } = 40f;
 	public float RarityMultiplier { get; set; } = 1f;
 }

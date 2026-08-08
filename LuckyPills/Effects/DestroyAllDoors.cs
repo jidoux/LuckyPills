@@ -1,4 +1,4 @@
-﻿using Interactables.Interobjects.DoorUtils;
+using Interactables.Interobjects.DoorUtils;
 
 namespace LuckyPills.Effects;
 
@@ -23,5 +23,5 @@ internal sealed class DestroyAllDoors : DestroyAllDoorsConfig, IPillEffect {
 
 internal class DestroyAllDoorsConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	public float RarityMultiplier { get; set; } = 0.9f;
 }

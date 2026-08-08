@@ -3,7 +3,7 @@ using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.CustomHandlers;
 using LuckyPills.Effects;
 
-namespace LuckyPills; 
+namespace LuckyPills;
 
 internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
 	private static readonly List<IPillEffect> _allEffects = SharedCode.GetAllPillEffects().ToList();

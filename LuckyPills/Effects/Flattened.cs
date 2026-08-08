@@ -1,4 +1,4 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
 internal sealed class Flattened : FlattenedConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
@@ -18,7 +18,7 @@ internal sealed class Flattened : FlattenedConfig, IPillEffect {
 
 internal class FlattenedConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 10f;
+	public float MinDuration { get; set; } = 15f;
 	public float MaxDuration { get; set; } = 30f;
 	public float RarityMultiplier { get; set; } = 1f;
 }

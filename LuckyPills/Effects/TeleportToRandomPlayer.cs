@@ -1,8 +1,8 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
 internal sealed class TeleportToRandomPlayer : TeleportToRandomPlayerConfig, IPillEffect {
 	// TODO continue testing this as its pretty iffy
-	public new bool IsEnabled(Player player) => 
+	public new bool IsEnabled(Player player) =>
 		Player.List.Any(
 			x => !x.Role.ToString().StartsWith("scp", StringComparison.OrdinalIgnoreCase)
 				&& x.Role != PlayerRoles.RoleTypeId.None

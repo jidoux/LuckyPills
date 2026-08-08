@@ -1,4 +1,6 @@
-﻿#define DEBUGGING_SPECIFIC_PILL_EFFECTS_WITH_INTERFACE // comment this out when you dont want to only use pill effects deriving from IDebugPickPills
+#define DEBUGGING_SPECIFIC_PILL_EFFECTS_WITH_INTERFACE // comment this out when you dont want to only use pill effects deriving from IDebugPickPills
+
+using System.Globalization;
 
 namespace LuckyPills;
 
@@ -35,12 +37,12 @@ internal static class PillEffectOrchestrator {
 		}
 		float duration = selectedEffect.PossibleDurationRangeInclusive.Random;
 		selectedEffect.OnEnabled(player, duration);
-		player.SendHint(selectedEffect.DisplayText.Replace("{duration}", ((int)Math.Floor(duration)).ToString()));
-		#pragma warning disable S1244 // I figure this warning is pointless when comparing against Float.MaxValue as long as im not doing computations...
+		player.SendHint(selectedEffect.DisplayText.Replace("{duration}", ((int)Math.Floor(duration)).ToString(CultureInfo.InvariantCulture)));
+#pragma warning disable S1244 // I figure this warning is pointless when comparing against Float.MaxValue as long as im not doing computations...
 		if (duration != float.MaxValue) {
 			MEC.Timing.CallDelayed(duration, () => selectedEffect.OnDisabled(player)); // Can sometimes just do nothing if OnDisabled isn't overriden.
 		}
-		#pragma warning restore S1244
+#pragma warning restore S1244
 	}
 
 	private static IPillEffect? GetRandomPillEffect(Player player) {
@@ -79,7 +81,7 @@ internal static class PillEffectOrchestrator {
 		GoodEffect = 1 << 2,
 	}
 
-	internal readonly struct Duration(float Minimum, float Maximum) {
-		public float Random => UnityEngine.Random.Range(Minimum, Maximum);
+	internal readonly struct Duration(float minimum, float maximum) {
+		public float Random => UnityEngine.Random.Range(minimum, maximum);
 	}
 }

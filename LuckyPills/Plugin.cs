@@ -1,4 +1,4 @@
-﻿global using LabApi.Features.Wrappers;
+global using LabApi.Features.Wrappers;
 global using Logger = LabApi.Features.Console.Logger;
 global using UnityEngine;
 global using Random = UnityEngine.Random;
@@ -10,7 +10,7 @@ using LabApi.Loader.Features.Plugins.Enums;
 
 namespace LuckyPills;
 
-internal class LuckyPillsEntryPoint : Plugin<Config> {
+internal sealed class LuckyPillsEntryPoint : Plugin<Config> {
 	public static Plugin Singleton { get; private set; } = null!; // Used in case I need to access the config internally/globally.
 
 	public override string Name => "LuckyPills";

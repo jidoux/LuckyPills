@@ -1,4 +1,4 @@
-﻿using PlayerRoles;
+using PlayerRoles;
 using PlayerRoles.PlayableScps.Scp079;
 
 namespace LuckyPills.Effects;
@@ -15,9 +15,14 @@ internal sealed class TurnIntoComputer : TurnIntoComputerConfig, IPillEffect, ID
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		if (player.IsAlive) {
-			player.SetRole(RoleTypeId.Scp079, RoleChangeReason.ItemUsage, RoleSpawnFlags.All);
-			// TODO set to max level
+		player.SetRole(RoleTypeId.Scp079, RoleChangeReason.ItemUsage, RoleSpawnFlags.All);
+		if (player.RoleBase is Scp079Role scp079Role && scp079Role.SubroutineModule.TryGetSubroutine<Scp079TierManager>(out Scp079TierManager? tierManager) && tierManager is not null) {
+			tierManager.TotalExp += 10000;
+			tierManager.TotalExp += 10000;
+			tierManager.TotalExp += 10000;
+			tierManager.TotalExp += 10000;
+			tierManager.TotalExp += 10000;
+			// hoping this will set it to max level ahahah TODO test this
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
 internal sealed class Flashed : FlashedConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
@@ -16,5 +16,5 @@ internal class FlashedConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 5f;
 	public float MaxDuration { get; set; } = 5f;
-	public float RarityMultiplier { get; set; } = 1f;
+	public float RarityMultiplier { get; set; } = 0.5f;
 }

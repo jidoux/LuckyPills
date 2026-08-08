@@ -1,5 +1,3 @@
-﻿using InventorySystem.Disarming;
-
 namespace LuckyPills.Effects;
 
 internal sealed class Handcuffed : HandcuffedConfig, IPillEffect, IDebugPickPills {
@@ -26,8 +24,7 @@ internal sealed class Handcuffed : HandcuffedConfig, IPillEffect, IDebugPickPill
 
 	public void OnDisabled(Player player) {
 		// I'd think its fine to not check if the player is alive here... probably doesn't even matter tbh.
-		if (_cachedHandcuffedPlayers.Contains(player)) {
-			_cachedHandcuffedPlayers.Remove(player);
+		if (_cachedHandcuffedPlayers.Remove(player)) {
 			player.IsDisarmed = false;
 		}
 	}
@@ -37,5 +34,5 @@ internal class HandcuffedConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 35f;
 	public float MaxDuration { get; set; } = 70f;
-	public float RarityMultiplier { get; set; } = 1f;
+	public float RarityMultiplier { get; set; } = 0.5f;
 }

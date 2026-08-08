@@ -1,4 +1,4 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
 internal sealed class Paper : PaperConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
@@ -18,7 +18,7 @@ internal sealed class Paper : PaperConfig, IPillEffect {
 
 internal class PaperConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 12f;
-	public float MaxDuration { get; set; } = 36f;
+	public float MinDuration { get; set; } = 20f;
+	public float MaxDuration { get; set; } = 40f;
 	public float RarityMultiplier { get; set; } = 1f;
 }
