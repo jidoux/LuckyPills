@@ -2,7 +2,8 @@ using PlayerRoles;
 
 namespace LuckyPills.Effects;
 
-// TODO test this class. Seems good to me, but thge position setting could be janky, and I could've missed something idk.
+// TODO test this class. Seems good to me, but thge position setting could be janky, and I could've
+// missed something idk. also spawn protection or naa cuz idkya feel me? also make sure setrole re-sets player.isalive
 internal sealed class ResurrectTeamMember : ResurrectTeamMemberConfig, IPillEffect, IDebugPickPills {
 	// My approach: add to it when a player dies, but don't remove when they respawn. If they die again, remove
 	// the old player's entry and add the new one. So we just have a list of players and their data when they last
