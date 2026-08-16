@@ -1,9 +1,12 @@
+using Hazards;
 using InventorySystem;
+using InventorySystem.Items;
 using InventorySystem.Items.Pickups;
 using InventorySystem.Items.ThrowableProjectiles;
 using Mirror;
 using PlayerRoles;
 using PlayerRoles.PlayableScps.Scp079;
+using RelativePositioning;
 using System.Diagnostics.CodeAnalysis;
 using ThrowableItem = InventorySystem.Items.ThrowableProjectiles.ThrowableItem;
 
@@ -130,5 +133,21 @@ internal static class SharedCode {
 		}
 
 		return default;
+	}
+
+	public static void SpawnTantrum(Vector3 position) {
+		TantrumEnvironmentalHazard? tantrum = UnityEngine.Object.Instantiate(SharedCode.GetPrefab<TantrumEnvironmentalHazard>());
+		if (tantrum is null) {
+			Logger.Error("Failed to instantiate Tantrum hazard for Tantrum pill effect... something changed?? Idk. Cancelling...");
+			return;
+		}
+		tantrum.SynchronizedPosition = new RelativePosition(position);
+
+		NetworkServer.Spawn(tantrum.gameObject);
+	}
+
+	public static void SpawnItemBelowPlayer(Player player, ItemType itemtype) {
+		ItemBase item = player.Inventory.ServerAddItem(itemtype, ItemAddReason.AdminCommand);
+		player.DropItem(item);
 	}
 }

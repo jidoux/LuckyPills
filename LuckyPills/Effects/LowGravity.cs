@@ -1,4 +1,4 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
 internal sealed class LowGravity : LowGravityConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;

@@ -11,7 +11,7 @@ internal sealed class ScrambleRolesAndItems : ScrambleRolesAndItemsConfig, IPill
 
 	public void OnEnabled(Player player, float duration) {
 		PreviousPlayer prevPlayer = new(
-			player.Items.Select(x => x.Base.ItemTypeId).ToList(),
+			[.. player.Items.Select(x => x.Base.ItemTypeId)],
 			new Dictionary<ItemType, ushort>(player.Ammo),
 			player.Role,
 			player.Health,
@@ -22,14 +22,14 @@ internal sealed class ScrambleRolesAndItems : ScrambleRolesAndItemsConfig, IPill
 		);
 		PreviousPlayer nextPrevPlayer;
 		Player currPlayer;
-		Player[] playerArray = Player.List.Where(x => x.IsAlive && x != player).ToArray();
+		Player[] playerArray = [.. Player.List.Where(x => x.IsAlive && x != player)];
 		for (int i = 0; i < playerArray.Length; i++) {
 			// The strategy is to cache the prevPlayer/firstPlayer and do operations on currPlayer.
 			// then at the very end, do operations on player itself on the very last player.
 			currPlayer = playerArray[i];
 
 			nextPrevPlayer = new(
-				currPlayer.Items.Select(x => x.Base.ItemTypeId).ToList(),
+				[.. currPlayer.Items.Select(x => x.Base.ItemTypeId)],
 				new Dictionary<ItemType, ushort>(currPlayer.Ammo),
 				currPlayer.Role,
 				currPlayer.Health,
@@ -89,5 +89,7 @@ internal sealed class ScrambleRolesAndItems : ScrambleRolesAndItemsConfig, IPill
 
 internal class ScrambleRolesAndItemsConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	// My friends felt like it was not really great to lose all your items and progress in your current life... so I'll just
+	// default this to be extremely rare, so that its genuinely crazy when it happens.
+	public float RarityMultiplier { get; set; } = 0.04f;
 }

@@ -17,5 +17,5 @@ internal sealed class ActivateNuke : ActivateNukeConfig, IPillEffect {
 
 internal class ActivateNukeConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.5f;
+	public float RarityMultiplier { get; set; } = 0.4f;
 }

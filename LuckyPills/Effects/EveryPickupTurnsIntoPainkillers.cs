@@ -1,20 +1,27 @@
 namespace LuckyPills.Effects;
 
-internal sealed class EveryPickupTurnsIntoPainkillers : EveryPickupTurnsIntoPainkillersConfig, IPillEffect {
-	public new bool IsEnabled(Player player) => base.IsEnabled;
+internal sealed class EveryPickupTurnsIntoPainkillers : EveryPickupTurnsIntoPainkillersConfig, IPillEffect, IDebugPickPills {
+	private static readonly HashSet<Player> _playersWhoCanOnlyPickUpPillsForTheRestOfTheGame = [];
+
+	public new bool IsEnabled(Player player) =>
+		!_playersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Contains(player) && base.IsEnabled;
 	public string DisplayText => "Every item you pick up until the end of the game will turn into painkillers";
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		GlobalVariables.PlayersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Add(player);
+		_playersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Add(player);
 	}
 
 	// This will only get called by various event handlers.
 	public void OnDisabled(Player player) {
-		// Looks like Player doesn't override Equals, so using the reference hub to determine what player was previously added.
-		// TODO validate that this works in every scenario, cuz idk.
-		GlobalVariables.PlayersWhoCanOnlyPickUpPillsForTheRestOfTheGame.RemoveWhere(x => x.ReferenceHub.Equals(player.ReferenceHub));
+		_playersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Remove(player);
+	}
+
+	public static bool ShouldPickupTurnIntoPills(Player player) => _playersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Contains(player);
+
+	public void OnRoundEnded() {
+		_playersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Clear();
 	}
 }
 

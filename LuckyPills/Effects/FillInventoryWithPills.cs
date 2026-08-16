@@ -1,4 +1,4 @@
-﻿using InventorySystem;
+using InventorySystem;
 
 namespace LuckyPills.Effects;
 
@@ -9,6 +9,7 @@ internal sealed class FillInventoryWithPills : FillInventoryWithPillsConfig, IPi
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
+		player.DropAllItems(); // Lets just see how this goes, why not :) TODO validate that this is fine.
 		for (int i = 0; i < 8; i++) {
 			player.Inventory.ServerAddItem(ItemType.Painkillers, InventorySystem.Items.ItemAddReason.AdminCommand);
 		}

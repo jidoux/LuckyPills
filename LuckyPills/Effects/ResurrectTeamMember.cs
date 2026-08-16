@@ -1,0 +1,47 @@
+using PlayerRoles;
+
+namespace LuckyPills.Effects;
+
+// TODO test this class. Seems good to me, but thge position setting could be janky, and I could've missed something idk.
+internal sealed class ResurrectTeamMember : ResurrectTeamMemberConfig, IPillEffect, IDebugPickPills {
+	// My approach: add to it when a player dies, but don't remove when they respawn. If they die again, remove
+	// the old player's entry and add the new one. So we just have a list of players and their data when they last
+	// died, and we access the list while filtering by players who are not alive.
+	private static readonly Dictionary<Player, RoleAndTeamInfo> _killedPlayers = [];
+
+	public new bool IsEnabled(Player player) => _killedPlayers.Any(x => x.Value.Team == player.Team && !x.Key.IsAlive) && base.IsEnabled;
+	public string DisplayText => "You've resurrected a team member";
+	public new float RarityMultiplier => base.RarityMultiplier;
+	public EffectCapabilities Capabilities => EffectCapabilities.GoodEffect;
+
+	public void OnEnabled(Player player, float duration) {
+		KeyValuePair<Player, RoleAndTeamInfo> respawnPlayerInfo = _killedPlayers
+			.Where(x => x.Value.Team == player.Team && !x.Key.IsAlive)
+			.OrderBy(x => Random.value)
+			.FirstOrDefault();
+		if (respawnPlayerInfo.Equals(default(KeyValuePair<Player, RoleAndTeamInfo>))) {
+			Logger.Warn("ResurrectTeamMember called where there are no players to respawn. Possibly the player just died...?");
+			return;
+		}
+		Player playerToRespawn = respawnPlayerInfo.Key;
+		RoleTypeId roleToSetTo = respawnPlayerInfo.Value.Role;
+		playerToRespawn.SetRole(roleToSetTo, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.AssignInventory);
+		playerToRespawn.Position = player.Position;
+	}
+
+	public static void OnServerEnding() {
+		_killedPlayers.Clear();
+	}
+
+	public static void PlayerDied(Player player) {
+		_killedPlayers.Remove(player);
+		_killedPlayers.Add(player, new RoleAndTeamInfo(player.Role, player.Team));
+	}
+
+	private readonly record struct RoleAndTeamInfo(RoleTypeId Role, Team Team);
+}
+
+internal class ResurrectTeamMemberConfig {
+	public bool IsEnabled { get; set; } = true;
+	public float RarityMultiplier { get; set; } = 1f;
+}

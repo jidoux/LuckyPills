@@ -22,14 +22,15 @@ internal interface IPillEffect {
 	public float RarityMultiplier => 1f;
 	public void OnEnabled(Player player, float duration);
 	public virtual void OnDisabled(Player player) { }
+	public virtual void OnRoundEnded() { /*Fairly rare for effects to have this, but its a generic cleanup thing which is sometimes just defensive.*/ }
 	public EffectCapabilities Capabilities { get; }
 }
 
 internal static class PillEffectOrchestrator {
 #if DEBUGGING_SPECIFIC_PILL_EFFECTS_WITH_INTERFACE && DEBUG
-	private static readonly IReadOnlyCollection<IPillEffect> _allPillEffects = SharedCode.GetAllPillEffects(useDebugPickPills: true).ToList();
+	private static readonly IReadOnlyCollection<IPillEffect> _allPillEffects = [.. SharedCode.GetAllPillEffects(useDebugPickPills: true)];
 #else
-	private static readonly IReadOnlyCollection<IPillEffect> _allPillEffects = SharedCode.GetAllPillEffects().ToList();
+	private static readonly IReadOnlyCollection<IPillEffect> _allPillEffects = [.. SharedCode.GetAllPillEffects()];
 #endif
 
 	public static void RunRandom(Player player) {
@@ -52,7 +53,7 @@ internal static class PillEffectOrchestrator {
 	}
 
 	private static IPillEffect? GetRandomPillEffect(Player player) {
-		List<IPillEffect> allEnabledPillEffects = _allPillEffects.Where(x => x.IsEnabled(player)).ToList();
+		List<IPillEffect> allEnabledPillEffects = [.. _allPillEffects.Where(x => x.IsEnabled(player))];
 		if (allEnabledPillEffects.Count == 0) {
 			return null; // Signal to the caller that some error occurred - think Result<T>
 		}

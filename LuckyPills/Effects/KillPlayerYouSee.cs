@@ -1,7 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace LuckyPills.Effects;
 
 internal sealed class KillPlayerYouSee : KillPlayerYouSeeConfig, IPillEffect, IDebugPickPills {
-	public new bool IsEnabled(Player player) => base.IsEnabled && TryGetLookedAtPlayer(player, out Player? targetPlayer) && targetPlayer is not null;
+	public new bool IsEnabled(Player player) => base.IsEnabled && TryGetLookedAtPlayer(player, out Player? targetPlayer);
 	public string DisplayText => "You've killed whoever you're looking at";
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll;
@@ -12,14 +14,14 @@ internal sealed class KillPlayerYouSee : KillPlayerYouSeeConfig, IPillEffect, ID
 			return;
 		}
 
-		if (TryGetLookedAtPlayer(player, out Player? targetPlayer) && targetPlayer is not null) {
+		if (TryGetLookedAtPlayer(player, out Player? targetPlayer)) {
 			targetPlayer.Damage(float.MaxValue, "Smitten by Painkillers");
 			return; // If it succeeded, lets just return so I can log the failure case every time.
 		}
 		Logger.Info($"{this.GetType().Name} didn't actually kill anyone... maybe the player turned quickly away from someone?? Idk.");
 	}
 
-	private static bool TryGetLookedAtPlayer(Player player, out Player? target) {
+	private static bool TryGetLookedAtPlayer(Player player, [NotNullWhen(true)] out Player? target) {
 		target = null;
 		if (player.Camera is null) {
 			return false;

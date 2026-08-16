@@ -1,13 +1,13 @@
 using InventorySystem;
 using LabApi.Events.Arguments.PlayerEvents;
-using LabApi.Events.Arguments.Scp049Events;
+using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Events.CustomHandlers;
 using LuckyPills.Effects;
 
 namespace LuckyPills;
 
 internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
-	private static readonly IReadOnlyCollection<IPillEffect> _allEffects = SharedCode.GetAllPillEffects().ToList();
+	private static readonly IReadOnlyCollection<IPillEffect> _allEffects = [.. SharedCode.GetAllPillEffects()];
 
 	public override void OnPlayerUsingItem(PlayerUsingItemEventArgs ev) {
 		try {
@@ -23,9 +23,8 @@ internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
 			PillEffectOrchestrator.RunRandom(ev.Player);
 		}
 		catch (Exception ex) {
-			Logger.Error(ex);
+			Debug.LogException(ex);
 		}
-
 	}
 
 	public override void OnPlayerDying(PlayerDyingEventArgs ev) {
@@ -34,9 +33,10 @@ internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
 			foreach (IPillEffect effect in _allEffects) {
 				effect.OnDisabled(ev.Player);
 			}
+			ResurrectTeamMember.PlayerDied(ev.Player);
 		}
 		catch (Exception ex) {
-			Logger.Error(ex);
+			Debug.LogException(ex);
 		}
 	}
 
@@ -48,20 +48,20 @@ internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
 			}
 		}
 		catch (Exception ex) {
-			Logger.Error(ex);
+			Debug.LogException(ex);
 		}
 	}
 
 	public override void OnPlayerPickingUpItem(PlayerPickingUpItemEventArgs ev) {
 		try {
-			if (GlobalVariables.PlayersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Contains(ev.Player)) {
+			if (EveryPickupTurnsIntoPainkillers.ShouldPickupTurnIntoPills(ev.Player)) {
 				ev.IsAllowed = false;
 				ev.Pickup.Destroy();
 				ev.Player.Inventory.ServerAddItem(ItemType.Painkillers, InventorySystem.Items.ItemAddReason.PickedUp);
 			}
 		}
 		catch (Exception ex) {
-			Logger.Error(ex);
+			Debug.LogException(ex);
 		}
 	}
 
@@ -71,20 +71,22 @@ internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
 			_allEffects.FirstOrDefault(x => x is Handcuffed && x.IsEnabled(ev.Player))?.OnDisabled(ev.Target);
 		}
 		catch (Exception ex) {
-			Logger.Error(ex);
+			Debug.LogException(ex);
 		}
 	}
 
-	public override void OnScp049ResurrectedBody(Scp049ResurrectedBodyEventArgs ev) {
+	public override void OnServerRoundEnding(RoundEndingEventArgs ev) {
 		try {
-			if (Plugin.Singleton.Config.SpawnMinionsWithPills) {
-				for (int i = 0; i < 8; i++) {
-					ev.Target.Inventory.ServerAddItem(ItemType.Painkillers, InventorySystem.Items.ItemAddReason.AdminCommand);
-				}
+			// Not sure if ALL of these are even needed... there was an issue where I got the "every item you pickup
+			// will turn into painkillers" and then the round ended and a different player got it, and it didnt work
+			// for that player. Not sure how that would be possible, but I'm giving this a try and hoping it doesn't
+			// happen again.
+			foreach (IPillEffect effect in _allEffects) {
+				effect.OnRoundEnded();
 			}
 		}
 		catch (Exception ex) {
-			Logger.Error(ex);
+			Debug.LogException(ex);
 		}
 	}
 }

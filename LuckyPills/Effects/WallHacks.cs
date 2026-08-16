@@ -16,6 +16,6 @@ internal sealed class WallHacks : WallHacksConfig, IPillEffect {
 internal class WallHacksConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 60f;
-	public float MaxDuration { get; set; } = 120f;
+	public float MaxDuration { get; set; } = 240f;
 	public float RarityMultiplier { get; set; } = 1f;
 }

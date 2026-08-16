@@ -9,6 +9,7 @@ internal sealed class Config {
 	public AllVomitEffectsConfig AllVomitEffects { get; set; } = new();
 	public AmnesiaConfig Amnesia { get; set; } = new();
 	public AustralianConfig Australian { get; set; } = new();
+	public AntiColaEffectConfig AntiColaEffect { get; set; } = new();
 	public BallVomitConfig BallVomit { get; set; } = new();
 	public BleedingConfig Bleeding { get; set; } = new();
 	public BlindedConfig Blinded { get; set; } = new();
@@ -19,6 +20,7 @@ internal sealed class Config {
 	public DestroyAllDoorsConfig DestroyAllDoors { get; set; } = new();
 	public DismembermentConfig Dismemberment { get; set; } = new();
 	public EnsnaredConfig Ensnared { get; set; } = new();
+	public ExtraHealthConfig ExtraHealth { get; set; } = new();
 	public ExplodeConfig Explode { get; set; } = new();
 	public EveryPickupTurnsIntoPainkillersConfig EveryPickupTurnsIntoPainkillers { get; set; } = new();
 	public FillInventoryWithPillsConfig FillInventoryWithPills { get; set; } = new();
@@ -40,12 +42,14 @@ internal sealed class Config {
 	public LightBulbVomitConfig LightBulbVomit { get; set; } = new();
 	public LowGravityConfig LowGravity { get; set; } = new();
 	public MassFogConfig MassFog { get; set; } = new();
+	public MassTantrumConfig MassTantrum { get; set; } = new();
 	public MutateConfig Mutate { get; set; } = new();
 	public NoClipConfig NoClip { get; set; } = new();
 	public NoJumpingConfig NoJumping { get; set; } = new();
 	public PaperConfig Paper { get; set; } = new();
 	public PocketDimensionConfig PocketDimension { get; set; } = new();
 	public PoisonedConfig Poisoned { get; set; } = new();
+	public ResurrectTeamMemberConfig ResurrectTeamMember { get; set; } = new();
 	public ScrambleRolesAndItemsConfig ScrambleRolesAndItems { get; set; } = new();
 	public ShrunkConfig Shrunk { get; set; } = new();
 	public SinkholeConfig Sinkhole { get; set; } = new();
@@ -58,5 +62,4 @@ internal sealed class Config {
 	public TheFogConfig TheFog { get; set; } = new();
 	public TurnIntoComputerConfig TurnIntoComputer { get; set; } = new();
 	public WallHacksConfig WallHacks { get; set; } = new();
-	public bool SpawnMinionsWithPills { get; set; } = true; // TODO set to false later I'd say.
 }

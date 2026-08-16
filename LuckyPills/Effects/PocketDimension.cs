@@ -1,6 +1,7 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
 internal sealed class PocketDimension : PocketDimensionConfig, IPillEffect {
+	// TODO sometimes this messes up my cahracter idk why tho,... do i need to give corrosion effect or smethng? IDk. I go into hole and just see black idk if i cluelss orr
 	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "You've been sent to the pocket dimension";
 	public new float RarityMultiplier => base.RarityMultiplier;

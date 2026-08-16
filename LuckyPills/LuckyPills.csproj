@@ -33,6 +33,11 @@
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
 	</ItemGroup>
+	<!-- Few notes, for my own benefit: I found these DLLs at the following path:
+	C:\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed
+	and I added an user variable environment variable of SL_REFERENCES. Then I copied some DLLs I needed and
+	some that were just recommended; I forget if I copied LabAPI repo or just copied TtroubleTT tutorial to
+	get the exact DLLs. I removed mscorlib from my list since was having conflicts with System.Stack/System.Queue -->
 	<ItemGroup>
 		<Reference Include="Assembly-CSharp">
 			<HintPath>$(SL_REFERENCES)\Assembly-CSharp.dll</HintPath>
@@ -60,9 +65,6 @@
 		</Reference>
 		<Reference Include="CommandSystem.Core">
 			<HintPath>$(SL_REFERENCES)\CommandSystem.Core.dll</HintPath>
-		</Reference>
-		<Reference Include="mscorlib">
-			<HintPath>$(SL_REFERENCES)\mscorlib.dll</HintPath>
 		</Reference>
 		<Reference Include="NorthwoodLib">
 			<HintPath>$(SL_REFERENCES)\NorthwoodLib.dll</HintPath>

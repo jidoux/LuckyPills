@@ -1,14 +1,13 @@
+using PlayerRoles;
+
 namespace LuckyPills.Effects;
 
 internal sealed class TeleportToRandomPlayer : TeleportToRandomPlayerConfig, IPillEffect {
 	// TODO continue testing this as its pretty iffy
 	public new bool IsEnabled(Player player) =>
 		Player.List.Any(
-			x => !x.Role.ToString().StartsWith("scp", StringComparison.OrdinalIgnoreCase)
-				&& x.Role != PlayerRoles.RoleTypeId.None
-				&& x.Role != PlayerRoles.RoleTypeId.Spectator
-				&& x != player
-		)
+			x => (x.Team == Team.FoundationForces || x.Team == Team.ChaosInsurgency || x.Team == Team.ClassD || x.Team == Team.Scientists)
+			&& x != player)
 		&& base.IsEnabled;
 	public string DisplayText => "You've been teleported to a random non-SCP";
 	public new float RarityMultiplier => base.RarityMultiplier;
@@ -16,8 +15,8 @@ internal sealed class TeleportToRandomPlayer : TeleportToRandomPlayerConfig, IPi
 
 	public void OnEnabled(Player player, float duration) {
 		Player? randomPlayer = Player.List
-			.Where(x => x != player && !x.Role.ToString().StartsWith("scp", StringComparison.OrdinalIgnoreCase) && x.Role != PlayerRoles.RoleTypeId.None)
-			.OrderBy(x => Random.value) // TODO check this cuz i dont know if its working correctly or not
+			.Where(x => (x.Team == Team.FoundationForces || x.Team == Team.ChaosInsurgency || x.Team == Team.ClassD || x.Team == Team.Scientists) && x != player)
+			.OrderBy(x => Random.value)
 			.FirstOrDefault();
 		if (randomPlayer is null) {
 			Logger.Warn("TeleportToRandomPlayer pill triggered when there is no player. Could be because the other/last player just died, or an error in the code.");
