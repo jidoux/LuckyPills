@@ -14,6 +14,8 @@ internal sealed class DestroyAllDoors : DestroyAllDoorsConfig, IPillEffect {
 		DestroyAllTheDoors();
 	}
 
+	// Doing weird stuff here to avoid manipulating the static bool from a non-static method. Unsure yet of how
+	// relevant that actually is since idk how many threads are actually active for LabAPI plugins.
 	private static void DestroyAllTheDoors() {
 		_wasEveryDoorBrokenAlready = true;
 		foreach (DoorVariant doorVariant in Map.Doors.Select(x => x.Base)) {
@@ -26,8 +28,12 @@ internal sealed class DestroyAllDoors : DestroyAllDoorsConfig, IPillEffect {
 		}
 	}
 
-	public void OnRoundEnded() {
+	private static void UnsetDestroyedDoors() {
 		_wasEveryDoorBrokenAlready = false;
+	}
+
+	public void OnRoundEnd() {
+		UnsetDestroyedDoors();
 	}
 }
 

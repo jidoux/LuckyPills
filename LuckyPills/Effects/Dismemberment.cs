@@ -1,4 +1,4 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
 internal sealed class Dismemberment : DismembermentConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
@@ -14,5 +14,5 @@ internal sealed class Dismemberment : DismembermentConfig, IPillEffect {
 
 internal class DismembermentConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.5f;
+	public float RarityMultiplier { get; set; } = 0.4f;
 }

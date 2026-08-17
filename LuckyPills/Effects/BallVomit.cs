@@ -20,6 +20,6 @@ internal class BallVomitConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 10f;
 	public float MaxDuration { get; set; } = 20f;
-	public float RarityMultiplier { get; set; } = 1f;
+	public float RarityMultiplier { get; set; } = 0.9f;
 	public int GrenadesPerSecond { get; set; } = 10;
 }

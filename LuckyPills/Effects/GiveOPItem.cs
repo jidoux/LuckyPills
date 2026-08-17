@@ -1,9 +1,6 @@
-using InventorySystem;
-using InventorySystem.Items;
-
 namespace LuckyPills.Effects;
 
-internal sealed class GiveOPItem : GiveOPItemConfig, IPillEffect {
+internal sealed class GiveOPItem : GiveOPItemConfig, IPillEffect, IDebugPickPills {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "You've been given an OP item";
 	public new float RarityMultiplier => base.RarityMultiplier;
@@ -16,8 +13,7 @@ internal sealed class GiveOPItem : GiveOPItemConfig, IPillEffect {
 			ItemType.Jailbird,
 			ItemType.GunCom45,
 		];
-		player.Inventory.ServerAddItem(itemPool[Random.Range(0, itemPool.Length)], ItemAddReason.AdminCommand);
-		// TODO maybe make this force equip?
+		player.ForceEquip(itemPool[Random.Range(0, itemPool.Length)]);
 	}
 }
 

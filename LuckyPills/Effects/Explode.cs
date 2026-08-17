@@ -1,4 +1,4 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
 internal sealed class Explode : ExplodeConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
@@ -14,5 +14,5 @@ internal sealed class Explode : ExplodeConfig, IPillEffect {
 
 internal class ExplodeConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	public float RarityMultiplier { get; set; } = 0.9f;
 }

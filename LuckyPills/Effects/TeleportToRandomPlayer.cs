@@ -16,7 +16,7 @@ internal sealed class TeleportToRandomPlayer : TeleportToRandomPlayerConfig, IPi
 	public void OnEnabled(Player player, float duration) {
 		Player? randomPlayer = Player.List
 			.Where(x => (x.Team == Team.FoundationForces || x.Team == Team.ChaosInsurgency || x.Team == Team.ClassD || x.Team == Team.Scientists) && x != player)
-			.OrderBy(x => Random.value)
+			.OrderBy(_ => Random.value)
 			.FirstOrDefault();
 		if (randomPlayer is null) {
 			Logger.Warn("TeleportToRandomPlayer pill triggered when there is no player. Could be because the other/last player just died, or an error in the code.");

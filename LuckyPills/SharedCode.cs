@@ -146,8 +146,21 @@ internal static class SharedCode {
 		NetworkServer.Spawn(tantrum.gameObject);
 	}
 
-	public static void SpawnItemBelowPlayer(Player player, ItemType itemtype) {
-		ItemBase item = player.Inventory.ServerAddItem(itemtype, ItemAddReason.AdminCommand);
+	public static void SpawnItemBelow(this Player? player, ItemType itemType, ItemAddReason itemAddReason = ItemAddReason.AdminCommand) {
+		if (player is null) {
+			return;
+		}
+		ItemBase item = player.Inventory.ServerAddItem(itemType, itemAddReason);
 		player.DropItem(item);
+	}
+
+	public static void ForceEquip(this Player? player, ItemType itemType, ItemAddReason itemAddReason = ItemAddReason.AdminCommand) {
+		if (player is null) {
+			return;
+		}
+		Item? item = player.AddItem(itemType, itemAddReason);
+		if (item is not null) {
+			player.CurrentItem = item;
+		}
 	}
 }

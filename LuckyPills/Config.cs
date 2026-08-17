@@ -27,9 +27,11 @@ internal sealed class Config {
 	public FlashedConfig Flashed { get; set; } = new();
 	public FlashVomitConfig FlashVomit { get; set; } = new();
 	public FlattenedConfig Flattened { get; set; } = new();
+	public FutureDeathRiskConfig FutureDeathRisk { get; set; } = new();
 	public GhostConfig Ghost { get; set; } = new();
 	public GiantConfig Giant { get; set; } = new();
 	public GiveEveryoneBallVomitConfig GiveEveryoneBallVomit { get; set; } = new();
+	public GiveO5KeycardConfig GiveO5Keycard { get; set; } = new();
 	public GiveOPItemConfig GiveOPItem { get; set; } = new();
 	public GodConfig God { get; set; } = new();
 	public HandcuffedConfig Handcuffed { get; set; } = new();
@@ -44,8 +46,11 @@ internal sealed class Config {
 	public MassFogConfig MassFog { get; set; } = new();
 	public MassTantrumConfig MassTantrum { get; set; } = new();
 	public MutateConfig Mutate { get; set; } = new();
+	public NextRoundLogicers NextRoundLogicers { get; set; } = new();
+	public NextRoundNoPillsConfig NextRoundNoPills { get; set; } = new();
 	public NoClipConfig NoClip { get; set; } = new();
 	public NoJumpingConfig NoJumping { get; set; } = new();
+	public OneHealthConfig OneHealth { get; set; } = new();
 	public PaperConfig Paper { get; set; } = new();
 	public PocketDimensionConfig PocketDimension { get; set; } = new();
 	public PoisonedConfig Poisoned { get; set; } = new();
@@ -55,6 +60,7 @@ internal sealed class Config {
 	public SinkholeConfig Sinkhole { get; set; } = new();
 	public SodaEffectConfig SodaEffect { get; set; } = new();
 	public SuperSpeedConfig SuperSpeed { get; set; } = new();
+	public SwapPositionsConfig SwapPositions { get; set; } = new();
 	public TantrumConfig Tantrum { get; set; } = new();
 	public TeleportTo096Config TeleportTo096 { get; set; } = new();
 	public TeleportToRandomPlayerConfig TeleportToRandomPlayer { get; set; } = new();

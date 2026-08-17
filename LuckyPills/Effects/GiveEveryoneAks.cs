@@ -1,4 +1,3 @@
-using InventorySystem;
 using PlayerRoles;
 
 namespace LuckyPills.Effects;
@@ -13,10 +12,10 @@ internal sealed class GiveEveryoneAks : GiveEveryoneAksConfig, IPillEffect {
 		foreach (Player anyPlayerInMap in Player.List.Where(x => x.IsAlive && x.Team != Team.SCPs)) {
 			anyPlayerInMap.SendHint("You've been given an AK by someone else's Painkillers");
 			if (anyPlayerInMap.Items.Count() >= 8) {
-				SharedCode.SpawnItemBelowPlayer(anyPlayerInMap, ItemType.GunAK);
+				anyPlayerInMap.SpawnItemBelow(ItemType.GunAK);
 			}
 			else {
-				anyPlayerInMap.Inventory.ServerAddItem(ItemType.GunAK, InventorySystem.Items.ItemAddReason.AdminCommand);
+				anyPlayerInMap.ForceEquip(ItemType.GunAK);
 			}
 		}
 	}

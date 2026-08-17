@@ -370,6 +370,9 @@ dotnet_diagnostic.S1481.severity = suggestion # Remove unused local variable ass
 dotnet_diagnostic.S1135.severity = suggestion # Complete TODO tasks - this one was cumbersome for localdev
 dotnet_diagnostic.S3011.severity = suggestion # Make sure that this accessibility bypass is safe here - cmon it even sounds like a suggestion... but I guess its a big deal idk
 dotnet_diagnostic.S3260.severity = error # Non-derived private classes/records should be marked as sealed
+dotnet_diagnostic.IDE0180.severity = error # Use tuple to swap values - not sure if this should be an error, but I personally don't mind it
+dotnet_diagnostic.CA2263.severity = error # Prefer generic overload when type is known
+dotnet_diagnostic.CA1508.serverity = error # Avoid dead conditional code
 
 
 dotnet_style_operator_placement_when_wrapping = beginning_of_line

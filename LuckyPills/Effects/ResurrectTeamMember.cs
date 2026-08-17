@@ -2,8 +2,6 @@ using PlayerRoles;
 
 namespace LuckyPills.Effects;
 
-// TODO test this class. Seems good to me, but thge position setting could be janky, and I could've
-// missed something idk. also spawn protection or naa cuz idkya feel me? also make sure setrole re-sets player.isalive
 internal sealed class ResurrectTeamMember : ResurrectTeamMemberConfig, IPillEffect, IDebugPickPills {
 	// My approach: add to it when a player dies, but don't remove when they respawn. If they die again, remove
 	// the old player's entry and add the new one. So we just have a list of players and their data when they last
@@ -18,7 +16,7 @@ internal sealed class ResurrectTeamMember : ResurrectTeamMemberConfig, IPillEffe
 	public void OnEnabled(Player player, float duration) {
 		KeyValuePair<Player, RoleAndTeamInfo> respawnPlayerInfo = _killedPlayers
 			.Where(x => x.Value.Team == player.Team && !x.Key.IsAlive)
-			.OrderBy(x => Random.value)
+			.OrderBy(_ => Random.value)
 			.FirstOrDefault();
 		if (respawnPlayerInfo.Equals(default(KeyValuePair<Player, RoleAndTeamInfo>))) {
 			Logger.Warn("ResurrectTeamMember called where there are no players to respawn. Possibly the player just died...?");
@@ -26,11 +24,12 @@ internal sealed class ResurrectTeamMember : ResurrectTeamMemberConfig, IPillEffe
 		}
 		Player playerToRespawn = respawnPlayerInfo.Key;
 		RoleTypeId roleToSetTo = respawnPlayerInfo.Value.Role;
-		playerToRespawn.SetRole(roleToSetTo, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.AssignInventory);
+		playerToRespawn.SetRole(roleToSetTo, RoleChangeReason.Revived, RoleSpawnFlags.AssignInventory);
 		playerToRespawn.Position = player.Position;
+		playerToRespawn.SendHint("You've been resurrected by someone's Painkillers");
 	}
 
-	public static void OnServerEnding() {
+	public void OnRoundEnd() {
 		_killedPlayers.Clear();
 	}
 

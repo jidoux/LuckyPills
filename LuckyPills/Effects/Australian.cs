@@ -19,6 +19,6 @@ internal sealed class Australian : AustralianConfig, IPillEffect {
 internal class AustralianConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 12f;
-	public float MaxDuration { get; set; } = 36f;
+	public float MaxDuration { get; set; } = 45f;
 	public float RarityMultiplier { get; set; } = 1f;
 }

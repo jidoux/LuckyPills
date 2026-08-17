@@ -7,7 +7,7 @@ internal sealed class TeleportToTeslaGate : TeleportToTeslaGateConfig, IPillEffe
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		Tesla? tesla = Map.Teslas.OrderBy(_ => Random.value).FirstOrDefault();
+		Tesla? tesla = Map.GetRandomTesla();
 		if (tesla is null) {
 			// May be possible with some crazy timing where this gets executed right when the map ends, but idk.
 			Logger.Warn("No tesla gates found in the map. Odds are this should have been prevented before this point.");

@@ -22,7 +22,7 @@ internal sealed class MassTantrum : MassTantrumConfig, IPillEffect, IDebugPickPi
 		_allTantrumMassSpawns.Remove(player);
 	}
 
-	public void OnRoundEnded() {
+	public void OnRoundEnd() {
 		_allTantrumMassSpawns.Clear();
 	}
 

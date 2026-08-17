@@ -60,7 +60,7 @@ internal sealed class ScrambleRolesAndItems : ScrambleRolesAndItemsConfig, IPill
 		}
 		// I think need to add the items after ammo so that it can handle oversized item additions.
 		foreach (ItemType item in prevPlayer.AllItems) {
-			currPlayer.Inventory.ServerAddItem(item, InventorySystem.Items.ItemAddReason.AdminCommand);
+			currPlayer.AddItem(item, InventorySystem.Items.ItemAddReason.AdminCommand);
 		}
 		currPlayer.SendHint("You wake up from a dream... maybe this is who you've always been...?");
 	}
@@ -91,5 +91,5 @@ internal class ScrambleRolesAndItemsConfig {
 	public bool IsEnabled { get; set; } = true;
 	// My friends felt like it was not really great to lose all your items and progress in your current life... so I'll just
 	// default this to be extremely rare, so that its genuinely crazy when it happens.
-	public float RarityMultiplier { get; set; } = 0.04f;
+	public float RarityMultiplier { get; set; } = 0.01f;
 }

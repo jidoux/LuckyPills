@@ -5,7 +5,7 @@ internal sealed class Invisible : InvisibleConfig, IPillEffect {
 	public string DisplayText => "You've been turned invisible for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.GoodEffect;
+	public EffectCapabilities Capabilities => EffectCapabilities.None; // Not having this in good effects since it was more fun when the good effect player was visible.
 
 	public void OnEnabled(Player player, float duration) {
 		player.EnableEffect<CustomPlayerEffects.Fade>(intensity: byte.MaxValue, duration: duration, addDuration: true);

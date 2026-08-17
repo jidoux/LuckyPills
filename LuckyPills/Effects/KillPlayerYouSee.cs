@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace LuckyPills.Effects;
 
 internal sealed class KillPlayerYouSee : KillPlayerYouSeeConfig, IPillEffect, IDebugPickPills {
-	public new bool IsEnabled(Player player) => base.IsEnabled && TryGetLookedAtPlayer(player, out Player? targetPlayer);
+	public new bool IsEnabled(Player player) => base.IsEnabled && TryGetLookedAtPlayer(player, out Player? _);
 	public string DisplayText => "You've killed whoever you're looking at";
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll;

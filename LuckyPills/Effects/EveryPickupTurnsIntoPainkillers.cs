@@ -20,7 +20,7 @@ internal sealed class EveryPickupTurnsIntoPainkillers : EveryPickupTurnsIntoPain
 
 	public static bool ShouldPickupTurnIntoPills(Player player) => _playersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Contains(player);
 
-	public void OnRoundEnded() {
+	public void OnRoundEnd() {
 		_playersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Clear();
 	}
 }

@@ -22,7 +22,7 @@ internal interface IPillEffect {
 	public float RarityMultiplier => 1f;
 	public void OnEnabled(Player player, float duration);
 	public virtual void OnDisabled(Player player) { }
-	public virtual void OnRoundEnded() { /*Fairly rare for effects to have this, but its a generic cleanup thing which is sometimes just defensive.*/ }
+	public virtual void OnRoundEnd() { /*Fairly rare for effects to have this, but its a generic cleanup thing which is sometimes just defensive.*/ }
 	public EffectCapabilities Capabilities { get; }
 }
 
@@ -41,7 +41,7 @@ internal static class PillEffectOrchestrator {
 		}
 		float duration = selectedEffect.PossibleDurationRangeInclusive.Random;
 		selectedEffect.OnEnabled(player, duration);
-		string textToDisplay = selectedEffect.DisplayText.Replace("{duration}", ((int)Math.Floor(duration)).ToString(CultureInfo.InvariantCulture));
+		string textToDisplay = selectedEffect.DisplayText.Replace("{duration}", ((int)Math.Floor(duration)).ToString(CultureInfo.InvariantCulture), StringComparison.Ordinal);
 		if (textToDisplay.Length > 0) {
 			player.SendHint(textToDisplay);
 		}
@@ -68,7 +68,7 @@ internal static class PillEffectOrchestrator {
 			}
 		}
 		// I figure this is a reasonable fallback
-		return allEnabledPillEffects[allEnabledPillEffects.Count - 1];
+		return allEnabledPillEffects[^1];
 	}
 
 	/// <summary>

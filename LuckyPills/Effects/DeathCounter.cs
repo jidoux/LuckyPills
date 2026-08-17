@@ -19,12 +19,14 @@ internal sealed class DeathCounter : DeathCounterConfig, IPillEffect {
 			player.SendHint($"{i}...", duration: 1f);
 			yield return MEC.Timing.WaitForSeconds(1);
 		}
-		ExplosiveGrenadeProjectile.SpawnActive(player.Position, ItemType.GrenadeHE, owner: player, timeOverride: 0f);
+		// TODO test this instead... might be more fun since less death for others idk tbh
+		player.Kill();
+		// ExplosiveGrenadeProjectile.SpawnActive(player.Position, ItemType.GrenadeHE, owner: player, timeOverride: 0f);
 	}
 }
 
 internal class DeathCounterConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	public float RarityMultiplier { get; set; } = 0.9f;
 	public int SecondsToDeath { get; set; } = 30;
 }

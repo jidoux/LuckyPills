@@ -2,8 +2,7 @@ using CustomPlayerEffects;
 
 namespace LuckyPills.Effects;
 
-// TODO test this cuz i didnt feel like running my code 2day <3
-internal sealed class AntiColaEffect : AntiColaEffectConfig, IPillEffect, IDebugPickPills {
+internal sealed class AntiColaEffect : AntiColaEffectConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "You've been given the anti-cola effect";
 	public new float RarityMultiplier => base.RarityMultiplier;
