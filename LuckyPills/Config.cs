@@ -2,6 +2,7 @@ using LuckyPills.Effects;
 
 namespace LuckyPills;
 
+// I tried making this partial class and putting the configs in each file, which would've been better for me, but that didn't work, unluko
 internal sealed class Config {
 	public ActivateNukeConfig ActivateNuke { get; set; } = new();
 	public AllEffectsConfig AllEffects { get; set; } = new();
@@ -48,6 +49,7 @@ internal sealed class Config {
 	public MutateConfig Mutate { get; set; } = new();
 	public NextRoundLogicers NextRoundLogicers { get; set; } = new();
 	public NextRoundNoPillsConfig NextRoundNoPills { get; set; } = new();
+	public NextRoundSurfaceFightConfig NextRoundSurfaceFight { get; set; } = new();
 	public NoClipConfig NoClip { get; set; } = new();
 	public NoJumpingConfig NoJumping { get; set; } = new();
 	public OneHealthConfig OneHealth { get; set; } = new();
@@ -55,6 +57,7 @@ internal sealed class Config {
 	public PocketDimensionConfig PocketDimension { get; set; } = new();
 	public PoisonedConfig Poisoned { get; set; } = new();
 	public ResurrectTeamMemberConfig ResurrectTeamMember { get; set; } = new();
+	public RoomWhichKillsYouConfig RoomWhichKillsYou { get; set; } = new();
 	public ScrambleRolesAndItemsConfig ScrambleRolesAndItems { get; set; } = new();
 	public ShrunkConfig Shrunk { get; set; } = new();
 	public SinkholeConfig Sinkhole { get; set; } = new();
@@ -67,5 +70,6 @@ internal sealed class Config {
 	public TeleportToTeslaGateConfig TeleportToTeslaGate { get; set; } = new();
 	public TheFogConfig TheFog { get; set; } = new();
 	public TurnIntoComputerConfig TurnIntoComputer { get; set; } = new();
+	public TurnOffLightsConfig TurnOffLights { get; set; } = new();
 	public WallHacksConfig WallHacks { get; set; } = new();
 }

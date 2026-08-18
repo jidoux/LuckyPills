@@ -1,6 +1,6 @@
 namespace LuckyPills.Effects;
 
-internal sealed class MassTantrum : MassTantrumConfig, IPillEffect, IDebugPickPills {
+internal sealed class MassTantrum : MassTantrumConfig, IPillEffect {
 	private static readonly HashSet<Player> _allTantrumMassSpawns = [];
 
 	public new bool IsEnabled(Player player) => !_allTantrumMassSpawns.Contains(player) && base.IsEnabled;

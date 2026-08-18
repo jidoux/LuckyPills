@@ -1,15 +1,17 @@
 namespace LuckyPills.Effects;
 
-internal sealed class NextRoundNoPills : NextRoundNoPillsConfig, IPillEffect, IDebugPickPills {
+internal sealed class NextRoundNoPills : NextRoundNoPillsConfig, IPillEffect {
 	private static bool _notSpawningPillsNextRound = false;
 	private static bool _notSpawningPillsThisRound = false;
 
-	public new bool IsEnabled(Player player) => !_notSpawningPillsNextRound && base.IsEnabled;
-	public string DisplayText => "Something special will happen next round..."; // TODO determine if this is preferable to no message at all, mby try both idk
+	public new bool IsEnabled(Player player) => !GlobalVariables.IsSpecialEventHappeningNextRound &&
+		!_notSpawningPillsNextRound && base.IsEnabled;
+	public string DisplayText => "Something special will happen next round...";
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
+		GlobalVariables.IsSpecialEventHappeningNextRound = true;
 		_notSpawningPillsNextRound = true;
 	}
 
@@ -24,6 +26,7 @@ internal sealed class NextRoundNoPills : NextRoundNoPillsConfig, IPillEffect, ID
 		}
 		else if (_notSpawningPillsNextRound) {
 			_notSpawningPillsThisRound = true;
+			GlobalVariables.IsSpecialEventHappeningNextRound = false;
 		}
 	}
 }

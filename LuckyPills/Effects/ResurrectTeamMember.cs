@@ -5,7 +5,7 @@ namespace LuckyPills.Effects;
 internal sealed class ResurrectTeamMember : ResurrectTeamMemberConfig, IPillEffect, IDebugPickPills {
 	// My approach: add to it when a player dies, but don't remove when they respawn. If they die again, remove
 	// the old player's entry and add the new one. So we just have a list of players and their data when they last
-	// died, and we access the list while filtering by players who are not alive.
+	// died, and we access the list by filtering out living players.
 	private static readonly Dictionary<Player, RoleAndTeamInfo> _killedPlayers = [];
 
 	public new bool IsEnabled(Player player) => _killedPlayers.Any(x => x.Value.Team == player.Team && !x.Key.IsAlive) && base.IsEnabled;

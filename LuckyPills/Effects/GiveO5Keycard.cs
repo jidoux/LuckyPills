@@ -1,6 +1,6 @@
 namespace LuckyPills.Effects;
 
-internal sealed class GiveO5Keycard : GiveO5KeycardConfig, IPillEffect, IDebugPickPills {
+internal sealed class GiveO5Keycard : GiveO5KeycardConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => !player.Items.Any(x => x.Base.name.Contains("keycard", StringComparison.OrdinalIgnoreCase)) && base.IsEnabled;
 	public string DisplayText => "You've been given an 05 keycard";
 	public new float RarityMultiplier => base.RarityMultiplier;

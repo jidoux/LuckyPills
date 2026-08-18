@@ -12,7 +12,6 @@ internal sealed class WallHacks : WallHacksConfig, IPillEffect {
 		player.EnableEffect<CustomPlayerEffects.Scp1344>(intensity: 1, duration: duration, addDuration: true);
 	}
 }
-
 internal class WallHacksConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 60f;

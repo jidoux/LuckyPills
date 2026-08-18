@@ -1,6 +1,7 @@
 namespace LuckyPills.Effects;
 
-internal sealed class EveryPickupTurnsIntoPainkillers : EveryPickupTurnsIntoPainkillersConfig, IPillEffect, IDebugPickPills {
+// TODO this broke after I got it one game, reset, and someone else got it next game. Validate that this is fixed ok?
+internal sealed class EveryPickupTurnsIntoPainkillers : EveryPickupTurnsIntoPainkillersConfig, IPillEffect {
 	private static readonly HashSet<Player> _playersWhoCanOnlyPickUpPillsForTheRestOfTheGame = [];
 
 	public new bool IsEnabled(Player player) =>

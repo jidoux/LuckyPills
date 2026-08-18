@@ -6,12 +6,14 @@ internal sealed class NextRoundLogicers : NextRoundLogicersConfig, IPillEffect, 
 	private static bool _giveDClassLogicersNextRound = false;
 	private static bool _givingLogicersThisRound = false;
 
-	public new bool IsEnabled(Player player) => !_giveDClassLogicersNextRound && base.IsEnabled;
+	public new bool IsEnabled(Player player) => !GlobalVariables.IsSpecialEventHappeningNextRound
+		&& !_giveDClassLogicersNextRound && Player.List.Any(x => x.Role == RoleTypeId.ClassD) && base.IsEnabled;
 	public string DisplayText => "Something special will happen next round..."; // TODO determine if this is preferable to no message at all, mby try both idk
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
+		GlobalVariables.IsSpecialEventHappeningNextRound = true;
 		_giveDClassLogicersNextRound = true;
 	}
 
@@ -29,6 +31,7 @@ internal sealed class NextRoundLogicers : NextRoundLogicersConfig, IPillEffect, 
 		}
 		else if (_giveDClassLogicersNextRound) {
 			_givingLogicersThisRound = true;
+			GlobalVariables.IsSpecialEventHappeningNextRound = false;
 		}
 	}
 }

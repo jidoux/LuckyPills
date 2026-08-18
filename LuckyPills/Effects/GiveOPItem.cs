@@ -1,6 +1,6 @@
 namespace LuckyPills.Effects;
 
-internal sealed class GiveOPItem : GiveOPItemConfig, IPillEffect, IDebugPickPills {
+internal sealed class GiveOPItem : GiveOPItemConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "You've been given an OP item";
 	public new float RarityMultiplier => base.RarityMultiplier;

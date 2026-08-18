@@ -76,7 +76,6 @@ internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
 
 	public override void OnServerRoundEnding(RoundEndingEventArgs ev) {
 		try {
-			Logger.Info("OnServerRoundEnding caled");
 			// Not sure if ALL of these are even needed... there was an issue where I got the "every item you pickup
 			// will turn into painkillers" and then the round ended and a different player got it, and it didnt work
 			// for that player. Not sure how that would be possible, but I'm giving this a try and hoping it doesn't
@@ -109,6 +108,14 @@ internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
 		}
 	}
 
+	public override void OnServerRoundStarted() {
+		NextRoundSurfaceFight.NextRoundSurfaceFightBehavior();
+	}
+
+	public override void OnPlayerRoomChanged(PlayerRoomChangedEventArgs ev) {
+		RoomWhichKillsYou.PlayerEnteredRoom(ev.Player, ev.NewRoom);
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
+	}
 	public override void OnPlayerActivatedGenerator(PlayerActivatedGeneratorEventArgs ev) {
 		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
 	}
@@ -218,9 +225,6 @@ internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
 		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
 	}
 	public override void OnPlayerToggledRadio(PlayerToggledRadioEventArgs ev) {
-		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
-	}
-	public override void OnPlayerRoomChanged(PlayerRoomChangedEventArgs ev) {
 		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
 	}
 	public override void OnPlayerToggledFlashlight(PlayerToggledFlashlightEventArgs ev) {
