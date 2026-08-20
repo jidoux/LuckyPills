@@ -15,8 +15,8 @@ internal sealed class TurnIntoComputer : TurnIntoComputerConfig, IPillEffect, ID
 
 	public void OnEnabled(Player player, float duration) {
 		player.SetRole(RoleTypeId.Scp079, RoleChangeReason.ItemUsage, RoleSpawnFlags.All);
-		if (SharedCode.TryGetScp079TierManager(player.RoleBase, out Scp079TierManager? tierManager)) {
-			SharedCode.SetScp079ExpLevel(tierManager, 10000);
+		if (TryGetScp079TierManager(player.RoleBase, out Scp079TierManager? tierManager)) {
+			SetScp079ExpLevel(tierManager, 10000);
 		}
 	}
 }

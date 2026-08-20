@@ -19,6 +19,6 @@ internal sealed class TurnOffLights : TurnOffLightsConfig, IPillEffect {
 internal class TurnOffLightsConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 10f;
-	public float MaxDuration { get; set; } = 100f;
+	public float MaxDuration { get; set; } = 300f;
 	public float RarityMultiplier { get; set; } = 0.5f;
 }

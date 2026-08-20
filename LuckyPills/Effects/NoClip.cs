@@ -1,4 +1,4 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
 // this one is kinda absurd... sometimes its fine, but you can easily get hard-stuck...
 internal sealed class NoClip : NoClipConfig, IPillEffect {
@@ -20,6 +20,6 @@ internal sealed class NoClip : NoClipConfig, IPillEffect {
 internal class NoClipConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 20f;
-	public float MaxDuration { get; set; } = 30f;
+	public float MaxDuration { get; set; } = 50f;
 	public float RarityMultiplier { get; set; } = 0.5f;
 }

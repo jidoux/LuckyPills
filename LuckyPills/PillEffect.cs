@@ -1,7 +1,5 @@
 #define DEBUGGING_SPECIFIC_PILL_EFFECTS_WITH_INTERFACE // comment this out when you dont want to only use pill effects deriving from IDebugPickPills
 
-using System.Globalization;
-
 namespace LuckyPills;
 
 /// <summary>
@@ -28,9 +26,9 @@ internal interface IPillEffect {
 
 internal static class PillEffectOrchestrator {
 #if DEBUGGING_SPECIFIC_PILL_EFFECTS_WITH_INTERFACE && DEBUG
-	private static readonly IReadOnlyCollection<IPillEffect> _allPillEffects = [.. SharedCode.GetAllPillEffects(useDebugPickPills: true)];
+	private static readonly IReadOnlyCollection<IPillEffect> _allPillEffects = [.. GetAllPillEffects(useDebugPickPills: true)];
 #else
-	private static readonly IReadOnlyCollection<IPillEffect> _allPillEffects = [.. SharedCode.GetAllPillEffects()];
+	private static readonly IReadOnlyCollection<IPillEffect> _allPillEffects = [.. GetAllPillEffects()];
 #endif
 
 	public static void RunRandom(Player player) {
@@ -41,8 +39,8 @@ internal static class PillEffectOrchestrator {
 		}
 		float duration = selectedEffect.PossibleDurationRangeInclusive.Random;
 		selectedEffect.OnEnabled(player, duration);
-		string textToDisplay = selectedEffect.DisplayText.Replace("{duration}", ((int)Math.Floor(duration)).ToString(CultureInfo.InvariantCulture), StringComparison.Ordinal);
-		if (textToDisplay.Length > 0) {
+		string textToDisplay = AddDurationToHintText(selectedEffect.DisplayText, duration);
+		if (textToDisplay.Length > 0) { // Some effects have no DisplayText because I needed better control.
 			player.SendHint(textToDisplay);
 		}
 #pragma warning disable S1244 // I figure this warning is pointless when comparing against Float.MaxValue as long as im not doing computations...
@@ -86,6 +84,10 @@ internal static class PillEffectOrchestrator {
 		/// </summary>
 		CandidateForGiveAll = 1 << 1,
 		GoodEffect = 1 << 2,
+		/// <summary>
+		/// Used for a pill effect which permanently changes the player in certain ways.
+		/// </summary>
+		GoodAsPermanent = 1 << 3,
 	}
 
 	internal readonly struct Duration(float minimum, float maximum) {

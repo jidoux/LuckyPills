@@ -6,8 +6,8 @@ internal sealed class TeleportToRandomPlayer : TeleportToRandomPlayerConfig, IPi
 	// TODO continue testing this as its pretty iffy
 	public new bool IsEnabled(Player player) =>
 		Player.List.Any(
-			x => (x.Team == Team.FoundationForces || x.Team == Team.ChaosInsurgency || x.Team == Team.ClassD || x.Team == Team.Scientists)
-			&& x != player)
+			currPlayer => IsPlayerInTeam(currPlayer, Team.ClassD, Team.Scientists, Team.FoundationForces, Team.ChaosInsurgency)
+			&& currPlayer != player)
 		&& base.IsEnabled;
 	public string DisplayText => "You've been teleported to a random non-SCP";
 	public new float RarityMultiplier => base.RarityMultiplier;
@@ -15,7 +15,7 @@ internal sealed class TeleportToRandomPlayer : TeleportToRandomPlayerConfig, IPi
 
 	public void OnEnabled(Player player, float duration) {
 		Player? randomPlayer = Player.List
-			.Where(x => (x.Team == Team.FoundationForces || x.Team == Team.ChaosInsurgency || x.Team == Team.ClassD || x.Team == Team.Scientists) && x != player)
+			.Where(currPlayer => IsPlayerInTeam(currPlayer, Team.ClassD, Team.Scientists, Team.FoundationForces, Team.ChaosInsurgency))
 			.OrderBy(_ => Random.value)
 			.FirstOrDefault();
 		if (randomPlayer is null) {

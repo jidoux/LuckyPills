@@ -9,7 +9,7 @@ internal sealed class ResurrectTeamMember : ResurrectTeamMemberConfig, IPillEffe
 	private static readonly Dictionary<Player, RoleAndTeamInfo> _killedPlayers = [];
 
 	public new bool IsEnabled(Player player) => _killedPlayers.Any(x => x.Value.Team == player.Team && !x.Key.IsAlive) && base.IsEnabled;
-	public string DisplayText => "You've resurrected a team member";
+	public string DisplayText => "You've resurrected a fallen team member";
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.GoodEffect;
 

@@ -9,7 +9,7 @@ internal sealed class Mutate : MutateConfig, IPillEffect {
 	public string DisplayText => "You've been mutated for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities => EffectCapabilities.GoodAsPermanent;
 
 	public void OnEnabled(Player player, float duration) {
 		if (!_cachedRoles.ContainsKey(player)) {
@@ -29,7 +29,7 @@ internal sealed class Mutate : MutateConfig, IPillEffect {
 
 internal class MutateConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 5f;
-	public float MaxDuration { get; set; } = 26f;
-	public float RarityMultiplier { get; set; } = 1f;
+	public float MinDuration { get; set; } = 9f;
+	public float MaxDuration { get; set; } = 36f;
+	public float RarityMultiplier { get; set; } = 0.86f;
 }

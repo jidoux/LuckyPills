@@ -8,6 +8,7 @@ using PlayerRoles;
 using PlayerRoles.PlayableScps.Scp079;
 using RelativePositioning;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using ThrowableItem = InventorySystem.Items.ThrowableProjectiles.ThrowableItem;
 
 namespace LuckyPills;
@@ -136,7 +137,7 @@ internal static class SharedCode {
 	}
 
 	public static void SpawnTantrum(Vector3 position) {
-		TantrumEnvironmentalHazard? tantrum = UnityEngine.Object.Instantiate(SharedCode.GetPrefab<TantrumEnvironmentalHazard>());
+		TantrumEnvironmentalHazard? tantrum = UnityEngine.Object.Instantiate(GetPrefab<TantrumEnvironmentalHazard>());
 		if (tantrum is null) {
 			Logger.Error("Failed to instantiate Tantrum hazard for Tantrum pill effect... something changed?? Idk. Cancelling...");
 			return;
@@ -163,4 +164,9 @@ internal static class SharedCode {
 			player.CurrentItem = item;
 		}
 	}
+
+	public static bool IsPlayerInTeam(Player player, params Team[] teams) => teams.Any(team => team == player.Team);
+
+	public static string AddDurationToHintText(string displayText, float duration) =>
+		displayText.Replace("{duration}", ((int)Math.Floor(duration)).ToString(CultureInfo.InvariantCulture), StringComparison.Ordinal);
 }

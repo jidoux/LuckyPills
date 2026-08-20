@@ -35,9 +35,9 @@ internal sealed class NextRoundSurfaceFight : NextRoundSurfaceFightConfig, IPill
 		];
 
 		if (_thisRoundSurfaceFight) {
-			//foreach (Elevator item in Map.Elevators) {
-			//	item.DynamicAdminLock = true;
-			//}
+			foreach (Elevator item in Map.Elevators) {
+				item.DynamicAdminLock = true;
+			} // TODO p sure this AINT GONA DO ANYHTING AHAHHAHAHA
 			foreach (Player currPlayer in Player.GetAll()) {
 				if (_teamDeterminer % 2 == 0) {
 					currPlayer.SetRole(chaosRoles[Random.Range(0, chaosRoles.Length)], RoleChangeReason.RemoteAdmin, RoleSpawnFlags.UseSpawnpoint);

@@ -8,7 +8,7 @@ internal sealed class BombVomit : BombVomitConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.VomitEffect | EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
-		MEC.Timing.RunCoroutine(SharedCode.RunGrenadeVomit(player, duration, base.GrenadesPerSecond, ItemType.GrenadeHE));
+		MEC.Timing.RunCoroutine(RunGrenadeVomit(player, duration, base.GrenadesPerSecond, ItemType.GrenadeHE));
 	}
 }
 

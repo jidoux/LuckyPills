@@ -5,7 +5,7 @@ internal sealed class LowGravity : LowGravityConfig, IPillEffect {
 	public string DisplayText => "You've been given low gravity for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities => EffectCapabilities.GoodAsPermanent;
 
 	public void OnEnabled(Player player, float duration) {
 		player.Gravity = new Vector3(0f, -1f, -0f);
@@ -19,6 +19,6 @@ internal sealed class LowGravity : LowGravityConfig, IPillEffect {
 internal class LowGravityConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 10f;
-	public float MaxDuration { get; set; } = 20f;
+	public float MaxDuration { get; set; } = 40f;
 	public float RarityMultiplier { get; set; } = 1f;
 }

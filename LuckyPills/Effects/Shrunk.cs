@@ -5,7 +5,7 @@ internal sealed class Shrunk : ShrunkConfig, IPillEffect {
 	public string DisplayText => "You've been shrunk for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities => EffectCapabilities.GoodAsPermanent;
 
 	public void OnEnabled(Player player, float duration) {
 		player.Scale = new Vector3(0.2f, 0.2f, 0.2f);
@@ -18,7 +18,7 @@ internal sealed class Shrunk : ShrunkConfig, IPillEffect {
 
 internal class ShrunkConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 15f;
-	public float MaxDuration { get; set; } = 30f;
+	public float MinDuration { get; set; } = 10f;
+	public float MaxDuration { get; set; } = 60f;
 	public float RarityMultiplier { get; set; } = 1f;
 }

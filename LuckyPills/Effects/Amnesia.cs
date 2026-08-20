@@ -1,4 +1,4 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
 internal sealed class Amnesia : AmnesiaConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
@@ -15,7 +15,7 @@ internal sealed class Amnesia : AmnesiaConfig, IPillEffect {
 
 internal class AmnesiaConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 11f;
-	public float MaxDuration { get; set; } = 27f;
+	public float MinDuration { get; set; } = 15f;
+	public float MaxDuration { get; set; } = 35f;
 	public float RarityMultiplier { get; set; } = 1f;
 }

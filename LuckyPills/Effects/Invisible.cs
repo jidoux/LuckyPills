@@ -14,7 +14,7 @@ internal sealed class Invisible : InvisibleConfig, IPillEffect {
 
 internal class InvisibleConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 19f;
-	public float MaxDuration { get; set; } = 35f;
+	public float MinDuration { get; set; } = 20f;
+	public float MaxDuration { get; set; } = 40f;
 	public float RarityMultiplier { get; set; } = 0.9f;
 }

@@ -54,9 +54,11 @@ internal sealed class Config {
 	public NoJumpingConfig NoJumping { get; set; } = new();
 	public OneHealthConfig OneHealth { get; set; } = new();
 	public PaperConfig Paper { get; set; } = new();
+	public PermanentPlayerChangesConfig PermanentPlayerChanges { get; set; } = new();
 	public PocketDimensionConfig PocketDimension { get; set; } = new();
 	public PoisonedConfig Poisoned { get; set; } = new();
 	public ResurrectTeamMemberConfig ResurrectTeamMember { get; set; } = new();
+	public ReviveTheDeadConfig ReviveTheDead { get; set; } = new();
 	public RoomWhichKillsYouConfig RoomWhichKillsYou { get; set; } = new();
 	public ScrambleRolesAndItemsConfig ScrambleRolesAndItems { get; set; } = new();
 	public ShrunkConfig Shrunk { get; set; } = new();

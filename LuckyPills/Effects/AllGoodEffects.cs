@@ -1,9 +1,9 @@
 namespace LuckyPills.Effects;
 
 internal sealed class AllGoodEffects : AllGoodEffectsConfig, IPillEffect {
-	private static readonly IReadOnlyCollection<IPillEffect> _effectCandidates = SharedCode.GetAllPillEffects()
+	private static readonly IReadOnlyCollection<IPillEffect> _effectCandidates = GetAllPillEffects()
 		.Where(x => (x.Capabilities & EffectCapabilities.GoodEffect) == EffectCapabilities.GoodEffect)
-		.ToList();
+		.ToList().AsReadOnly();
 
 	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => "You've been given every good effect for {duration} seconds";
@@ -14,7 +14,7 @@ internal sealed class AllGoodEffects : AllGoodEffectsConfig, IPillEffect {
 	public void OnEnabled(Player player, float duration) {
 		IEnumerable<IPillEffect> effectsToUse = _effectCandidates.Where(x => x.IsEnabled(player));
 		foreach (IPillEffect effect in effectsToUse) {
-			SharedCode.EnablePillEffect(effect, player, duration);
+			EnablePillEffect(effect, player, duration);
 		}
 	}
 }

@@ -6,7 +6,7 @@ using LuckyPills.Effects;
 namespace LuckyPills;
 
 internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
-	private static readonly IReadOnlyCollection<IPillEffect> _allEffects = [.. SharedCode.GetAllPillEffects()];
+	private static readonly IReadOnlyCollection<IPillEffect> _allEffects = [.. GetAllPillEffects()];
 
 	public override void OnPlayerUsingItem(PlayerUsingItemEventArgs ev) {
 		try {
@@ -19,7 +19,7 @@ internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
 			// Remove the painkillers as they are still used up by all intends and purposes.
 			ev.Player.RemoveItem(ev.UsableItem);
 
-			PillEffectOrchestrator.RunRandom(ev.Player);
+			RunRandom(ev.Player);
 		}
 		catch (Exception ex) {
 			Debug.LogException(ex);

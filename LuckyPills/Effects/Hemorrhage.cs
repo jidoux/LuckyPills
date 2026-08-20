@@ -15,6 +15,6 @@ internal sealed class Hemorrhage : HemorrhageConfig, IPillEffect {
 internal class HemorrhageConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 20f;
-	public float MaxDuration { get; set; } = 40f;
+	public float MaxDuration { get; set; } = 50f;
 	public float RarityMultiplier { get; set; } = 1f;
 }

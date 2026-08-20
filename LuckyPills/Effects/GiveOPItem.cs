@@ -19,5 +19,5 @@ internal sealed class GiveOPItem : GiveOPItemConfig, IPillEffect {
 
 internal class GiveOPItemConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	public float RarityMultiplier { get; set; } = 0.9f;
 }

@@ -5,7 +5,7 @@ internal sealed class Australian : AustralianConfig, IPillEffect {
 	public string DisplayText => "You've been converted to australian for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
+	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodAsPermanent;
 
 	public void OnEnabled(Player player, float duration) {
 		player.Scale = new Vector3(1f, -1f, 1f);
@@ -18,7 +18,7 @@ internal sealed class Australian : AustralianConfig, IPillEffect {
 
 internal class AustralianConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 12f;
-	public float MaxDuration { get; set; } = 45f;
+	public float MinDuration { get; set; } = 15f;
+	public float MaxDuration { get; set; } = 50f;
 	public float RarityMultiplier { get; set; } = 1f;
 }

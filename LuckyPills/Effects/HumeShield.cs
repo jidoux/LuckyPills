@@ -1,4 +1,4 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
 internal sealed class HumeShield : HumeShieldConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;

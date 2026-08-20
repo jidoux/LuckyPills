@@ -7,7 +7,7 @@ internal sealed class TheFog : TheFogConfig, IPillEffect {
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		SharedCode.SpawnScp244(player.Position);
+		SpawnScp244(player.Position);
 	}
 }
 

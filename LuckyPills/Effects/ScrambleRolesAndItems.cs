@@ -36,7 +36,7 @@ internal sealed class ScrambleRolesAndItems : ScrambleRolesAndItemsConfig, IPill
 				currPlayer.Position,
 				currPlayer.Rotation,
 				currPlayer.LookRotation,
-				SharedCode.TryGetScp079TierManager(currPlayer.RoleBase, out Scp079TierManager? tierManager) ? tierManager?.TotalExp : null
+				TryGetScp079TierManager(currPlayer.RoleBase, out Scp079TierManager? tierManager) ? tierManager?.TotalExp : null
 			);
 			SetPlayerState(currPlayer, prevPlayer);
 			prevPlayer = nextPrevPlayer;
@@ -52,8 +52,8 @@ internal sealed class ScrambleRolesAndItems : ScrambleRolesAndItemsConfig, IPill
 		currPlayer.Position = prevPlayer.Position;
 		currPlayer.Rotation = prevPlayer.Rotation;
 		currPlayer.LookRotation = prevPlayer.LookRotation;
-		if (prevPlayer.Scp079ExpTotal is not null && SharedCode.TryGetScp079TierManager(currPlayer.RoleBase, out Scp079TierManager? currTierManager)) {
-			SharedCode.SetScp079ExpLevel(currTierManager, prevPlayer.Scp079ExpTotal.Value);
+		if (prevPlayer.Scp079ExpTotal is not null && TryGetScp079TierManager(currPlayer.RoleBase, out Scp079TierManager? currTierManager)) {
+			SetScp079ExpLevel(currTierManager, prevPlayer.Scp079ExpTotal.Value);
 		}
 		foreach (KeyValuePair<ItemType, ushort> ammo in prevPlayer.AllAmmo) {
 			currPlayer.Inventory.ServerAddAmmo(ammo.Key, ammo.Value);

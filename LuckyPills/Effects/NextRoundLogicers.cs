@@ -19,7 +19,7 @@ internal sealed class NextRoundLogicers : NextRoundLogicersConfig, IPillEffect, 
 
 	public static void NextRoundLogicersBehavior(Player player) {
 		if (_givingLogicersThisRound && player.Role == RoleTypeId.ClassD) {
-			player.SendHint("Someone's Painkillers from last round has given you this AK");
+			player.SendHint("Someone's Painkillers from last round has given you this Logicer");
 			player.ForceEquip(ItemType.GunLogicer);
 		}
 	}

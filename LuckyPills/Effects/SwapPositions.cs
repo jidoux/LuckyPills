@@ -1,14 +1,14 @@
 namespace LuckyPills.Effects;
 
 internal sealed class SwapPositions : SwapPositionsConfig, IPillEffect, IDebugPickPills {
-	public new bool IsEnabled(Player player) => Player.List.Count(x => x.IsAlive) > 1 && base.IsEnabled;
+	public new bool IsEnabled(Player player) => Player.List.Count(x => x.IsAlive && x.Role != PlayerRoles.RoleTypeId.Scp079) > 1 && base.IsEnabled;
 	public string DisplayText => "You've swapped positions with another random player";
 	public new float RarityMultiplier => base.RarityMultiplier;
 	public EffectCapabilities Capabilities => EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
 		Player? randomPlayer = Player.List
-			.Where(x => x.IsAlive && x != player)
+			.Where(x => x.IsAlive && x != player && x.Role != PlayerRoles.RoleTypeId.Scp079)
 			.OrderBy(_ => Random.value)
 			.FirstOrDefault();
 		if (randomPlayer is null) {
@@ -18,7 +18,7 @@ internal sealed class SwapPositions : SwapPositionsConfig, IPillEffect, IDebugPi
 		(randomPlayer.Position, player.Position) = (player.Position, randomPlayer.Position);
 		(randomPlayer.Rotation, player.Rotation) = (player.Rotation, randomPlayer.Rotation);
 		(randomPlayer.LookRotation, player.LookRotation) = (player.LookRotation, randomPlayer.LookRotation);
-		randomPlayer.SendHint("Painkillers have swapped your position with another player");
+		randomPlayer.SendHint("Painkillers have swapped your position with another player"); // TODO validate this shows as someone alleged it didnt show
 	}
 }
 
