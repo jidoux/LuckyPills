@@ -69,5 +69,5 @@ internal sealed class NextRoundSurfaceFight : NextRoundSurfaceFightConfig, IPill
 
 internal class NextRoundSurfaceFightConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.5f;
+	public float RarityMultiplier { get; set; } = 0.25f;
 }

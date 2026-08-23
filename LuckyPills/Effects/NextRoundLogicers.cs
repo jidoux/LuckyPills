@@ -38,5 +38,5 @@ internal sealed class NextRoundLogicers : NextRoundLogicersConfig, IPillEffect {
 
 internal class NextRoundLogicersConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.5f;
+	public float RarityMultiplier { get; set; } = 0.25f;
 }

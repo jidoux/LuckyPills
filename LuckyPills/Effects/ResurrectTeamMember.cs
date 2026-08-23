@@ -13,7 +13,20 @@ internal sealed class ResurrectTeamMember : ResurrectTeamMemberConfig, IPillEffe
 			return false;
 		}
 		foreach (KeyValuePair<Player, RoleAndTeamInfo> item in _killedPlayers) {
-			if (!item.Key.IsAlive && item.Value.Team == player.Team) {
+			// I noticed that leaving the server triggers OnPlayerDying, and either way if someone dies and then leaves
+			// the server, they should no longer be eligible for resurrection.
+			bool playerStillInServer = false;
+			foreach (Player currPlayer in Player.List) {
+				if (currPlayer == item.Key) {
+					playerStillInServer = true;
+					break;
+				}
+			}
+			if (!playerStillInServer) {
+				_killedPlayers.Remove(item.Key);
+				break;
+			}
+			if (!item.Key.IsAlive && item.Value.Team == player.Team && item.Key != player) {
 				return true;
 			}
 		}
@@ -29,14 +42,14 @@ internal sealed class ResurrectTeamMember : ResurrectTeamMemberConfig, IPillEffe
 			.OrderBy(_ => Random.value)
 			.FirstOrDefault();
 		if (respawnPlayerInfo.Equals(default(KeyValuePair<Player, RoleAndTeamInfo>))) {
-			Logger.Warn("ResurrectTeamMember called where there are no players to respawn. Possibly the player just died...?");
+			Logger.Warn("ResurrectTeamMember called where there are no players to respawn. Possibly the player just left...?");
 			return;
 		}
 		Player playerToRespawn = respawnPlayerInfo.Key;
 		RoleTypeId roleToSetTo = respawnPlayerInfo.Value.Role;
 		playerToRespawn.SetRole(roleToSetTo, RoleChangeReason.Revived, RoleSpawnFlags.AssignInventory);
 		playerToRespawn.Position = player.Position;
-		playerToRespawn.SendHint("You've been resurrected by someone's Painkillers");
+		playerToRespawn.SendHint("You've been resurrected by someone's Painkillers", duration: 4);
 	}
 
 	public void OnRoundEnd() {

@@ -26,7 +26,7 @@ internal static class SharedCode {
 		Vector3 scale = scaleInput ?? Vector3.one;
 
 		ItemType itemType = ItemType.SCP244a;
-		if (Random.Range(1, 3) == 1) { // not sure the cleanest way to write 50% chances but this is 50% chance
+		if (Random.Range(0, 2) == 1) { // not sure the cleanest way to write 50% chances but this is 50% chance
 			itemType = ItemType.SCP244b;
 		}
 

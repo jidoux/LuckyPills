@@ -9,14 +9,15 @@ internal sealed class InvertedMovement : InvertedMovementConfig, IPillEffect, ID
 
 	public void OnEnabled(Player player, float duration) {
 		// Idk why this works, but yeah giving max slowness inverts movement??? Lol
-		// 200 they were too slow, 209 too fast
+		// 209 was too fast. 200 felt like the normal player speed... my understanding is that its some
+		// overflow scenario.
 		player.EnableEffect<CustomPlayerEffects.Slowness>(intensity: 200, duration: duration, addDuration: true);
 	}
 }
 
 internal class InvertedMovementConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 30f;
-	public float MaxDuration { get; set; } = 120f;
+	public float MinDuration { get; set; } = 20f;
+	public float MaxDuration { get; set; } = 140f;
 	public float RarityMultiplier { get; set; } = 1f;
 }

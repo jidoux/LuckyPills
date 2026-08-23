@@ -49,19 +49,12 @@ internal static class PillEffectOrchestrator {
 
 	public static void RunRandom(Player player) {
 		IPillEffect? selectedEffect = GetRandomPillEffect(player);
+		LogCallIfDebug("RunRandom; effect: " + selectedEffect?.GetType()?.Name ?? "ITS NULL IDK");
 		if (selectedEffect is null) {
 			Logger.Warn("There are no enabled effects to select.");
 			return;
 		}
-		float duration = selectedEffect.PossibleDurationRangeInclusive.Random;
-		selectedEffect.OnEnabled(player, duration);
-		string textToDisplay = AddDurationToHintText(selectedEffect.DisplayText, duration);
-		if (textToDisplay.Length > 0) { // Some effects have no DisplayText because I needed better control.
-			player.SendHint(textToDisplay);
-		}
-		if (duration < float.MaxValue - 1) {
-			MEC.Timing.CallDelayed(duration, () => selectedEffect.OnDisabled(player)); // Can sometimes just do nothing if OnDisabled isn't overriden.
-		}
+		ActivateEffect(player, selectedEffect);
 	}
 
 	private static IPillEffect? GetRandomPillEffect(Player player) {
@@ -87,6 +80,18 @@ internal static class PillEffectOrchestrator {
 		}
 		// I figure returning the last enabled element is a reasonable fallback...
 		return _enabledEffects[totalEnabledPills - 1];
+	}
+
+	public static void ActivateEffect(Player player, IPillEffect selectedEffect) {
+		float duration = selectedEffect.PossibleDurationRangeInclusive.Random;
+		selectedEffect.OnEnabled(player, duration);
+		string textToDisplay = AddDurationToHintText(selectedEffect.DisplayText, duration);
+		if (textToDisplay.Length > 0) { // Some effects have no DisplayText because I needed better control.
+			player.SendHint(textToDisplay);
+		}
+		if (duration < float.MaxValue - 1) {
+			MEC.Timing.CallDelayed(duration, () => selectedEffect.OnDisabled(player)); // Can sometimes just do nothing if OnDisabled isn't overriden.
+		}
 	}
 
 	/// <summary>

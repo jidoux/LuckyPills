@@ -65,24 +65,27 @@ internal sealed class ScrambleRolesAndItems : ScrambleRolesAndItemsConfig, IPill
 
 	private static void SetPlayerState(Player currPlayer, PreviousPlayer prevPlayer) {
 		currPlayer.SetRole(prevPlayer.Role, RoleChangeReason.RemoteAdmin, RoleSpawnFlags.None);
-		currPlayer.ClearInventory(clearAmmo: true, clearItems: true);
-		currPlayer.Health = prevPlayer.Health;
-		currPlayer.Position = prevPlayer.Position;
-		currPlayer.Rotation = prevPlayer.Rotation;
-		currPlayer.LookRotation = prevPlayer.LookRotation;
-		currPlayer.Scale = prevPlayer.Scale;
-		currPlayer.Gravity = prevPlayer.Gravity;
-		if (prevPlayer.Scp079ExpTotal is not null && TryGetScp079TierManager(currPlayer.RoleBase, out Scp079TierManager? currTierManager)) {
-			SetScp079ExpLevel(currTierManager, prevPlayer.Scp079ExpTotal.Value);
-		}
-		foreach (KeyValuePair<ItemType, ushort> ammo in prevPlayer.AllAmmo) {
-			currPlayer.Inventory.ServerAddAmmo(ammo.Key, ammo.Value);
-		}
-		// I think need to add the items after ammo so that it can handle oversized item additions.
-		foreach (ItemType item in prevPlayer.AllItems) {
-			currPlayer.AddItem(item, InventorySystem.Items.ItemAddReason.AdminCommand);
-		}
-		currPlayer.SendHint("You wake up from a dream... maybe this is who you've always been...?");
+		// Seems this needs to be delayed since some actions take a bit of time (I think).
+		MEC.Timing.CallDelayed(0.05f, () => {
+			currPlayer.ClearInventory(clearAmmo: true, clearItems: true);
+			currPlayer.Health = prevPlayer.Health;
+			currPlayer.Position = prevPlayer.Position;
+			currPlayer.Rotation = prevPlayer.Rotation;
+			currPlayer.LookRotation = prevPlayer.LookRotation;
+			currPlayer.Scale = prevPlayer.Scale;
+			currPlayer.Gravity = prevPlayer.Gravity;
+			if (prevPlayer.Scp079ExpTotal is not null && TryGetScp079TierManager(currPlayer.RoleBase, out Scp079TierManager? currTierManager)) {
+				SetScp079ExpLevel(currTierManager, prevPlayer.Scp079ExpTotal.Value);
+			}
+			foreach (KeyValuePair<ItemType, ushort> ammo in prevPlayer.AllAmmo) {
+				currPlayer.Inventory.ServerAddAmmo(ammo.Key, ammo.Value);
+			}
+			// I think need to add the items after ammo so that it can handle oversized item additions.
+			foreach (ItemType item in prevPlayer.AllItems) {
+				currPlayer.AddItem(item, InventorySystem.Items.ItemAddReason.AdminCommand);
+			}
+			currPlayer.SendHint("You wake up from a dream... maybe this is who you've always been...?", duration: 4);
+		});
 	}
 
 	/// <summary>

@@ -10,7 +10,7 @@ internal sealed class GiveEveryoneAks : GiveEveryoneAksConfig, IPillEffect {
 
 	public void OnEnabled(Player player, float duration) {
 		foreach (Player anyPlayerInMap in Player.List.Where(x => x.IsAlive && x.Team != Team.SCPs)) {
-			anyPlayerInMap.SendHint("You've been given an AK by someone else's Painkillers");
+			anyPlayerInMap.SendHint("You've been given an AK by someone else's Painkillers", duration: 4);
 			if (anyPlayerInMap.Items.Count() >= 8) {
 				anyPlayerInMap.SpawnItemBelow(ItemType.GunAK);
 			}

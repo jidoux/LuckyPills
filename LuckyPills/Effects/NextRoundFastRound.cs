@@ -36,5 +36,5 @@ internal sealed class NextRoundFastRound : NextRoundFastRoundConfig, IPillEffect
 
 internal class NextRoundFastRoundConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.5f;
+	public float RarityMultiplier { get; set; } = 0.25f;
 }

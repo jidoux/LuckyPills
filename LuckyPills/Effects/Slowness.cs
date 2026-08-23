@@ -5,7 +5,7 @@ internal sealed class Slowness : SlownessConfig, IPillEffect {
 	public string DisplayText { get; } = "You've been given slowness for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities { get; } = EffectCapabilities.GoodAsPermanent;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
 		player.EnableEffect<CustomPlayerEffects.Slowness>(intensity: 30, duration: duration, addDuration: true);

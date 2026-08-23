@@ -13,7 +13,7 @@ internal sealed class GiveEveryoneBallVomit : GiveEveryoneBallVomitConfig, IPill
 
 	public void OnEnabled(Player player, float duration) {
 		foreach (Player anyPlayerInMap in Player.List.Where(x => x.IsAlive)) {
-			anyPlayerInMap.SendHint("You've been given ball vomit by someone else's Painkillers");
+			anyPlayerInMap.SendHint("You've been given ball vomit by someone else's Painkillers", duration: 4);
 			EnablePillEffect(_ballVomitInstance, anyPlayerInMap, duration);
 		}
 	}

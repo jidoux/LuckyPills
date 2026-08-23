@@ -5,16 +5,18 @@ using LuckyPills.Effects;
 
 namespace LuckyPills;
 
-internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
+internal sealed class EventHandlers : CustomEventsHandler {
 	public override void OnPlayerUsingItem(PlayerUsingItemEventArgs ev) {
 		LogCallIfDebug();
 		try {
 			if (ev.UsableItem.Type != ItemType.Painkillers) {
 				return;
 			}
+			if (!NextRoundEveryPillIsBallVomit.TryDoNextRoundBallVomitBehavior(ev.Player)) {
+				RunRandom(ev.Player);
+			}
 			ev.IsAllowed = false;
 			ev.Player.RemoveItem(ev.UsableItem);
-			RunRandom(ev.Player);
 		}
 		catch (Exception ex) {
 			Logger.Error(ex);
@@ -248,9 +250,9 @@ internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
 	public override void OnPlayerSpinnedRevolver(PlayerSpinnedRevolverEventArgs ev) {
 		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
 	}
-	public override void OnPlayerMovementStateChanged(PlayerMovementStateChangedEventArgs ev) {
-		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
-	}
+	//public override void OnPlayerMovementStateChanged(PlayerMovementStateChangedEventArgs ev) {
+	//	FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
+	//}
 	public override void OnPlayerEscaped(PlayerEscapedEventArgs ev) {
 		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
 	}
@@ -294,6 +296,9 @@ internal sealed class LuckyPillsEventHandlers : CustomEventsHandler {
 		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
 	}
 	public override void OnPlayerSendingVoiceMessage(PlayerSendingVoiceMessageEventArgs ev) {
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
+	}
+	public override void OnPlayerUpdatedEffect(PlayerEffectUpdatedEventArgs ev) {
 		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
 	}
 }

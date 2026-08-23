@@ -12,6 +12,7 @@ internal sealed class Config {
 	public AustralianConfig Australian { get; set; } = new();
 	public AntiColaEffectConfig AntiColaEffect { get; set; } = new();
 	public BallVomitConfig BallVomit { get; set; } = new();
+	public BecomeGuardConfig BecomeGuard { get; set; } = new();
 	public BleedingConfig Bleeding { get; set; } = new();
 	public BlindedConfig Blinded { get; set; } = new();
 	public BombVomitConfig BombVomit { get; set; } = new();
@@ -49,6 +50,7 @@ internal sealed class Config {
 	public LowGravityConfig LowGravity { get; set; } = new();
 	public MassFogConfig MassFog { get; set; } = new();
 	public MutateConfig Mutate { get; set; } = new();
+	public NextRoundEveryPillIsBallVomitConfig NextRoundEveryPillIsBallVomit { get; set; } = new();
 	public NextRoundFastRoundConfig NextRoundFastRound { get; set; } = new();
 	public NextRoundLogicers NextRoundLogicers { get; set; } = new();
 	public NextRoundNoPillsConfig NextRoundNoPills { get; set; } = new();
@@ -79,5 +81,6 @@ internal sealed class Config {
 	public TheFogConfig TheFog { get; set; } = new();
 	public TurnIntoComputerConfig TurnIntoComputer { get; set; } = new();
 	public TurnOffLightsConfig TurnOffLights { get; set; } = new();
+	public VisibleToScpsConfig VisibleToScps { get; set; } = new();
 	public WallHacksConfig WallHacks { get; set; } = new();
 }

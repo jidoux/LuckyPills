@@ -33,7 +33,7 @@ internal sealed class SwapPositions : SwapPositionsConfig, IPillEffect, IDebugPi
 		(randomPlayer.Position, player.Position) = (player.Position, randomPlayer.Position);
 		(randomPlayer.Rotation, player.Rotation) = (player.Rotation, randomPlayer.Rotation);
 		(randomPlayer.LookRotation, player.LookRotation) = (player.LookRotation, randomPlayer.LookRotation);
-		randomPlayer.SendHint("Painkillers have swapped your position with another player"); // TODO validate this shows as someone alleged it didnt show
+		randomPlayer.SendHint("Painkillers have swapped your position with another player", duration: 4); // TODO validate this shows as someone alleged it didnt show
 	}
 }
 

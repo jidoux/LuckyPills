@@ -1,6 +1,6 @@
 namespace LuckyPills.Effects;
 
-internal sealed class PocketDimension : PocketDimensionConfig, IPillEffect {
+internal sealed class PocketDimension : PocketDimensionConfig, IPillEffect, IDebugPickPills {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
 	// No DisplayText here, I display it manually.
 	public new float RarityMultiplier => base.RarityMultiplier;
@@ -15,7 +15,7 @@ internal sealed class PocketDimension : PocketDimensionConfig, IPillEffect {
 		}
 		else {
 			foreach (Player currPlayer in Player.List) {
-				if (currPlayer.IsAlive) {
+				if (currPlayer.IsAlive && currPlayer.Role != PlayerRoles.RoleTypeId.Scp079) {
 					currPlayer.EnableEffect<CustomPlayerEffects.PocketCorroding>();
 					currPlayer.SendHint("Someone's Painkillers have sent everyone to the Pocket Dimension", duration: 4);
 				}
@@ -26,6 +26,6 @@ internal sealed class PocketDimension : PocketDimensionConfig, IPillEffect {
 
 internal class PocketDimensionConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.7f; // TODO check this value again, idk
-	public float OddsFromZeroToOneToSendEveryPlayerThere = 0.1f;
+	public float RarityMultiplier { get; set; } = 0.9f; // TODO check this value again, idk... I was gonna lower it to 0.7 but kepeing it upf ro now to test this one + I think its fine tbh
+	public float OddsFromZeroToOneToSendEveryPlayerThere = 0.4f;
 }

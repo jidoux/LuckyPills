@@ -28,7 +28,7 @@ internal sealed class Plugin : Plugin<Config> {
 
 	public override LoadPriority Priority => LoadPriority.Medium; // Its LoadPriority.Medium by default; I figure explicitness is fine.
 
-	public LuckyPillsEventHandlers Events { get; } = new();
+	public EventHandlers Events { get; } = new();
 
 
 	public override void Enable() {

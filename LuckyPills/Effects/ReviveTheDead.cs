@@ -32,14 +32,14 @@ internal sealed class ReviveTheDead : ReviveTheDeadConfig, IPillEffect, IDebugPi
 		foreach (Player playerToRevive in playersToRevive) {
 			playerToRevive.SetRole(player.Role, RoleChangeReason.Revived, RoleSpawnFlags.AssignInventory);
 			playerToRevive.Position = player.Position;
-			playerToRevive.SendHint("Someone's Painkillers has revived the dead");
+			playerToRevive.SendHint("Someone's Painkillers have revived the dead", duration: 4);
 		}
 	}
 }
 
 internal class ReviveTheDeadConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f; // TODO lower this imo to 0.2 or something idk
-	public int NumDeadPlayersNecessaryToBeEnabled = 3;
-	public int MaxDeadPlayersToRevive = 999;
+	public float RarityMultiplier { get; set; } = 0.2f;
+	public int NumDeadPlayersNecessaryToBeEnabled { get; set; } = 3;
+	public int MaxDeadPlayersToRevive { get; set; } = 999;
 }
