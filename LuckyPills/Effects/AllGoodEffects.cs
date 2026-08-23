@@ -1,20 +1,25 @@
 namespace LuckyPills.Effects;
 
 internal sealed class AllGoodEffects : AllGoodEffectsConfig, IPillEffect {
-	private static readonly IReadOnlyCollection<IPillEffect> _effectCandidates = GetAllPillEffects()
-		.Where(x => (x.Capabilities & EffectCapabilities.GoodEffect) == EffectCapabilities.GoodEffect)
-		.ToList().AsReadOnly();
+	private static readonly Lazy<IPillEffect[]> _effectCandidates = new(() => {
+		// I did this mainly because I was scared of static initialization order issues with my singleton AllPillEffects,
+		// but this also may be better to not allocate this static field, to be honest.
+		return AllPillEffects
+			.Where(x => (x.Capabilities & EffectCapabilities.GoodEffect) == EffectCapabilities.GoodEffect)
+			.ToArray();
+	});
 
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've been given every good effect for {duration} seconds";
+	public string DisplayText { get; } = "You've been given every good effect for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		IEnumerable<IPillEffect> effectsToUse = _effectCandidates.Where(x => x.IsEnabled(player));
-		foreach (IPillEffect effect in effectsToUse) {
-			EnablePillEffect(effect, player, duration);
+		foreach (IPillEffect effect in _effectCandidates.Value) {
+			if (effect.IsEnabled(player)) {
+				EnablePillEffect(effect, player, duration);
+			}
 		}
 	}
 }

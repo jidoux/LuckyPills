@@ -2,10 +2,10 @@ namespace LuckyPills.Effects;
 
 internal sealed class Giant : GiantConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've been turned into a giant for {duration} seconds";
+	public string DisplayText { get; } = "You've been turned into a giant for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
 		player.Scale = new Vector3(2f, 2f, 2f);

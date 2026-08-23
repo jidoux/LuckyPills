@@ -8,7 +8,7 @@ namespace LuckyPills;
 internal interface IDebugPickPills;
 
 /// <summary>
-/// All virtual fields are virtual due to interface segregation.
+/// The contract of all pill effects. All virtual fields are virtual due to interface segregation.
 /// </summary>
 internal interface IPillEffect {
 	public bool IsEnabled(Player player);
@@ -25,11 +25,27 @@ internal interface IPillEffect {
 }
 
 internal static class PillEffectOrchestrator {
+	/// <summary>
+	/// This is global for performance reasons. A better data type for it would be IReadOnlyCollection, but using an array for perf.
+	/// </summary>
+	public static readonly IPillEffect[] AllPillEffects =
 #if DEBUGGING_SPECIFIC_PILL_EFFECTS_WITH_INTERFACE && DEBUG
-	private static readonly IReadOnlyCollection<IPillEffect> _allPillEffects = [.. GetAllPillEffects(useDebugPickPills: true)];
+		typeof(IPillEffect).Assembly.GetTypes()
+			.Where(x => typeof(IDebugPickPills).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
+			.Select(x => (IPillEffect)Activator.CreateInstance(x)!)
+			.ToArray();
 #else
-	private static readonly IReadOnlyCollection<IPillEffect> _allPillEffects = [.. GetAllPillEffects()];
+		typeof(IPillEffect).Assembly.GetTypes()
+			.Where(x => typeof(IPillEffect).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
+			.Select(x => (IPillEffect)Activator.CreateInstance(x)!)
+			.ToArray();
 #endif
+	/// <summary>
+	/// This is populated of all enabled effects everytime a Painkiller is used. i want to initialize its size to the
+	/// possible max to avoid overhead later on.
+	/// </summary>
+	private static readonly IPillEffect[] _enabledEffects = new IPillEffect[AllPillEffects.Length];
+	public static bool IsSpecialEventHappeningNextRound { get; set; } = false;
 
 	public static void RunRandom(Player player) {
 		IPillEffect? selectedEffect = GetRandomPillEffect(player);
@@ -43,30 +59,34 @@ internal static class PillEffectOrchestrator {
 		if (textToDisplay.Length > 0) { // Some effects have no DisplayText because I needed better control.
 			player.SendHint(textToDisplay);
 		}
-#pragma warning disable S1244 // I figure this warning is pointless when comparing against Float.MaxValue as long as im not doing computations...
-		if (duration != float.MaxValue) {
+		if (duration < float.MaxValue - 1) {
 			MEC.Timing.CallDelayed(duration, () => selectedEffect.OnDisabled(player)); // Can sometimes just do nothing if OnDisabled isn't overriden.
 		}
-#pragma warning restore S1244
 	}
 
 	private static IPillEffect? GetRandomPillEffect(Player player) {
-		List<IPillEffect> allEnabledPillEffects = [.. _allPillEffects.Where(x => x.IsEnabled(player))];
-		if (allEnabledPillEffects.Count == 0) {
-			return null; // Signal to the caller that some error occurred - think Result<T>
-		}
-
-		float totalWeight = allEnabledPillEffects.Sum(x => x.RarityMultiplier);
-		float randomRoll = Random.Range(0f, totalWeight);
-		float cumulativeWeightSum = 0f;
-		foreach (IPillEffect pillEffect in allEnabledPillEffects) {
-			cumulativeWeightSum += pillEffect.RarityMultiplier;
-			if (randomRoll < cumulativeWeightSum) {
-				return pillEffect;
+		float totalWeight = 0f;
+		int totalEnabledPills = 0;
+		foreach (IPillEffect effect in AllPillEffects) {
+			if (effect.IsEnabled(player)) {
+				totalWeight += effect.RarityMultiplier;
+				_enabledEffects[totalEnabledPills] = effect;
+				totalEnabledPills++;
 			}
 		}
-		// I figure this is a reasonable fallback
-		return allEnabledPillEffects[^1];
+		if (totalEnabledPills == 0) {
+			return null; // Signal to the caller that some error occurred - think Result<T>
+		}
+		float randomRoll = Random.Range(0f, totalWeight);
+		float cumulativeWeightSum = 0f;
+		for (int i = 0; i < totalEnabledPills; i++) {
+			cumulativeWeightSum += _enabledEffects[i].RarityMultiplier;
+			if (randomRoll < cumulativeWeightSum) {
+				return _enabledEffects[i];
+			}
+		}
+		// I figure returning the last enabled element is a reasonable fallback...
+		return _enabledEffects[totalEnabledPills - 1];
 	}
 
 	/// <summary>

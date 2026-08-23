@@ -7,17 +7,17 @@ internal sealed class FutureDeathRisk : FutureDeathRiskConfig, IPillEffect, IDeb
 	private static readonly HashSet<string> _relevantEventHandlers = [];
 
 	// The amount is arbitrary.
-	public new bool IsEnabled(Player player) => _relevantEventHandlers.Count > 22 && !_playersToDie.ContainsKey(player) && base.IsEnabled;
-	public string DisplayText => "One randomly-selected action you take will kill you";
+	public new bool IsEnabled(Player player) => _relevantEventHandlers.Count > 20 && !_playersToDie.ContainsKey(player) && base.IsEnabled;
+	public string DisplayText { get; } = "One randomly-selected action you take will kill you";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
 		_playersToDie.Add(player, GetRandomEventHandler());
 	}
 
 	public void OnDisabled(Player player) {
-		player.Scale = Vector3.one;
+		_playersToDie.Remove(player);
 	}
 
 	public void OnRoundEnd() {
@@ -26,20 +26,21 @@ internal sealed class FutureDeathRisk : FutureDeathRiskConfig, IPillEffect, IDeb
 	}
 
 	public static void FutureDeathRiskBehavior(Player? player, [CallerMemberName] string callerMethod = "") {
-		if (player is null) {
+		LogCallIfDebug(callerMethod);
+		if (player is null || _relevantEventHandlers.Add(callerMethod) || _playersToDie.Count == 0) {
 			return;
 		}
 		try { // will be called by many random event handlers, so dont want it to throw
-			if (!_relevantEventHandlers.Add(callerMethod)) {
+			if (!_playersToDie.TryGetValue(player, out string eventHandlerTiedToPlayer)) {
 				return;
 			}
-			if (callerMethod == GetRandomEventHandler() && _playersToDie.Remove(player)) {
+			if (callerMethod == eventHandlerTiedToPlayer && _playersToDie.Remove(player)) {
 				player.SendHint($"Your Painkillers decided you can't trigger \"{callerMethod}\", so now you die");
 				MEC.Timing.CallDelayed(1.5f, player.Kill);
 			}
 		}
 		catch (Exception ex) {
-			Debug.LogException(ex);
+			Logger.Error(ex);
 		}
 	}
 

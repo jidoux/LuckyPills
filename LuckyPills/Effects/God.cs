@@ -2,10 +2,10 @@ namespace LuckyPills.Effects;
 
 internal sealed class God : GodConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've been given god mode for {duration} seconds";
+	public string DisplayText { get; } = "You've been given god mode for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
 		player.IsGodModeEnabled = true;

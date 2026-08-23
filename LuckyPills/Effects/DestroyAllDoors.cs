@@ -6,9 +6,9 @@ internal sealed class DestroyAllDoors : DestroyAllDoorsConfig, IPillEffect {
 	private static bool _wasEveryDoorBrokenAlready = false;
 
 	public new bool IsEnabled(Player player) => !_wasEveryDoorBrokenAlready && base.IsEnabled;
-	public string DisplayText => "You've destroyed every door";
+	public string DisplayText { get; } = "You've destroyed every door";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
 		DestroyAllTheDoors();

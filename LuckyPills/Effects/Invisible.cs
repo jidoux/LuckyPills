@@ -2,10 +2,10 @@ namespace LuckyPills.Effects;
 
 internal sealed class Invisible : InvisibleConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've been turned invisible for {duration} seconds";
+	public string DisplayText { get; } = "You've been turned invisible for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None; // Not having this in good effects since it was more fun when the good effect player was visible.
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None; // Not having this in good effects since it was more fun when the good effect player was visible.
 
 	public void OnEnabled(Player player, float duration) {
 		player.EnableEffect<CustomPlayerEffects.Fade>(intensity: byte.MaxValue, duration: duration, addDuration: true);

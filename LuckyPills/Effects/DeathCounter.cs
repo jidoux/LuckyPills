@@ -4,7 +4,7 @@ internal sealed class DeathCounter : DeathCounterConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
 	public string DisplayText => $"You will die in {base.SecondsToDeath} seconds";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
 		MEC.Timing.RunCoroutine(DeathCountdown(player, base.SecondsToDeath));

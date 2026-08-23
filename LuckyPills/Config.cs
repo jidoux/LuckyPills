@@ -22,6 +22,7 @@ internal sealed class Config {
 	public DismembermentConfig Dismemberment { get; set; } = new();
 	public EnsnaredConfig Ensnared { get; set; } = new();
 	public ExtraHealthConfig ExtraHealth { get; set; } = new();
+	public ExhaustedConfig Exhausted { get; set; } = new();
 	public ExplodeConfig Explode { get; set; } = new();
 	public EveryPickupTurnsIntoPainkillersConfig EveryPickupTurnsIntoPainkillers { get; set; } = new();
 	public FillInventoryWithPillsConfig FillInventoryWithPills { get; set; } = new();
@@ -38,15 +39,17 @@ internal sealed class Config {
 	public HandcuffedConfig Handcuffed { get; set; } = new();
 	public HemorrhageConfig Hemorrhage { get; set; } = new();
 	public HumeShieldConfig HumeShield { get; set; } = new();
+	public InvertedMovementConfig InvertedMovement { get; set; } = new();
 	public InvigoratedConfig Invigorated { get; set; } = new();
 	public InvisibleConfig Invisible { get; set; } = new();
+	public LczDecontaminationConfig LczDecontamination { get; set; } = new();
 	public KillPlayerYouSeeConfig KillPlayerYouSee { get; set; } = new();
 	public GiveEveryoneAksConfig GiveEveryoneAks { get; set; } = new();
 	public LightBulbVomitConfig LightBulbVomit { get; set; } = new();
 	public LowGravityConfig LowGravity { get; set; } = new();
 	public MassFogConfig MassFog { get; set; } = new();
-	public MassTantrumConfig MassTantrum { get; set; } = new();
 	public MutateConfig Mutate { get; set; } = new();
+	public NextRoundFastRoundConfig NextRoundFastRound { get; set; } = new();
 	public NextRoundLogicers NextRoundLogicers { get; set; } = new();
 	public NextRoundNoPillsConfig NextRoundNoPills { get; set; } = new();
 	public NextRoundSurfaceFightConfig NextRoundSurfaceFight { get; set; } = new();
@@ -54,6 +57,8 @@ internal sealed class Config {
 	public NoJumpingConfig NoJumping { get; set; } = new();
 	public OneHealthConfig OneHealth { get; set; } = new();
 	public PaperConfig Paper { get; set; } = new();
+	public PeriodicGrenadesConfig PeriodicGrenades { get; set; } = new();
+	public PeriodicTantrumsConfig PeriodicTantrums { get; set; } = new();
 	public PermanentPlayerChangesConfig PermanentPlayerChanges { get; set; } = new();
 	public PocketDimensionConfig PocketDimension { get; set; } = new();
 	public PoisonedConfig Poisoned { get; set; } = new();
@@ -63,6 +68,7 @@ internal sealed class Config {
 	public ScrambleRolesAndItemsConfig ScrambleRolesAndItems { get; set; } = new();
 	public ShrunkConfig Shrunk { get; set; } = new();
 	public SinkholeConfig Sinkhole { get; set; } = new();
+	public SlownessConfig Slowness { get; set; } = new();
 	public SodaEffectConfig SodaEffect { get; set; } = new();
 	public SuperSpeedConfig SuperSpeed { get; set; } = new();
 	public SwapPositionsConfig SwapPositions { get; set; } = new();

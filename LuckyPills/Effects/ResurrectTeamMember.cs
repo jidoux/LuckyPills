@@ -8,10 +8,20 @@ internal sealed class ResurrectTeamMember : ResurrectTeamMemberConfig, IPillEffe
 	// died, and we access the list by filtering out living players.
 	private static readonly Dictionary<Player, RoleAndTeamInfo> _killedPlayers = [];
 
-	public new bool IsEnabled(Player player) => _killedPlayers.Any(x => x.Value.Team == player.Team && !x.Key.IsAlive) && base.IsEnabled;
-	public string DisplayText => "You've resurrected a fallen team member";
+	public new bool IsEnabled(Player player) {
+		if (!base.IsEnabled) {
+			return false;
+		}
+		foreach (KeyValuePair<Player, RoleAndTeamInfo> item in _killedPlayers) {
+			if (!item.Key.IsAlive && item.Value.Team == player.Team) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public string DisplayText { get; } = "You've resurrected a fallen team member";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.GoodEffect;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
 		KeyValuePair<Player, RoleAndTeamInfo> respawnPlayerInfo = _killedPlayers

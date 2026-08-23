@@ -2,24 +2,24 @@ using PlayerRoles;
 
 namespace LuckyPills.Effects;
 
-internal sealed class NextRoundLogicers : NextRoundLogicersConfig, IPillEffect, IDebugPickPills {
+internal sealed class NextRoundLogicers : NextRoundLogicersConfig, IPillEffect {
 	private static bool _giveDClassLogicersNextRound = false;
 	private static bool _givingLogicersThisRound = false;
 
-	public new bool IsEnabled(Player player) => !GlobalVariables.IsSpecialEventHappeningNextRound
-		&& !_giveDClassLogicersNextRound && Player.List.Any(x => x.Role == RoleTypeId.ClassD) && base.IsEnabled;
-	public string DisplayText => "Something special will happen next round..."; // TODO determine if this is preferable to no message at all, mby try both idk
+	public new bool IsEnabled(Player player) => !IsSpecialEventHappeningNextRound &&
+		!_giveDClassLogicersNextRound && base.IsEnabled;
+	public string DisplayText { get; } = "Something special will happen next round...";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		GlobalVariables.IsSpecialEventHappeningNextRound = true;
+		IsSpecialEventHappeningNextRound = true;
 		_giveDClassLogicersNextRound = true;
 	}
 
 	public static void NextRoundLogicersBehavior(Player player) {
 		if (_givingLogicersThisRound && player.Role == RoleTypeId.ClassD) {
-			player.SendHint("Someone's Painkillers from last round has given you this Logicer");
+			player.SendHint("Someone's Painkillers from last round has given you this Logicer", duration: 5f);
 			player.ForceEquip(ItemType.GunLogicer);
 		}
 	}
@@ -31,7 +31,7 @@ internal sealed class NextRoundLogicers : NextRoundLogicersConfig, IPillEffect, 
 		}
 		else if (_giveDClassLogicersNextRound) {
 			_givingLogicersThisRound = true;
-			GlobalVariables.IsSpecialEventHappeningNextRound = false;
+			IsSpecialEventHappeningNextRound = false;
 		}
 	}
 }

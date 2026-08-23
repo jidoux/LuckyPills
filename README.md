@@ -4,7 +4,7 @@ This is a heavily modified remix of [LuckyPills made by BuildBoy12](https://gith
 
 ## What is it?
 
-LuckyPills is a heavily-configurable plugin for LabAPI that redefines Painkillers to be a mystery box. Never before has consuming Painkillers caused such unbelievable outcomes... but don't just take my word for it. Who doesn't like gambling, anyway? (in a video game)
+LuckyPills is a heavily-configurable plugin for LabAPI that redefines Painkillers to be a mystery box. Never before has consuming Painkillers caused such unbelievable outcomes... but don't just take my word for it. Who doesn't like gambling, anyway? (in a video game) (dont gamble for real)
 
 ## Setup
 

@@ -2,10 +2,10 @@ namespace LuckyPills.Effects;
 
 internal sealed class WallHacks : WallHacksConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've been given wall hacks for {duration} seconds";
+	public string DisplayText { get; } = "You've been given wall hacks for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect | EffectCapabilities.GoodAsPermanent;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect | EffectCapabilities.GoodAsPermanent;
 
 	public void OnEnabled(Player player, float duration) {
 		// I have no clue what Scp1344Detected is... I gave it to a player and noticed nothing visually from my alt account.

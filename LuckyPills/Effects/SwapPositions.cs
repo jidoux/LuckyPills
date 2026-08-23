@@ -1,10 +1,25 @@
 namespace LuckyPills.Effects;
 
 internal sealed class SwapPositions : SwapPositionsConfig, IPillEffect, IDebugPickPills {
-	public new bool IsEnabled(Player player) => Player.List.Count(x => x.IsAlive && x.Role != PlayerRoles.RoleTypeId.Scp079) > 1 && base.IsEnabled;
-	public string DisplayText => "You've swapped positions with another random player";
+	public new bool IsEnabled(Player player) {
+		if (!base.IsEnabled) {
+			return false;
+		}
+		byte counter = 0;
+		foreach (Player currPlayer in Player.List) {
+			if (currPlayer.IsAlive && currPlayer.Role != PlayerRoles.RoleTypeId.Scp079) {
+				counter++;
+			}
+			if (counter > 1) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public string DisplayText { get; } = "You've swapped positions with another random player";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
 		Player? randomPlayer = Player.List

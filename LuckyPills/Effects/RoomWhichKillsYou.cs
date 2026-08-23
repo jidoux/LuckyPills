@@ -2,13 +2,13 @@ using MapGeneration;
 
 namespace LuckyPills.Effects;
 
-internal sealed class RoomWhichKillsYou : RoomWhichKillsYouConfig, IPillEffect, IDebugPickPills {
+internal sealed class RoomWhichKillsYou : RoomWhichKillsYouConfig, IPillEffect {
 	private static readonly Dictionary<Player, Room> _playersAndRoomsWhichKillThem = [];
 
 	public new bool IsEnabled(Player player) => !_playersAndRoomsWhichKillThem.ContainsKey(player) && base.IsEnabled;
 	// No DisplayText because I want to display the zone as well, so I just display it in OnEnabled
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
 		FacilityZone zoneToUse = GetZoneToUse();
@@ -26,11 +26,11 @@ internal sealed class RoomWhichKillsYou : RoomWhichKillsYouConfig, IPillEffect, 
 	private static Room GetRoomToUse(Room? playerCurrentRoom, FacilityZone zoneToUse) {
 		Room? roomToUse;
 		do { // I don't want to roll the player's current room...
-			roomToUse = Map.GetRandomRoom(zoneToUse);
+			roomToUse = GetRandomRoom(zoneToUse);
 			if (roomToUse is null) {
 				throw new InvalidOperationException("RoomWhichKillsYou effect activated with NO ROOMS IN THE MAP??? HCOW???");
 			}
-		} while (playerCurrentRoom != roomToUse && playerCurrentRoom is not null); // But if the player's current room is null, we can just exit the loop.
+		} while (playerCurrentRoom == roomToUse);
 		return roomToUse;
 	}
 
@@ -43,9 +43,16 @@ internal sealed class RoomWhichKillsYou : RoomWhichKillsYouConfig, IPillEffect, 
 			FacilityZone.Surface => " on Surface ",
 			_ => " somewhere "
 		};
-		string hintText = $"A random room{zoneToDisplay}will kill you upon entry");
+		string hintText = $"A random room{zoneToDisplay}will kill you upon entry";
 		return hintText;
 	}
+
+	// Looked like the LabApi version of this method was quite unoptimized. At least, the version in open source control was.
+	private static Room? GetRandomRoom(FacilityZone zoneToUse) {
+		Room[] rooms = Map.Rooms.Where(x => x.Zone == zoneToUse).ToArray();
+		return rooms.Length == 0 ? null : rooms[Random.Range(0, rooms.Length)];
+	}
+
 
 	public void OnRoundEnd() {
 		_playersAndRoomsWhichKillThem.Clear();

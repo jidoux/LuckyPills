@@ -5,37 +5,55 @@ using PlayerRoles.PlayableScps.Scp079;
 namespace LuckyPills.Effects;
 
 internal sealed class ScrambleRolesAndItems : ScrambleRolesAndItemsConfig, IPillEffect, IDebugPickPills {
-	public new bool IsEnabled(Player player) => Player.List.Count(x => x.IsAlive) > 1 && base.IsEnabled;
+	public new bool IsEnabled(Player player) {
+		if (!base.IsEnabled) {
+			return false;
+		}
+		byte counter = 0;
+		foreach (Player currPlayer in Player.List) {
+			if (currPlayer.IsAlive) {
+				counter++;
+			}
+			if (counter > 1) {
+				return true;
+			}
+		}
+		return false;
+	}
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
 		PreviousPlayer prevPlayer = new(
-			[.. player.Items.Select(x => x.Base.ItemTypeId)],
+			player.Items.Select(x => x.Base.ItemTypeId).ToArray(),
 			new Dictionary<ItemType, ushort>(player.Ammo),
 			player.Role,
 			player.Health,
 			player.Position,
 			player.Rotation,
 			player.LookRotation,
+			player.Scale,
+			player.Gravity,
 			Scp079ExpTotal: null
 		);
 		PreviousPlayer nextPrevPlayer;
 		Player currPlayer;
-		Player[] playerArray = [.. Player.List.Where(x => x.IsAlive && x != player)];
+		Player[] playerArray = Player.List.Where(x => x.IsAlive && x != player).ToArray();
 		for (int i = 0; i < playerArray.Length; i++) {
 			// The strategy is to cache the prevPlayer/firstPlayer and do operations on currPlayer.
 			// then at the very end, do operations on player itself on the very last player.
 			currPlayer = playerArray[i];
 
 			nextPrevPlayer = new(
-				[.. currPlayer.Items.Select(x => x.Base.ItemTypeId)],
+				currPlayer.Items.Select(x => x.Base.ItemTypeId).ToArray(),
 				new Dictionary<ItemType, ushort>(currPlayer.Ammo),
 				currPlayer.Role,
 				currPlayer.Health,
 				currPlayer.Position,
 				currPlayer.Rotation,
 				currPlayer.LookRotation,
+				currPlayer.Scale,
+				currPlayer.Gravity,
 				TryGetScp079TierManager(currPlayer.RoleBase, out Scp079TierManager? tierManager) ? tierManager?.TotalExp : null
 			);
 			SetPlayerState(currPlayer, prevPlayer);
@@ -52,6 +70,8 @@ internal sealed class ScrambleRolesAndItems : ScrambleRolesAndItemsConfig, IPill
 		currPlayer.Position = prevPlayer.Position;
 		currPlayer.Rotation = prevPlayer.Rotation;
 		currPlayer.LookRotation = prevPlayer.LookRotation;
+		currPlayer.Scale = prevPlayer.Scale;
+		currPlayer.Gravity = prevPlayer.Gravity;
 		if (prevPlayer.Scp079ExpTotal is not null && TryGetScp079TierManager(currPlayer.RoleBase, out Scp079TierManager? currTierManager)) {
 			SetScp079ExpLevel(currTierManager, prevPlayer.Scp079ExpTotal.Value);
 		}
@@ -70,19 +90,21 @@ internal sealed class ScrambleRolesAndItems : ScrambleRolesAndItemsConfig, IPill
 	/// that populated this object are simply overridden.
 	/// </summary>
 	/// <remarks>
-	/// Could add HumeShield, ArtificialHealth, StaminaRemaining, ActiveEffects. The ArtificialHealth is
+	/// Could add HumeShield, ArtificialHealth, StaminaRemaining, ActiveEffects, MaxHealth, etc... The ArtificialHealth is
 	/// given by Adrenaline for example, and I noticed just copying the value didn't copy over the natural drain
 	/// that should accompany it. I removed HumeShield preemptively for fear of same situation. I remove ActiveEffects
 	/// just because I couldn't get it to work for some reason... not really sure why.
 	/// </remarks>
 	private sealed record PreviousPlayer(
-		IReadOnlyCollection<ItemType> AllItems,
-		IReadOnlyDictionary<ItemType, ushort> AllAmmo,
+		ItemType[] AllItems,
+		Dictionary<ItemType, ushort> AllAmmo,
 		RoleTypeId Role,
 		float Health,
 		Vector3 Position,
 		Quaternion Rotation,
 		Vector2 LookRotation,
+		Vector3 Scale,
+		Vector3 Gravity,
 		int? Scp079ExpTotal
 	);
 }

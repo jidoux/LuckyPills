@@ -1,23 +1,31 @@
 namespace LuckyPills.Effects;
 
 internal sealed class PocketDimension : PocketDimensionConfig, IPillEffect {
-	// TODO sometimes this messes up my cahracter idk why tho,... do i need to give corrosion effect or smethng? IDk. I go into hole and just see black idk if i cluelss orr
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've been sent to the pocket dimension";
+	// No DisplayText here, I display it manually.
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		Room? pocketDimensionRoom = Room.Get(MapGeneration.RoomName.Pocket).FirstOrDefault();
-		if (pocketDimensionRoom is null) {
-			Logger.Error("PocketDimensionRoom is null... this is a problem");
-			return;
+		// When this effect is enabled it checks if pocket dimension's room identifier can be found, then teleports the player to it's position.
+		// I was previously finding the room manually, which had some freaky issue where players could just have a permanent black screen, idk why.
+		if (Random.value > base.OddsFromZeroToOneToSendEveryPlayerThere) {
+			player.SendHint("You've been sent to the pocket dimension");
+			player.EnableEffect<CustomPlayerEffects.PocketCorroding>();
 		}
-		player.Position = pocketDimensionRoom.Position + Vector3.up; // Sometimes I teleported through the floor, the +1 is intended to fix.
+		else {
+			foreach (Player currPlayer in Player.List) {
+				if (currPlayer.IsAlive) {
+					currPlayer.EnableEffect<CustomPlayerEffects.PocketCorroding>();
+					currPlayer.SendHint("Someone's Painkillers have sent everyone to the Pocket Dimension", duration: 4);
+				}
+			}
+		}
 	}
 }
 
 internal class PocketDimensionConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	public float RarityMultiplier { get; set; } = 0.7f; // TODO check this value again, idk
+	public float OddsFromZeroToOneToSendEveryPlayerThere = 0.1f;
 }

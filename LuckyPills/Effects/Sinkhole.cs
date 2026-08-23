@@ -2,10 +2,10 @@ namespace LuckyPills.Effects;
 
 internal sealed class Sinkhole : SinkholeConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've been given a sinkhole effect for {duration} seconds";
+	public string DisplayText { get; } = "You've been given a sinkhole effect for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodAsPermanent;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodAsPermanent;
 
 	public void OnEnabled(Player player, float duration) {
 		player.EnableEffect<CustomPlayerEffects.Sinkhole>(intensity: byte.MaxValue, duration: duration, addDuration: true);

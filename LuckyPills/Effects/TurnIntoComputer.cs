@@ -4,14 +4,33 @@ using PlayerRoles.PlayableScps.Scp079;
 namespace LuckyPills.Effects;
 
 internal sealed class TurnIntoComputer : TurnIntoComputerConfig, IPillEffect, IDebugPickPills {
-	public new bool IsEnabled(Player player) =>
-		Player.List.Count(x => x.Role != RoleTypeId.ClassD && x.Role != RoleTypeId.Scientist && x != player) > 2 // At least 3 class D/scientists, not counting current pill popper
-		&& !Player.List.Any(x => x.Role == RoleTypeId.Scp079) // We don't want there to already be a 079
-		&& Map.Generators.Count(x => x.Engaged) >= 3 // If the generators are engaged to where SCP-079 should be dead.
-		&& base.IsEnabled;
-	public string DisplayText => "You've turned into SCP-079";
+	// TODO I am moderately unsure if I want to swap one of the SCPs to a D-Class when this gets activated, like idk man.
+	public new bool IsEnabled(Player player) {
+		if (!base.IsEnabled) {
+			return false;
+		}
+		// At least 3 class D/scientists
+		byte relevantPlayers = 0;
+		foreach (Player currPlayer in Player.List) {
+			if (currPlayer.Role == RoleTypeId.Scp079) {
+				return false;
+			}
+			if (relevantPlayers <= 3 && (currPlayer.Role == RoleTypeId.ClassD || currPlayer.Role == RoleTypeId.Scientist)) {
+				relevantPlayers++;
+			}
+		}
+		byte engagedCount = 0;
+		foreach (Generator generator in Map.Generators) {
+			if (generator.Engaged) {
+				engagedCount++;
+			}
+		}
+		return engagedCount < 3 && relevantPlayers > 3;
+	}
+
+	public string DisplayText { get; } = "You've turned into SCP-079";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
 		player.SetRole(RoleTypeId.Scp079, RoleChangeReason.ItemUsage, RoleSpawnFlags.All);

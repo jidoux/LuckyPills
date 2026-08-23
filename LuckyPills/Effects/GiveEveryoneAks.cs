@@ -4,9 +4,9 @@ namespace LuckyPills.Effects;
 
 internal sealed class GiveEveryoneAks : GiveEveryoneAksConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've given every player an AK";
+	public string DisplayText { get; } = "You've given every player an AK";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
 		foreach (Player anyPlayerInMap in Player.List.Where(x => x.IsAlive && x.Team != Team.SCPs)) {

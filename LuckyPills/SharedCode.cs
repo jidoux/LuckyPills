@@ -9,6 +9,7 @@ using PlayerRoles.PlayableScps.Scp079;
 using RelativePositioning;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using ThrowableItem = InventorySystem.Items.ThrowableProjectiles.ThrowableItem;
 
 namespace LuckyPills;
@@ -47,9 +48,9 @@ internal static class SharedCode {
 		}
 	}
 
-	private static void SpawnThrownExplosive(ReferenceHub thrower, ItemType grenadeType, float forceMultiplier = 1f, float upwardMultiplier = 1f) {
+	public static void SpawnThrownExplosive(ReferenceHub thrower, ItemType grenadeType, float forceMultiplier = 1f, float upwardMultiplier = 1f) {
 		if (!InventoryItemLoader.TryGetItem(grenadeType, out ThrowableItem grenadeTemplate)) {
-			Logger.Error($"Failed to get the following grenade type (for bomb vomit): {grenadeType}");
+			Logger.Error($"Failed to get the following grenade type (for spawning thrown explosive): {grenadeType}");
 			return;
 		}
 		float forceAmount = grenadeTemplate.FullThrowSettings.StartVelocity * forceMultiplier;
@@ -76,15 +77,6 @@ internal static class SharedCode {
 		}
 		thrownProjectile.ServerActivate();
 	}
-
-	public static IEnumerable<IPillEffect> GetAllPillEffects(bool useDebugPickPills = false)
-		=> useDebugPickPills
-			? typeof(IPillEffect).Assembly.GetTypes()
-				.Where(x => typeof(IDebugPickPills).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
-				.Select(x => (IPillEffect)Activator.CreateInstance(x)!)
-			: typeof(IPillEffect).Assembly.GetTypes()
-				.Where(x => typeof(IPillEffect).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
-				.Select(x => (IPillEffect)Activator.CreateInstance(x)!);
 
 	public static void EnablePillEffect(IPillEffect effect, Player player, float duration) {
 		effect.OnEnabled(player, duration);
@@ -165,8 +157,21 @@ internal static class SharedCode {
 		}
 	}
 
-	public static bool IsPlayerInTeam(Player player, params Team[] teams) => teams.Any(team => team == player.Team);
+	public static bool IsInTeam(this Player player, params Team[] teams) => teams.Any(team => team == player.Team);
 
+	public static bool IsInNonScpTeam(this Player player) {
+		return player.Team == Team.ClassD ||
+			player.Team == Team.ChaosInsurgency ||
+			player.Team == Team.FoundationForces ||
+			player.Team == Team.Scientists;
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static string AddDurationToHintText(string displayText, float duration) =>
 		displayText.Replace("{duration}", ((int)Math.Floor(duration)).ToString(CultureInfo.InvariantCulture), StringComparison.Ordinal);
+
+	[System.Diagnostics.Conditional("DEBUG")]
+	public static void LogCallIfDebug([System.Runtime.CompilerServices.CallerMemberName] string callerMethod = "") {
+		Logger.Debug(callerMethod + " was just called");
+	}
 }

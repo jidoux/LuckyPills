@@ -4,14 +4,14 @@ internal sealed class NextRoundNoPills : NextRoundNoPillsConfig, IPillEffect {
 	private static bool _notSpawningPillsNextRound = false;
 	private static bool _notSpawningPillsThisRound = false;
 
-	public new bool IsEnabled(Player player) => !GlobalVariables.IsSpecialEventHappeningNextRound &&
+	public new bool IsEnabled(Player player) => !IsSpecialEventHappeningNextRound &&
 		!_notSpawningPillsNextRound && base.IsEnabled;
-	public string DisplayText => "Something special will happen next round...";
+	public string DisplayText { get; } = "Something special will happen next round...";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		GlobalVariables.IsSpecialEventHappeningNextRound = true;
+		IsSpecialEventHappeningNextRound = true;
 		_notSpawningPillsNextRound = true;
 	}
 
@@ -26,7 +26,7 @@ internal sealed class NextRoundNoPills : NextRoundNoPillsConfig, IPillEffect {
 		}
 		else if (_notSpawningPillsNextRound) {
 			_notSpawningPillsThisRound = true;
-			GlobalVariables.IsSpecialEventHappeningNextRound = false;
+			IsSpecialEventHappeningNextRound = false;
 		}
 	}
 }

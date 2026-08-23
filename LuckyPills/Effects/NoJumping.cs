@@ -1,11 +1,11 @@
-﻿namespace LuckyPills.Effects;
+namespace LuckyPills.Effects;
 
 internal sealed class NoJumping : NoJumpingConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You can no longer jump for {duration} seconds";
+	public string DisplayText { get; } = "You can no longer jump for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
 		player.EnableEffect<CustomPlayerEffects.HeavyFooted>(intensity: byte.MaxValue, duration: duration, addDuration: true);

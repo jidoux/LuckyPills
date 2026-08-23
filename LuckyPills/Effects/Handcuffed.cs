@@ -4,10 +4,10 @@ internal sealed class Handcuffed : HandcuffedConfig, IPillEffect {
 	private readonly HashSet<Player> _cachedHandcuffedPlayers = [];
 
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've been handcuffed for {duration} seconds";
+	public string DisplayText { get; } = "You've been handcuffed for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
 		if (player.IsDisarmed || !player.IsAlive) {

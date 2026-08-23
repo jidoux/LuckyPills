@@ -4,9 +4,9 @@ namespace LuckyPills.Effects;
 
 internal sealed class SodaEffect : SodaEffectConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've been given the soda effect";
+	public string DisplayText { get; } = "You've been given the soda effect";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
 		byte currentPlayerIntensity = 0;

@@ -5,11 +5,25 @@ namespace LuckyPills.Effects;
 internal sealed class Mutate : MutateConfig, IPillEffect {
 	private readonly Dictionary<Player, RoleTypeId> _cachedRoles = [];
 
-	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've been mutated for {duration} seconds";
+	public new bool IsEnabled(Player player) {
+		if (!base.IsEnabled) {
+			return false;
+		}
+		byte counter = 0;
+		foreach (Player currPlayer in Player.List) {
+			if (currPlayer.IsInNonScpTeam()) {
+				counter++;
+			}
+			if (counter > 1) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public string DisplayText { get; } = "You've been mutated for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.GoodAsPermanent;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
 		if (!_cachedRoles.ContainsKey(player)) {
@@ -31,5 +45,5 @@ internal class MutateConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 9f;
 	public float MaxDuration { get; set; } = 36f;
-	public float RarityMultiplier { get; set; } = 0.86f;
+	public float RarityMultiplier { get; set; } = 0.8f;
 }

@@ -2,9 +2,9 @@ namespace LuckyPills.Effects;
 
 internal sealed class ExtraHealth : ExtraHealthConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => player.Health < 99f && base.IsEnabled;
-	public string DisplayText => "You've been permanently given extra health";
+	public string DisplayText { get; } = "You've been permanently given extra health";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
 		player.MaxHealth += base.AmountOfHealthToGive;

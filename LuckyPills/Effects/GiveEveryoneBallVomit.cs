@@ -6,10 +6,10 @@ internal sealed class GiveEveryoneBallVomit : GiveEveryoneBallVomitConfig, IPill
 	public new bool IsEnabled(Player player) => _ballVomitInstance.IsEnabled(player)
 		&& Round.Duration > TimeSpan.FromMinutes(base.RoundDurationMinutesUntilThisCanBeEnabled)
 		&& base.IsEnabled;
-	public string DisplayText => "You've given everyone ball vomit";
+	public string DisplayText { get; } = "You've given everyone ball vomit";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
 		foreach (Player anyPlayerInMap in Player.List.Where(x => x.IsAlive)) {

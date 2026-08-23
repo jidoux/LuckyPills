@@ -4,9 +4,9 @@ namespace LuckyPills.Effects;
 
 internal sealed class AntiColaEffect : AntiColaEffectConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've been given the anti-cola effect";
+	public string DisplayText { get; } = "You've been given the anti-cola effect";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None; // can't be anything since the cola is "good effects" and "all effects" so player will die
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None; // can't be anything since the cola is "good effects" and "all effects" so player will die
 
 	public void OnEnabled(Player player, float duration) {
 		byte currentPlayerIntensity = 0;

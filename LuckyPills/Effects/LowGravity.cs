@@ -2,10 +2,10 @@ namespace LuckyPills.Effects;
 
 internal sealed class LowGravity : LowGravityConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've been given low gravity for {duration} seconds";
+	public string DisplayText { get; } = "You've been given low gravity for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.GoodAsPermanent;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.GoodAsPermanent;
 
 	public void OnEnabled(Player player, float duration) {
 		player.Gravity = new Vector3(0f, -1f, -0f);

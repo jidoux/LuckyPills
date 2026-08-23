@@ -2,9 +2,9 @@ namespace LuckyPills.Effects;
 
 internal sealed class HumeShield : HumeShieldConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've been given some shield";
+	public string DisplayText { get; } = "You've been given some shield";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
 		player.HumeShield += base.AmountOfShieldToGive;

@@ -2,20 +2,20 @@ using PlayerRoles;
 
 namespace LuckyPills.Effects;
 
-// TODO test this... also TODO disable the elevators, either put facility in blown up state or something idk man
-internal sealed class NextRoundSurfaceFight : NextRoundSurfaceFightConfig, IPillEffect, IDebugPickPills {
+internal sealed class NextRoundSurfaceFight : NextRoundSurfaceFightConfig, IPillEffect {
 	private static bool _nextRoundSurfaceFight = false;
 	private static bool _thisRoundSurfaceFight = false;
 	private static int _teamDeterminer = 0;
 
-	public new bool IsEnabled(Player player) => !GlobalVariables.IsSpecialEventHappeningNextRound &&
-		!_nextRoundSurfaceFight && Player.List.Count > 3 && base.IsEnabled;
-	public string DisplayText => "Something special will happen next round...";
+	// The Player.List count will work for 2 player lobbies (at least in my testing there was a 3rd npc or something... idk)
+	public new bool IsEnabled(Player player) => !IsSpecialEventHappeningNextRound &&
+		!_nextRoundSurfaceFight && Player.List.Count > 2 && base.IsEnabled;
+	public string DisplayText { get; } = "Something special will happen next round...";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		GlobalVariables.IsSpecialEventHappeningNextRound = true;
+		IsSpecialEventHappeningNextRound = true;
 		_nextRoundSurfaceFight = true;
 	}
 
@@ -35,9 +35,7 @@ internal sealed class NextRoundSurfaceFight : NextRoundSurfaceFightConfig, IPill
 		];
 
 		if (_thisRoundSurfaceFight) {
-			foreach (Elevator item in Map.Elevators) {
-				item.DynamicAdminLock = true;
-			} // TODO p sure this AINT GONA DO ANYHTING AHAHHAHAHA
+			Elevator.LockAll(); // Obviously pivotal
 			foreach (Player currPlayer in Player.GetAll()) {
 				if (_teamDeterminer % 2 == 0) {
 					currPlayer.SetRole(chaosRoles[Random.Range(0, chaosRoles.Length)], RoleChangeReason.RemoteAdmin, RoleSpawnFlags.UseSpawnpoint);
@@ -51,7 +49,7 @@ internal sealed class NextRoundSurfaceFight : NextRoundSurfaceFightConfig, IPill
 					currPlayer.AddItem(ItemType.Jailbird);
 				}
 				currPlayer.ForceEquip(ItemType.Jailbird);
-				currPlayer.SendHint("Someone's Painkillers from last round has caused a Chaos vs MTF surface fight");
+				currPlayer.SendHint("Someone's Painkillers from last round has caused a Chaos vs MTF surface fight", duration: 5f);
 			}
 		}
 	}
@@ -64,7 +62,7 @@ internal sealed class NextRoundSurfaceFight : NextRoundSurfaceFightConfig, IPill
 		else if (_nextRoundSurfaceFight) {
 			_thisRoundSurfaceFight = true;
 			_teamDeterminer = 0;
-			GlobalVariables.IsSpecialEventHappeningNextRound = false;
+			IsSpecialEventHappeningNextRound = false;
 		}
 	}
 }

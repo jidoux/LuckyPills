@@ -6,9 +6,9 @@ internal sealed class EveryPickupTurnsIntoPainkillers : EveryPickupTurnsIntoPain
 
 	public new bool IsEnabled(Player player) =>
 		!_playersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Contains(player) && base.IsEnabled;
-	public string DisplayText => "Every item you pick up until the end of the game will turn into painkillers";
+	public string DisplayText { get; } = "Every item you pick up until the end of the game will turn into painkillers";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
 		_playersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Add(player);

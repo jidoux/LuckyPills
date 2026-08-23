@@ -2,9 +2,9 @@ namespace LuckyPills.Effects;
 
 internal sealed class TheFog : TheFogConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've created the fog";
+	public string DisplayText { get; } = "You've created the fog";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
 		SpawnScp244(player.Position);

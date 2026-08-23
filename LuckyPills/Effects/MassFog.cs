@@ -1,20 +1,31 @@
 namespace LuckyPills.Effects;
 
 internal sealed class MassFog : MassFogConfig, IPillEffect {
-	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "Fog is spawning under you for {duration} seconds";
+	private static readonly HashSet<Player> _playersSpawningMassFog = [];
+
+	public new bool IsEnabled(Player player) => !_playersSpawningMassFog.Contains(player) && base.IsEnabled;
+	public string DisplayText { get; } = "Fog is spawning under you for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.GoodAsPermanent;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.GoodAsPermanent;
 
 	public void OnEnabled(Player player, float duration) {
+		_playersSpawningMassFog.Add(player);
 		MEC.Timing.RunCoroutine(SpawnMassFog(player, duration, base.Scp244PerSecond));
+	}
+
+	public void OnDisabled(Player player) {
+		_playersSpawningMassFog.Remove(player);
+	}
+
+	public void OnRoundEnd() {
+		_playersSpawningMassFog.Clear();
 	}
 
 	private static IEnumerator<float> SpawnMassFog(Player player, float duration, float scp244PerSecond) {
 		float delayTime = 1f / scp244PerSecond;
 		for (int i = 0; i < duration * scp244PerSecond; i++) {
-			if (!player.IsAlive) {
+			if (!_playersSpawningMassFog.Contains(player)) {
 				yield break;
 			}
 			SpawnScp244(player.Position);

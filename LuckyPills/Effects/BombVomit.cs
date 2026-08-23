@@ -2,10 +2,10 @@ namespace LuckyPills.Effects;
 
 internal sealed class BombVomit : BombVomitConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've been given bomb vomit for {duration} seconds";
+	public string DisplayText { get; } = "You've been given bomb vomit for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.VomitEffect | EffectCapabilities.CandidateForGiveAll;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.VomitEffect | EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
 		MEC.Timing.RunCoroutine(RunGrenadeVomit(player, duration, base.GrenadesPerSecond, ItemType.GrenadeHE));

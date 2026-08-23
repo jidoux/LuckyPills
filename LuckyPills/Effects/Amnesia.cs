@@ -2,10 +2,10 @@ namespace LuckyPills.Effects;
 
 internal sealed class Amnesia : AmnesiaConfig, IPillEffect {
 	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => "You've been given amnesia for {duration} seconds";
+	public string DisplayText { get; } = "You've been given amnesia for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
 		player.EnableEffect<CustomPlayerEffects.AmnesiaVision>(intensity: byte.MaxValue, duration: duration, addDuration: true);
@@ -16,6 +16,6 @@ internal sealed class Amnesia : AmnesiaConfig, IPillEffect {
 internal class AmnesiaConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 15f;
-	public float MaxDuration { get; set; } = 35f;
+	public float MaxDuration { get; set; } = 37f;
 	public float RarityMultiplier { get; set; } = 1f;
 }

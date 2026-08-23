@@ -1,21 +1,25 @@
-using PlayerRoles;
-
 namespace LuckyPills.Effects;
 
 internal sealed class TeleportToRandomPlayer : TeleportToRandomPlayerConfig, IPillEffect {
 	// TODO continue testing this as its pretty iffy
-	public new bool IsEnabled(Player player) =>
-		Player.List.Any(
-			currPlayer => IsPlayerInTeam(currPlayer, Team.ClassD, Team.Scientists, Team.FoundationForces, Team.ChaosInsurgency)
-			&& currPlayer != player)
-		&& base.IsEnabled;
-	public string DisplayText => "You've been teleported to a random non-SCP";
+	public new bool IsEnabled(Player player) {
+		if (!base.IsEnabled) {
+			return false;
+		}
+		foreach (Player currPlayer in Player.List) {
+			if (currPlayer.IsInNonScpTeam() && currPlayer != player) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public string DisplayText { get; } = "You've been teleported to a random non-SCP";
 	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities => EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
 		Player? randomPlayer = Player.List
-			.Where(currPlayer => IsPlayerInTeam(currPlayer, Team.ClassD, Team.Scientists, Team.FoundationForces, Team.ChaosInsurgency))
+			.Where(currPlayer => currPlayer.IsInNonScpTeam())
 			.OrderBy(_ => Random.value)
 			.FirstOrDefault();
 		if (randomPlayer is null) {
