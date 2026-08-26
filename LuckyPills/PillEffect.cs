@@ -1,4 +1,5 @@
-#define DEBUGGING_SPECIFIC_PILL_EFFECTS_WITH_INTERFACE // comment this out when you dont want to only use pill effects deriving from IDebugPickPills
+
+using System.Reflection;
 
 namespace LuckyPills;
 
@@ -27,25 +28,24 @@ internal interface IPillEffect {
 internal static class PillEffectOrchestrator {
 	/// <summary>
 	/// This is global for performance reasons. A better data type for it would be IReadOnlyCollection, but using an array for perf.
+	/// I'm also keeping this here due to static initialization order with _enabledEffects.
 	/// </summary>
-	public static readonly IPillEffect[] AllPillEffects =
-#if DEBUGGING_SPECIFIC_PILL_EFFECTS_WITH_INTERFACE && DEBUG
-		typeof(IPillEffect).Assembly.GetTypes()
-			.Where(x => typeof(IDebugPickPills).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
-			.Select(x => (IPillEffect)Activator.CreateInstance(x)!)
-			.ToArray();
-#else
-		typeof(IPillEffect).Assembly.GetTypes()
-			.Where(x => typeof(IPillEffect).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
-			.Select(x => (IPillEffect)Activator.CreateInstance(x)!)
-			.ToArray();
-#endif
+	public static IPillEffect[] AllPillEffects { get; private set; } = PillEffectPopulator.GetAllPillEffects();
+
 	/// <summary>
 	/// This is populated of all enabled effects everytime a Painkiller is used. i want to initialize its size to the
 	/// possible max to avoid overhead later on.
 	/// </summary>
 	private static readonly IPillEffect[] _enabledEffects = new IPillEffect[AllPillEffects.Length];
 	public static bool IsSpecialEventHappeningNextRound { get; set; } = false;
+
+	/// <summary>
+	/// This gets called right when the plugin is ready/config loads. This is how I both cache all pill effects at startup
+	/// and have each pill effect instance read the config value.
+	/// </summary>
+	public static void SetupPillEffects() {
+		AllPillEffects = PillEffectPopulator.GetAllPillEffects();
+	}
 
 	public static void RunRandom(Player player) {
 		IPillEffect? selectedEffect = GetRandomPillEffect(player);
@@ -117,5 +117,38 @@ internal static class PillEffectOrchestrator {
 
 	internal readonly struct Duration(float minimum, float maximum) {
 		public float Random => UnityEngine.Random.Range(minimum, maximum);
+	}
+}
+
+/// <summary>
+/// This got kinda ugly so made a separate class for it. Its SOLE purpose is to populate a global static field
+/// which contains all the pill effects.
+/// </summary>
+internal static class PillEffectPopulator {
+	public static IPillEffect[] GetAllPillEffects() {
+#if DEBUG
+		return typeof(IPillEffect).Assembly.GetTypes()
+			.Where(x => typeof(IDebugPickPills).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
+			.Select(InitializeEffectRespectingConfigValues)
+			.ToArray();
+#else
+		return typeof(IPillEffect).Assembly.GetTypes()
+			.Where(x => typeof(IPillEffect).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
+			.Select(InitializeEffectRespectingConfigValues)
+			.ToArray();
+#endif
+	}
+
+	private static IPillEffect InitializeEffectRespectingConfigValues(Type effectType) {
+		PropertyInfo? configProperty = typeof(Config).GetProperty(effectType.Name, BindingFlags.Instance | BindingFlags.Public);
+
+		object? matchingConfig = configProperty?.GetValue(Plugin.Singleton.Config);
+		if (matchingConfig is not null) {
+			ConstructorInfo? configCtor = effectType.GetConstructor([matchingConfig.GetType()]);
+			if (configCtor is not null) {
+				return (IPillEffect)configCtor.Invoke([matchingConfig]);
+			}
+		}
+		throw new InvalidOperationException($"{effectType.Name} has incorrect config setup... this is a bug which needs to be fixed."); // TODO can this also happen if user manipulates the config file itselF?? I'd guess no.
 	}
 }

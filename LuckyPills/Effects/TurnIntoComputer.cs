@@ -3,15 +3,15 @@ using PlayerRoles.PlayableScps.Scp079;
 
 namespace LuckyPills.Effects;
 
-internal sealed class TurnIntoComputer : TurnIntoComputerConfig, IPillEffect, IDebugPickPills {
+internal sealed class TurnIntoComputer(TurnIntoComputerConfig config) : IPillEffect, IDebugPickPills {
 	// TODO I am moderately unsure if I want to swap one of the SCPs to a D-Class when this gets activated, like idk man.
-	public new bool IsEnabled(Player player) {
-		if (!base.IsEnabled) {
+	public bool IsEnabled(Player player) {
+		if (!config.IsEnabled) {
 			return false;
 		}
 		// At least 3 class D/scientists
 		byte relevantPlayers = 0;
-		foreach (Player currPlayer in Player.List) {
+		foreach (Player currPlayer in Player.ReadyList) {
 			if (currPlayer.Role == RoleTypeId.Scp079) {
 				return false;
 			}
@@ -29,18 +29,18 @@ internal sealed class TurnIntoComputer : TurnIntoComputerConfig, IPillEffect, ID
 	}
 
 	public string DisplayText { get; } = "You've turned into SCP-079";
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		player.SetRole(RoleTypeId.Scp079, RoleChangeReason.ItemUsage, RoleSpawnFlags.All);
+		player.SetRoleDelay(RoleTypeId.Scp079, RoleChangeReason.ItemUsage, RoleSpawnFlags.All);
 		if (TryGetScp079TierManager(player.RoleBase, out Scp079TierManager? tierManager)) {
 			SetScp079ExpLevel(tierManager, 10000);
 		}
 	}
 }
 
-internal class TurnIntoComputerConfig {
+internal sealed class TurnIntoComputerConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 0.2f;
 }

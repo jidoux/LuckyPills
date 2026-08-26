@@ -1,12 +1,12 @@
 namespace LuckyPills.Effects;
 
-internal sealed class TeleportToRandomPlayer : TeleportToRandomPlayerConfig, IPillEffect {
+internal sealed class TeleportToRandomPlayer(TeleportToRandomPlayerConfig config) : IPillEffect {
 	// TODO continue testing this as its pretty iffy
-	public new bool IsEnabled(Player player) {
-		if (!base.IsEnabled) {
+	public bool IsEnabled(Player player) {
+		if (!config.IsEnabled) {
 			return false;
 		}
-		foreach (Player currPlayer in Player.List) {
+		foreach (Player currPlayer in Player.ReadyList) {
 			if (currPlayer.IsInNonScpTeam() && currPlayer != player) {
 				return true;
 			}
@@ -14,11 +14,11 @@ internal sealed class TeleportToRandomPlayer : TeleportToRandomPlayerConfig, IPi
 		return false;
 	}
 	public string DisplayText { get; } = "You've been teleported to a random non-SCP";
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		Player? randomPlayer = Player.List
+		Player? randomPlayer = Player.ReadyList
 			.Where(currPlayer => currPlayer.IsInNonScpTeam())
 			.OrderBy(_ => Random.value)
 			.FirstOrDefault();
@@ -30,7 +30,7 @@ internal sealed class TeleportToRandomPlayer : TeleportToRandomPlayerConfig, IPi
 	}
 }
 
-internal class TeleportToRandomPlayerConfig {
+internal sealed class TeleportToRandomPlayerConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 }

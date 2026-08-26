@@ -2,14 +2,14 @@ using PlayerRoles;
 
 namespace LuckyPills.Effects;
 
-internal sealed class NextRoundLogicers : NextRoundLogicersConfig, IPillEffect {
+internal sealed class NextRoundLogicers(NextRoundLogicersConfig config) : IPillEffect {
 	private static bool _giveDClassLogicersNextRound = false;
 	private static bool _givingLogicersThisRound = false;
 
-	public new bool IsEnabled(Player player) => !IsSpecialEventHappeningNextRound &&
-		!_giveDClassLogicersNextRound && base.IsEnabled;
+	public bool IsEnabled(Player player) => !IsSpecialEventHappeningNextRound &&
+		!_giveDClassLogicersNextRound && config.IsEnabled;
 	public string DisplayText { get; } = "Something special will happen next round...";
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
@@ -36,7 +36,7 @@ internal sealed class NextRoundLogicers : NextRoundLogicersConfig, IPillEffect {
 	}
 }
 
-internal class NextRoundLogicersConfig {
+internal sealed class NextRoundLogicersConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 0.25f;
 }

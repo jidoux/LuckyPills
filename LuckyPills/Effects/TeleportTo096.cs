@@ -2,12 +2,12 @@ using PlayerRoles;
 
 namespace LuckyPills.Effects;
 
-internal sealed class TeleportTo096 : TeleportTo096Config, IPillEffect, IDebugPickPills {
-	public new bool IsEnabled(Player player) {
-		if (!base.IsEnabled) {
+internal sealed class TeleportTo096(TeleportTo096Config config) : IPillEffect, IDebugPickPills {
+	public bool IsEnabled(Player player) {
+		if (!config.IsEnabled) {
 			return false;
 		}
-		foreach (Player currPlayer in Player.List) {
+		foreach (Player currPlayer in Player.ReadyList) {
 			if (currPlayer.Role == RoleTypeId.Scp096) {
 				return true;
 			}
@@ -16,11 +16,11 @@ internal sealed class TeleportTo096 : TeleportTo096Config, IPillEffect, IDebugPi
 	}
 
 	public string DisplayText { get; } = "You've been teleported to SCP-096";
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
-		foreach (Player currPlayer in Player.List) {
+		foreach (Player currPlayer in Player.ReadyList) {
 			if (currPlayer.Role == RoleTypeId.Scp096) {
 				player.Position = currPlayer.Position + Vector3.up; // not sure if the +1 is needed for this.. some other teleports sent you thru the floor.
 				return; // I want to early exit + log when we somehow cant meet this condition.
@@ -30,7 +30,7 @@ internal sealed class TeleportTo096 : TeleportTo096Config, IPillEffect, IDebugPi
 	}
 }
 
-internal class TeleportTo096Config {
+internal sealed class TeleportTo096Config {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 }

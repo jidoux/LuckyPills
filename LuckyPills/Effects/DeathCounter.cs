@@ -1,13 +1,13 @@
 namespace LuckyPills.Effects;
 
-internal sealed class DeathCounter : DeathCounterConfig, IPillEffect {
-	public new bool IsEnabled(Player player) => base.IsEnabled;
-	public string DisplayText => $"You will die in {base.SecondsToDeath} seconds";
-	public new float RarityMultiplier => base.RarityMultiplier;
+internal sealed class DeathCounter(DeathCounterConfig config) : IPillEffect {
+	public bool IsEnabled(Player player) => config.IsEnabled;
+	public string DisplayText => $"You will die in {config.SecondsToDeath} seconds";
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
-		MEC.Timing.RunCoroutine(DeathCountdown(player, base.SecondsToDeath));
+		MEC.Timing.RunCoroutine(DeathCountdown(player, config.SecondsToDeath));
 	}
 
 	private static IEnumerator<float> DeathCountdown(Player player, int secondsToDeath) {
@@ -19,13 +19,12 @@ internal sealed class DeathCounter : DeathCounterConfig, IPillEffect {
 			player.SendHint($"{i}...", duration: 1f);
 			yield return MEC.Timing.WaitForSeconds(1);
 		}
-		// TODO test this instead... might be more fun since less death for others idk tbh
-		player.Kill();
-		// ExplosiveGrenadeProjectile.SpawnActive(player.Position, ItemType.GrenadeHE, owner: player, timeOverride: 0f);
+		// I experimented with Player.Kill() and actually blowing them up, and they preferred the explosive grenade.
+		ExplosiveGrenadeProjectile.SpawnActive(player.Position, ItemType.GrenadeHE, owner: player, timeOverride: 0f);
 	}
 }
 
-internal class DeathCounterConfig {
+internal sealed class DeathCounterConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 0.9f;
 	public int SecondsToDeath { get; set; } = 30;

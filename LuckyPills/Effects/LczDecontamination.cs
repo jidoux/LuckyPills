@@ -3,11 +3,11 @@ using MapGeneration;
 
 namespace LuckyPills.Effects;
 
-internal sealed class LczDecontamination : LczDecontaminationConfig, IPillEffect {
-	public new bool IsEnabled(Player player) =>
-		player.Zone == FacilityZone.LightContainment && DecontaminationController.Singleton.TimeOffset < 600f && base.IsEnabled;
+internal sealed class LczDecontamination(LczDecontaminationConfig config) : IPillEffect {
+	public bool IsEnabled(Player player) =>
+		player.Zone == FacilityZone.LightContainment && DecontaminationController.Singleton.TimeOffset < 600f && config.IsEnabled;
 	public string DisplayText { get; } = "You've triggered Light Containment Zone decontamination";
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
@@ -18,7 +18,7 @@ internal sealed class LczDecontamination : LczDecontaminationConfig, IPillEffect
 	}
 }
 
-internal class LczDecontaminationConfig {
+internal sealed class LczDecontaminationConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 0.4f;
 }

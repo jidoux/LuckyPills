@@ -2,10 +2,10 @@ using CustomPlayerEffects;
 
 namespace LuckyPills.Effects;
 
-internal sealed class AntiColaEffect : AntiColaEffectConfig, IPillEffect {
-	public new bool IsEnabled(Player player) => base.IsEnabled;
+internal sealed class AntiColaEffect(AntiColaEffectConfig config) : IPillEffect {
+	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "You've been given the anti-cola effect";
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None; // can't be anything since the cola is "good effects" and "all effects" so player will die
 
 	public void OnEnabled(Player player, float duration) {
@@ -22,7 +22,7 @@ internal sealed class AntiColaEffect : AntiColaEffectConfig, IPillEffect {
 	}
 }
 
-internal class AntiColaEffectConfig {
+internal sealed class AntiColaEffectConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 }

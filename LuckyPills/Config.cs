@@ -52,7 +52,7 @@ internal sealed class Config {
 	public MutateConfig Mutate { get; set; } = new();
 	public NextRoundEveryPillIsBallVomitConfig NextRoundEveryPillIsBallVomit { get; set; } = new();
 	public NextRoundFastRoundConfig NextRoundFastRound { get; set; } = new();
-	public NextRoundLogicers NextRoundLogicers { get; set; } = new();
+	public NextRoundLogicersConfig NextRoundLogicers { get; set; } = new();
 	public NextRoundNoPillsConfig NextRoundNoPills { get; set; } = new();
 	public NextRoundSurfaceFightConfig NextRoundSurfaceFight { get; set; } = new();
 	public NoClipConfig NoClip { get; set; } = new();

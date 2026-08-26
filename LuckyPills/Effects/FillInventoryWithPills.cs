@@ -1,9 +1,9 @@
 namespace LuckyPills.Effects;
 
-internal sealed class FillInventoryWithPills : FillInventoryWithPillsConfig, IPillEffect, IDebugPickPills {
-	public new bool IsEnabled(Player player) => base.IsEnabled;
+internal sealed class FillInventoryWithPills(FillInventoryWithPillsConfig config) : IPillEffect, IDebugPickPills {
+	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "Your inventory has been topped off with more pills";
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
@@ -13,7 +13,7 @@ internal sealed class FillInventoryWithPills : FillInventoryWithPillsConfig, IPi
 	}
 }
 
-internal class FillInventoryWithPillsConfig {
+internal sealed class FillInventoryWithPillsConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 }

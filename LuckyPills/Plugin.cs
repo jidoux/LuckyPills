@@ -33,6 +33,7 @@ internal sealed class Plugin : Plugin<Config> {
 
 	public override void Enable() {
 		Singleton = this;
+		PillEffectOrchestrator.SetupPillEffects();
 		CustomHandlersManager.RegisterEventsHandler(Events);
 	}
 

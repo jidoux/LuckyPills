@@ -1,6 +1,6 @@
 namespace LuckyPills.Effects;
 
-internal sealed class PermanentPlayerChanges : PermanentPlayerChangesConfig, IPillEffect {
+internal sealed class PermanentPlayerChanges(PermanentPlayerChangesConfig config) : IPillEffect {
 	private static readonly HashSet<Player> _playersWithPermanentEffectsThisRound = [];
 	private readonly Lazy<IPillEffect[]> _effectCandidates = new(() => {
 		// I did this mainly because I was scared of static initialization order issues with my singleton AllPillEffects,
@@ -12,8 +12,8 @@ internal sealed class PermanentPlayerChanges : PermanentPlayerChangesConfig, IPi
 
 	// I'm not letting players get 2 permanent effects at once mostly because I don't feel like
 	// tracking for duplicates.
-	public new bool IsEnabled(Player player) => !_playersWithPermanentEffectsThisRound.Contains(player) && base.IsEnabled;
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public bool IsEnabled(Player player) => !_playersWithPermanentEffectsThisRound.Contains(player) && config.IsEnabled;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
@@ -38,7 +38,10 @@ internal sealed class PermanentPlayerChanges : PermanentPlayerChangesConfig, IPi
 	}
 }
 
-internal class PermanentPlayerChangesConfig {
+internal sealed class PermanentPlayerChangesConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	// I lowered most of the effects which are flagged as GoodAsPermanent from 1 to 0.95, so hoping they won't be more common.
+	// I figure since this effect is technically >10 effects, its fine for it to be more common (shouldn't feel more common).
+	// TODO double check this imho
+	public float RarityMultiplier { get; set; } = 1.6f;
 }

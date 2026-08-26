@@ -1,16 +1,16 @@
 namespace LuckyPills.Effects;
 
-internal sealed class PeriodicGrenades : PeriodicGrenadesConfig, IPillEffect {
+internal sealed class PeriodicGrenades(PeriodicGrenadesConfig config) : IPillEffect, IDebugPickPills {
 	private static readonly HashSet<Player> _allGrenadePeriodicSpawns = [];
 
-	public new bool IsEnabled(Player player) => !_allGrenadePeriodicSpawns.Contains(player) && base.IsEnabled;
+	public bool IsEnabled(Player player) => !_allGrenadePeriodicSpawns.Contains(player) && config.IsEnabled;
 	public string DisplayText { get; } = "You will uncontrollably spew out grenades...";
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
 		if (_allGrenadePeriodicSpawns.Add(player)) {
-			MEC.Timing.RunCoroutine(SpawnGrenades(player, base.IntervalLowerBound, base.IntervalUpperBound));
+			MEC.Timing.RunCoroutine(SpawnGrenades(player, config.IntervalLowerBound, config.IntervalUpperBound));
 		}
 		else {
 			Logger.Error("Error with PeriodicGrenades: player is already in the _allGrenadePeriodicSpawns set.");
@@ -38,9 +38,9 @@ internal sealed class PeriodicGrenades : PeriodicGrenadesConfig, IPillEffect {
 	}
 }
 
-internal class PeriodicGrenadesConfig {
+internal sealed class PeriodicGrenadesConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 0.5f;
-	public float IntervalLowerBound { get; set; } = 10f;
-	public float IntervalUpperBound { get; set; } = 40f;
+	public float IntervalLowerBound { get; set; } = 5f;
+	public float IntervalUpperBound { get; set; } = 30f;
 }

@@ -1,13 +1,13 @@
 namespace LuckyPills.Effects;
 
-internal sealed class TurnOffLights : TurnOffLightsConfig, IPillEffect {
+internal sealed class TurnOffLights(TurnOffLightsConfig config) : IPillEffect {
 	private bool _lightsAreOff = false; // Trying to avoid having this get triggered when the lights are already off.
 
-	public new bool IsEnabled(Player player) => !_lightsAreOff && base.IsEnabled;
+	public bool IsEnabled(Player player) => !_lightsAreOff && config.IsEnabled;
 	public string DisplayText { get; } = "You've turned off the lights for {duration} seconds";
-	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
-	public new float RarityMultiplier => base.RarityMultiplier;
-	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
+	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
+	public float RarityMultiplier => config.RarityMultiplier;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.GoodAsPermanent; // I was told this effect was quite fun/cool experience.
 
 	public void OnEnabled(Player player, float duration) {
 		_lightsAreOff = true;
@@ -16,7 +16,7 @@ internal sealed class TurnOffLights : TurnOffLightsConfig, IPillEffect {
 	}
 }
 
-internal class TurnOffLightsConfig {
+internal sealed class TurnOffLightsConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 10f;
 	public float MaxDuration { get; set; } = 300f;

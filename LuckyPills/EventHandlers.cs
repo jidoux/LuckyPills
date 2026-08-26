@@ -12,11 +12,11 @@ internal sealed class EventHandlers : CustomEventsHandler {
 			if (ev.UsableItem.Type != ItemType.Painkillers) {
 				return;
 			}
+			ev.Player.RemoveItem(ev.UsableItem); // Need to remove the item now since some effects can add an item.
 			if (!NextRoundEveryPillIsBallVomit.TryDoNextRoundBallVomitBehavior(ev.Player)) {
 				RunRandom(ev.Player);
 			}
 			ev.IsAllowed = false;
-			ev.Player.RemoveItem(ev.UsableItem);
 		}
 		catch (Exception ex) {
 			Logger.Error(ex);
@@ -40,9 +40,12 @@ internal sealed class EventHandlers : CustomEventsHandler {
 	public override void OnPlayerEscaping(PlayerEscapingEventArgs ev) {
 		LogCallIfDebug();
 		try {
-			// Need to disable any possible active effects here as well.
-			foreach (IPillEffect effect in AllPillEffects) {
-				effect.OnDisabled(ev.Player);
+			// This gets triggered no matter what role you are.
+			if (ev.Player.Role == PlayerRoles.RoleTypeId.ClassD || ev.Player.Role == PlayerRoles.RoleTypeId.Scientist) {
+				// Need to disable any possible active effects here as well.
+				foreach (IPillEffect effect in AllPillEffects) {
+					effect.OnDisabled(ev.Player);
+				}
 			}
 		}
 		catch (Exception ex) {
@@ -68,7 +71,7 @@ internal sealed class EventHandlers : CustomEventsHandler {
 	public override void OnPlayerUncuffed(PlayerUncuffedEventArgs ev) {
 		LogCallIfDebug();
 		try {
-			new Handcuffed().OnDisabled(ev.Target);
+			new Handcuffed(Plugin.Singleton.Config.Handcuffed).OnDisabled(ev.Target);
 		}
 		catch (Exception ex) {
 			Logger.Error(ex);

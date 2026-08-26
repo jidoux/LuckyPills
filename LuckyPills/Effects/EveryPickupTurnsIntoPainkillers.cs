@@ -1,13 +1,13 @@
 namespace LuckyPills.Effects;
 
 // TODO this broke after I got it one game, reset, and someone else got it next game. Validate that this is fixed ok?
-internal sealed class EveryPickupTurnsIntoPainkillers : EveryPickupTurnsIntoPainkillersConfig, IPillEffect {
+internal sealed class EveryPickupTurnsIntoPainkillers(EveryPickupTurnsIntoPainkillersConfig config) : IPillEffect {
 	private static readonly HashSet<Player> _playersWhoCanOnlyPickUpPillsForTheRestOfTheGame = [];
 
-	public new bool IsEnabled(Player player) =>
-		!_playersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Contains(player) && base.IsEnabled;
+	public bool IsEnabled(Player player) =>
+		!_playersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Contains(player) && config.IsEnabled;
 	public string DisplayText { get; } = "Every item you pick up until the end of the game will turn into painkillers";
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
@@ -26,7 +26,7 @@ internal sealed class EveryPickupTurnsIntoPainkillers : EveryPickupTurnsIntoPain
 	}
 }
 
-internal class EveryPickupTurnsIntoPainkillersConfig {
+internal sealed class EveryPickupTurnsIntoPainkillersConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 }

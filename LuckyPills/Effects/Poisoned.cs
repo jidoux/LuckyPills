@@ -1,10 +1,10 @@
 namespace LuckyPills.Effects;
 
-internal sealed class Poisoned : PoisonedConfig, IPillEffect {
-	public new bool IsEnabled(Player player) => base.IsEnabled;
+internal sealed class Poisoned(PoisonedConfig config) : IPillEffect {
+	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "You've poisoned yourself for {duration} seconds";
-	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
@@ -12,9 +12,9 @@ internal sealed class Poisoned : PoisonedConfig, IPillEffect {
 	}
 }
 
-internal class PoisonedConfig {
+internal sealed class PoisonedConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 30f;
-	public float MaxDuration { get; set; } = 60f;
+	public float MinDuration { get; set; } = 20f;
+	public float MaxDuration { get; set; } = 50f; // TODO experiment with this one
 	public float RarityMultiplier { get; set; } = 1f;
 }

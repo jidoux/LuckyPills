@@ -1,18 +1,18 @@
 namespace LuckyPills.Effects;
 
-internal sealed class LightBulbVomit : LightBulbVomitConfig, IPillEffect {
-	public new bool IsEnabled(Player player) => base.IsEnabled;
+internal sealed class LightBulbVomit(LightBulbVomitConfig config) : IPillEffect {
+	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "You've been given light bulb vomit for {duration} seconds";
-	public Duration PossibleDurationRangeInclusive => new(base.MinDuration, base.MaxDuration);
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.VomitEffect;
 
 	public void OnEnabled(Player player, float duration) {
-		MEC.Timing.RunCoroutine(RunGrenadeVomit(player, duration, base.GrenadesPerSecond, ItemType.SCP2176));
+		MEC.Timing.RunCoroutine(RunGrenadeVomit(player, duration, config.GrenadesPerSecond, ItemType.SCP2176));
 	}
 }
 
-internal class LightBulbVomitConfig {
+internal sealed class LightBulbVomitConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float MinDuration { get; set; } = 10f;
 	public float MaxDuration { get; set; } = 20f;

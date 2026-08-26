@@ -1,16 +1,16 @@
 namespace LuckyPills.Effects;
 
-internal sealed class PeriodicTantrums : PeriodicTantrumsConfig, IPillEffect {
+internal sealed class PeriodicTantrums(PeriodicTantrumsConfig config) : IPillEffect {
 	private static readonly HashSet<Player> _allTantrumPeriodicSpawns = [];
 
-	public new bool IsEnabled(Player player) => !_allTantrumPeriodicSpawns.Contains(player) && base.IsEnabled;
+	public bool IsEnabled(Player player) => !_allTantrumPeriodicSpawns.Contains(player) && config.IsEnabled;
 	public string DisplayText { get; } = "Your stomach begins to quake...";
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
 		if (_allTantrumPeriodicSpawns.Add(player)) {
-			MEC.Timing.RunCoroutine(SpawnTantrums(player, base.IntervalLowerBound, base.IntervalUpperBound));
+			MEC.Timing.RunCoroutine(SpawnTantrums(player, config.IntervalLowerBound, config.IntervalUpperBound));
 		}
 		else {
 			Logger.Error("Error with PeriodicTantrums: player is already in the _allTantrumPeriodicSpawns set.");
@@ -38,7 +38,7 @@ internal sealed class PeriodicTantrums : PeriodicTantrumsConfig, IPillEffect {
 	}
 }
 
-internal class PeriodicTantrumsConfig {
+internal sealed class PeriodicTantrumsConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 0.5f;
 	public float IntervalLowerBound { get; set; } = 30f;

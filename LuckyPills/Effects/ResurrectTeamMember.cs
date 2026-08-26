@@ -2,26 +2,27 @@ using PlayerRoles;
 
 namespace LuckyPills.Effects;
 
-internal sealed class ResurrectTeamMember : ResurrectTeamMemberConfig, IPillEffect, IDebugPickPills {
+internal sealed class ResurrectTeamMember(ResurrectTeamMemberConfig config) : IPillEffect, IDebugPickPills {
 	// My approach: add to it when a player dies, but don't remove when they respawn. If they die again, remove
 	// the old player's entry and add the new one. So we just have a list of players and their data when they last
 	// died, and we access the list by filtering out living players.
 	private static readonly Dictionary<Player, RoleAndTeamInfo> _killedPlayers = [];
 
-	public new bool IsEnabled(Player player) {
-		if (!base.IsEnabled) {
+	public bool IsEnabled(Player player) {
+		if (!config.IsEnabled) {
 			return false;
 		}
 		foreach (KeyValuePair<Player, RoleAndTeamInfo> item in _killedPlayers) {
 			// I noticed that leaving the server triggers OnPlayerDying, and either way if someone dies and then leaves
 			// the server, they should no longer be eligible for resurrection.
 			bool playerStillInServer = false;
-			foreach (Player currPlayer in Player.List) {
+			foreach (Player currPlayer in Player.ReadyList) {
 				if (currPlayer == item.Key) {
 					playerStillInServer = true;
 					break;
 				}
 			}
+			// TODO still need to test this, I believe?
 			if (!playerStillInServer) {
 				_killedPlayers.Remove(item.Key);
 				break;
@@ -33,7 +34,7 @@ internal sealed class ResurrectTeamMember : ResurrectTeamMemberConfig, IPillEffe
 		return false;
 	}
 	public string DisplayText { get; } = "You've resurrected a fallen team member";
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
@@ -47,9 +48,13 @@ internal sealed class ResurrectTeamMember : ResurrectTeamMemberConfig, IPillEffe
 		}
 		Player playerToRespawn = respawnPlayerInfo.Key;
 		RoleTypeId roleToSetTo = respawnPlayerInfo.Value.Role;
-		playerToRespawn.SetRole(roleToSetTo, RoleChangeReason.Revived, RoleSpawnFlags.AssignInventory);
+		playerToRespawn.SetRoleDelay(roleToSetTo, RoleChangeReason.Revived, RoleSpawnFlags.AssignInventory);
 		playerToRespawn.Position = player.Position;
-		playerToRespawn.SendHint("You've been resurrected by someone's Painkillers", duration: 4);
+		// Delaying since some "next round" things can also show hint text upon respawn,
+		// but this is significantly more important to display.
+		MEC.Timing.CallDelayed(0.15f, () => {
+			playerToRespawn.SendHint("You've been resurrected by someone's Painkillers", duration: 5);
+		});
 	}
 
 	public void OnRoundEnd() {
@@ -64,7 +69,7 @@ internal sealed class ResurrectTeamMember : ResurrectTeamMemberConfig, IPillEffe
 	private readonly record struct RoleAndTeamInfo(RoleTypeId Role, Team Team);
 }
 
-internal class ResurrectTeamMemberConfig {
+internal sealed class ResurrectTeamMemberConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 }

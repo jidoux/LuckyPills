@@ -2,10 +2,10 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace LuckyPills.Effects;
 
-internal sealed class KillPlayerYouSee : KillPlayerYouSeeConfig, IPillEffect, IDebugPickPills {
-	public new bool IsEnabled(Player player) => base.IsEnabled && TryGetLookedAtPlayer(player, out Player? _);
+internal sealed class KillPlayerYouSee(KillPlayerYouSeeConfig config) : IPillEffect, IDebugPickPills {
+	public bool IsEnabled(Player player) => config.IsEnabled && TryGetLookedAtPlayer(player, out Player? _);
 	public string DisplayText { get; } = "You've killed whoever you're looking at";
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
@@ -43,7 +43,7 @@ internal sealed class KillPlayerYouSee : KillPlayerYouSeeConfig, IPillEffect, ID
 	}
 }
 
-internal class KillPlayerYouSeeConfig {
+internal sealed class KillPlayerYouSeeConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 }

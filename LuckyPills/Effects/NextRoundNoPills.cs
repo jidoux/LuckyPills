@@ -1,13 +1,13 @@
 namespace LuckyPills.Effects;
 
-internal sealed class NextRoundNoPills : NextRoundNoPillsConfig, IPillEffect {
+internal sealed class NextRoundNoPills(NextRoundNoPillsConfig config) : IPillEffect {
 	private static bool _notSpawningPillsNextRound = false;
 	private static bool _notSpawningPillsThisRound = false;
 
-	public new bool IsEnabled(Player player) => !IsSpecialEventHappeningNextRound &&
-		!_notSpawningPillsNextRound && base.IsEnabled;
+	public bool IsEnabled(Player player) => !IsSpecialEventHappeningNextRound &&
+		!_notSpawningPillsNextRound && config.IsEnabled;
 	public string DisplayText { get; } = "Something special will happen next round...";
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
@@ -31,7 +31,7 @@ internal sealed class NextRoundNoPills : NextRoundNoPillsConfig, IPillEffect {
 	}
 }
 
-internal class NextRoundNoPillsConfig {
+internal sealed class NextRoundNoPillsConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 0.25f;
 }

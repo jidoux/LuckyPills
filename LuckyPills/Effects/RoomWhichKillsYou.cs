@@ -2,12 +2,12 @@ using MapGeneration;
 
 namespace LuckyPills.Effects;
 
-internal sealed class RoomWhichKillsYou : RoomWhichKillsYouConfig, IPillEffect {
+internal sealed class RoomWhichKillsYou(RoomWhichKillsYouConfig config) : IPillEffect {
 	private static readonly Dictionary<Player, Room> _playersAndRoomsWhichKillThem = [];
 
-	public new bool IsEnabled(Player player) => !_playersAndRoomsWhichKillThem.ContainsKey(player) && base.IsEnabled;
+	public bool IsEnabled(Player player) => !_playersAndRoomsWhichKillThem.ContainsKey(player) && config.IsEnabled;
 	// No DisplayText because I want to display the zone as well, so I just display it in OnEnabled
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
@@ -65,12 +65,12 @@ internal sealed class RoomWhichKillsYou : RoomWhichKillsYouConfig, IPillEffect {
 			&& newRoom == roomAssociatedWithPlayer
 			&& _playersAndRoomsWhichKillThem.Remove(player)) {
 			player.SendHint($"Your Painkillers decided you can't enter this room, so now you die");
-			MEC.Timing.CallDelayed(1.5f, player.Kill);
+			MEC.Timing.CallDelayed(2.5f, player.Kill); // TODO I am testing 2.5 Maybe test 2 idk
 		}
 	}
 }
 
-internal class RoomWhichKillsYouConfig {
+internal sealed class RoomWhichKillsYouConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 1f;
 }

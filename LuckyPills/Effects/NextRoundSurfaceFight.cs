@@ -2,16 +2,16 @@ using PlayerRoles;
 
 namespace LuckyPills.Effects;
 
-internal sealed class NextRoundSurfaceFight : NextRoundSurfaceFightConfig, IPillEffect {
+internal sealed class NextRoundSurfaceFight(NextRoundSurfaceFightConfig config) : IPillEffect {
 	private static bool _nextRoundSurfaceFight = false;
 	private static bool _thisRoundSurfaceFight = false;
 	private static int _teamDeterminer = 0;
 
 	// The Player.List count will work for 2 player lobbies (at least in my testing there was a 3rd npc or something... idk)
-	public new bool IsEnabled(Player player) => !IsSpecialEventHappeningNextRound &&
-		!_nextRoundSurfaceFight && Player.List.Count > 2 && base.IsEnabled;
+	public bool IsEnabled(Player player) => !IsSpecialEventHappeningNextRound &&
+		!_nextRoundSurfaceFight && Player.ReadyList.Count() > 2 && config.IsEnabled;
 	public string DisplayText { get; } = "Something special will happen next round...";
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, float duration) {
@@ -38,10 +38,10 @@ internal sealed class NextRoundSurfaceFight : NextRoundSurfaceFightConfig, IPill
 			Elevator.LockAll(); // Obviously pivotal
 			foreach (Player currPlayer in Player.GetAll()) {
 				if (_teamDeterminer % 2 == 0) {
-					currPlayer.SetRole(chaosRoles[Random.Range(0, chaosRoles.Length)], RoleChangeReason.RemoteAdmin, RoleSpawnFlags.UseSpawnpoint);
+					currPlayer.SetRoleDelay(chaosRoles[Random.Range(0, chaosRoles.Length)], RoleChangeReason.RemoteAdmin, RoleSpawnFlags.UseSpawnpoint);
 				}
 				else {
-					currPlayer.SetRole(mtfRoles[Random.Range(0, chaosRoles.Length)], RoleChangeReason.RemoteAdmin, RoleSpawnFlags.UseSpawnpoint);
+					currPlayer.SetRoleDelay(mtfRoles[Random.Range(0, chaosRoles.Length)], RoleChangeReason.RemoteAdmin, RoleSpawnFlags.UseSpawnpoint);
 				}
 				_teamDeterminer++;
 				currPlayer.ClearInventory();
@@ -67,7 +67,7 @@ internal sealed class NextRoundSurfaceFight : NextRoundSurfaceFightConfig, IPill
 	}
 }
 
-internal class NextRoundSurfaceFightConfig {
+internal sealed class NextRoundSurfaceFightConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 0.25f;
 }

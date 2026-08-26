@@ -1,6 +1,6 @@
 namespace LuckyPills.Effects;
 
-internal sealed class GiveOPItem : GiveOPItemConfig, IPillEffect {
+internal sealed class GiveOPItem(GiveOPItemConfig config) : IPillEffect {
 	private static readonly ItemType[] _itemPool = [
 			ItemType.MicroHID,
 			ItemType.ParticleDisruptor,
@@ -8,9 +8,9 @@ internal sealed class GiveOPItem : GiveOPItemConfig, IPillEffect {
 			ItemType.GunCom45,
 		];
 
-	public new bool IsEnabled(Player player) => base.IsEnabled;
+	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "You've been given an OP item";
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
@@ -18,7 +18,7 @@ internal sealed class GiveOPItem : GiveOPItemConfig, IPillEffect {
 	}
 }
 
-internal class GiveOPItemConfig {
+internal sealed class GiveOPItemConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 0.9f;
 }

@@ -1,9 +1,9 @@
 namespace LuckyPills.Effects;
 
-internal sealed class Tantrum : TantrumConfig, IPillEffect {
-	public new bool IsEnabled(Player player) => base.IsEnabled;
+internal sealed class Tantrum(TantrumConfig config) : IPillEffect {
+	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "Oh...";
-	public new float RarityMultiplier => base.RarityMultiplier;
+	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
@@ -11,7 +11,7 @@ internal sealed class Tantrum : TantrumConfig, IPillEffect {
 	}
 }
 
-internal class TantrumConfig {
+internal sealed class TantrumConfig {
 	public bool IsEnabled { get; set; } = true;
 	public float RarityMultiplier { get; set; } = 0.8f;
 	public float TantrumSizeMultiplier = 2f;

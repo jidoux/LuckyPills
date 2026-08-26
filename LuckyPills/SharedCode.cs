@@ -166,6 +166,12 @@ internal static class SharedCode {
 			player.Team == Team.Scientists;
 	}
 
+	// Avoiding any issues where stuff isn't properly initialized. 0.05f is arbitrary time and probably is too long.
+	public static void SetRoleDelay(this Player player, RoleTypeId newRole, RoleChangeReason reason = RoleChangeReason.RemoteAdmin, RoleSpawnFlags flags = RoleSpawnFlags.All) {
+		player.SetRole(newRole, reason, flags);
+		MEC.Timing.WaitForSeconds(0.05f);
+	}
+
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static string AddDurationToHintText(string displayText, float duration) =>
 		displayText.Replace("{duration}", ((int)Math.Floor(duration)).ToString(CultureInfo.InvariantCulture), StringComparison.Ordinal);
