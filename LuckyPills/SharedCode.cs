@@ -139,14 +139,6 @@ internal static class SharedCode {
 		NetworkServer.Spawn(tantrum.gameObject);
 	}
 
-	public static void SpawnItemBelow(this Player? player, ItemType itemType, ItemAddReason itemAddReason = ItemAddReason.AdminCommand) {
-		if (player is null) {
-			return;
-		}
-		ItemBase item = player.Inventory.ServerAddItem(itemType, itemAddReason);
-		player.DropItem(item);
-	}
-
 	public static void ForceEquip(this Player? player, ItemType itemType, ItemAddReason itemAddReason = ItemAddReason.AdminCommand) {
 		if (player is null) {
 			return;
@@ -170,6 +162,10 @@ internal static class SharedCode {
 	public static void SetRoleDelay(this Player player, RoleTypeId newRole, RoleChangeReason reason = RoleChangeReason.RemoteAdmin, RoleSpawnFlags flags = RoleSpawnFlags.All) {
 		player.SetRole(newRole, reason, flags);
 		MEC.Timing.WaitForSeconds(0.05f);
+	}
+
+	public static void BlowUp(this Player player) {
+		ExplosiveGrenadeProjectile.SpawnActive(player.Position, ItemType.GrenadeHE, owner: player, timeOverride: 0f);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]

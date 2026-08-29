@@ -26,6 +26,6 @@ internal sealed class PocketDimension(PocketDimensionConfig config) : IPillEffec
 
 internal sealed class PocketDimensionConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.9f;
-	public float OddsFromZeroToOneToSendEveryPlayerThere = 0.2f;
+	public float RarityMultiplier { get; set; } = 0.85f;
+	public float OddsFromZeroToOneToSendEveryPlayerThere = 0.1f;
 }

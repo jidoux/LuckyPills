@@ -65,7 +65,7 @@ internal sealed class RoomWhichKillsYou(RoomWhichKillsYouConfig config) : IPillE
 			&& newRoom == roomAssociatedWithPlayer
 			&& _playersAndRoomsWhichKillThem.Remove(player)) {
 			player.SendHint($"Your Painkillers decided you can't enter this room, so now you die");
-			MEC.Timing.CallDelayed(2.5f, player.Kill); // TODO I am testing 2.5 Maybe test 2 idk
+			MEC.Timing.CallDelayed(2.5f, player.BlowUp); // TODO I am testing 2.5 Maybe test 2 idk
 		}
 	}
 }

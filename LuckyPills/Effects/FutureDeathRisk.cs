@@ -36,7 +36,7 @@ internal sealed class FutureDeathRisk(FutureDeathRiskConfig config) : IPillEffec
 			}
 			if (callerMethod == eventHandlerTiedToPlayer && _playersToDie.Remove(player)) {
 				player.SendHint($"Your Painkillers decided you can't trigger \"{callerMethod}\", so now you die");
-				MEC.Timing.CallDelayed(2.5f, player.Kill);
+				MEC.Timing.CallDelayed(2.5f, player.BlowUp);
 			}
 		}
 		catch (Exception ex) {

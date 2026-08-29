@@ -20,7 +20,7 @@ internal sealed class DeathCounter(DeathCounterConfig config) : IPillEffect {
 			yield return MEC.Timing.WaitForSeconds(1);
 		}
 		// I experimented with Player.Kill() and actually blowing them up, and they preferred the explosive grenade.
-		ExplosiveGrenadeProjectile.SpawnActive(player.Position, ItemType.GrenadeHE, owner: player, timeOverride: 0f);
+		player.BlowUp();
 	}
 }
 
