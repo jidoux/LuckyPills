@@ -14,10 +14,8 @@ internal sealed class EveryPickupTurnsIntoPainkillers(EveryPickupTurnsIntoPainki
 		_playersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Add(player);
 	}
 
-	// This will only get called by various event handlers.
-	public void OnDisabled(Player player) {
-		_playersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Remove(player);
-	}
+	// NOTE: I decided that this should NOT call OnDisabled, and instead it will actually be active until the
+	// rest of the game. However if it did call OnDisabled it would just remove the player from the HashSet.
 
 	public static bool ShouldPickupTurnIntoPills(Player player) => _playersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Contains(player);
 

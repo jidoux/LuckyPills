@@ -6,7 +6,7 @@ internal sealed class PeriodicTantrums(PeriodicTantrumsConfig config) : IPillEff
 	public bool IsEnabled(Player player) => !_allTantrumPeriodicSpawns.Contains(player) && config.IsEnabled;
 	public string DisplayText { get; } = "Your stomach begins to quake...";
 	public float RarityMultiplier => config.RarityMultiplier;
-	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
 		if (_allTantrumPeriodicSpawns.Add(player)) {

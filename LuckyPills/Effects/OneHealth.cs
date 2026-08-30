@@ -1,7 +1,7 @@
 namespace LuckyPills.Effects;
 
 internal sealed class OneHealth(OneHealthConfig config) : IPillEffect {
-	public bool IsEnabled(Player player) => player.MaxHealth > 99f && player.MaxHealth < 101f && config.IsEnabled;
+	public bool IsEnabled(Player player) => player.MaxHealth > 99f && config.IsEnabled;
 	public string DisplayText { get; } = "Your health has been permanently lowered";
 	public float RarityMultiplier => config.RarityMultiplier;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;

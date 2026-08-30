@@ -8,7 +8,7 @@ internal sealed class LczDecontamination(LczDecontaminationConfig config) : IPil
 		player.Zone == FacilityZone.LightContainment && DecontaminationController.Singleton.TimeOffset < 600f && config.IsEnabled;
 	public string DisplayText { get; } = "You've triggered Light Containment Zone decontamination";
 	public float RarityMultiplier => config.RarityMultiplier;
-	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
 		// must be below 666 and above 660... I didn't test 665. Just an arbitrary offset to trigger 30 second countdown.

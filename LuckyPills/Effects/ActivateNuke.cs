@@ -6,7 +6,7 @@ internal sealed class ActivateNuke(ActivateNukeConfig config) : IPillEffect {
 	public bool IsEnabled(Player player) => !Warhead.LeverStatus && !Warhead.IsAuthorized && config.IsEnabled;
 	public string DisplayText { get; } = "You've activated the nuclear warhead";
 	public float RarityMultiplier => config.RarityMultiplier;
-	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
 		Warhead.LeverStatus = true; // Turning on the nuke in nuke room

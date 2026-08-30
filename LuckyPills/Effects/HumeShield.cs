@@ -7,6 +7,8 @@ internal sealed class HumeShield(HumeShieldConfig config) : IPillEffect {
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
+		// TODO change to  be ArtificialHealth and give them REAL hume shield/AHP like the SCPS fully rechargable too.
+		// experiment with player.CreateAhpProcess
 		player.HumeShield += config.AmountOfShieldToGive;
 	}
 }

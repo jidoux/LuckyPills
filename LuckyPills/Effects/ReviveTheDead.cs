@@ -43,7 +43,7 @@ internal sealed class ReviveTheDead(ReviveTheDeadConfig config) : IPillEffect, I
 
 internal sealed class ReviveTheDeadConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.2f;
+	public float RarityMultiplier { get; set; } = 0.3f;
 	public int NumDeadPlayersNecessaryToBeEnabled { get; set; } = 3;
 	public int MaxDeadPlayersToRevive { get; set; } = 999;
 }

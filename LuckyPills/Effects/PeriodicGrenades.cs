@@ -6,7 +6,7 @@ internal sealed class PeriodicGrenades(PeriodicGrenadesConfig config) : IPillEff
 	public bool IsEnabled(Player player) => !_allGrenadePeriodicSpawns.Contains(player) && config.IsEnabled;
 	public string DisplayText { get; } = "You will uncontrollably spew out grenades...";
 	public float RarityMultiplier => config.RarityMultiplier;
-	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, float duration) {
 		if (_allGrenadePeriodicSpawns.Add(player)) {

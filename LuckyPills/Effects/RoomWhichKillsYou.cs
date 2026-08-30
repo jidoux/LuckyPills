@@ -17,6 +17,10 @@ internal sealed class RoomWhichKillsYou(RoomWhichKillsYouConfig config) : IPillE
 		_playersAndRoomsWhichKillThem.Add(player, roomToUse);
 	}
 
+	public void OnDisabled(Player player) {
+		_playersAndRoomsWhichKillThem.Remove(player);
+	}
+
 	private static FacilityZone GetZoneToUse() => Random.value switch {
 		<= 0.333f => FacilityZone.LightContainment,
 		<= 0.7f => FacilityZone.HeavyContainment,
