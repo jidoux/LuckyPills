@@ -5,7 +5,7 @@ internal sealed class Concussed(ConcussedConfig config) : IPillEffect {
 	public string DisplayText { get; } = "You've been concussed for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
 	public float RarityMultiplier => config.RarityMultiplier;
-	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.GoodAsPermanent;
 
 	public void OnEnabled(Player player, float duration) {
 		player.EnableEffect<CustomPlayerEffects.Concussed>(intensity: byte.MaxValue, duration: duration, addDuration: true);

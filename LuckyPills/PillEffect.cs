@@ -149,6 +149,6 @@ internal static class PillEffectPopulator {
 				return (IPillEffect)configCtor.Invoke([matchingConfig]);
 			}
 		}
-		throw new InvalidOperationException($"{effectType.Name} has incorrect config setup... this is a bug which needs to be fixed."); // TODO can this also happen if user manipulates the config file itselF?? I'd guess no.
+		throw new InvalidOperationException($"{effectType.Name} has incorrect/nonexistent config setup... this is a bug which needs to be fixed."); // TODO can this also happen if user manipulates the config file itselF?? I'd guess no.
 	}
 }

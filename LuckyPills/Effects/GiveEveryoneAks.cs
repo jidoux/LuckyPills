@@ -14,7 +14,9 @@ internal sealed class GiveEveryoneAks(GiveEveryoneAksConfig config) : IPillEffec
 				//SpawnFirearmBelow(player.Position, ItemType.GunAK);
 			}
 			else {
-				anyPlayerInMap.SendHint("You've been given an AK by someone else's Painkillers", duration: 4);
+				if (anyPlayerInMap != player) {
+					anyPlayerInMap.SendHint("You've been given an AK by someone else's Painkillers", duration: 4);
+				}
 				anyPlayerInMap.ForceEquip(ItemType.GunAK);
 			}
 		}

@@ -38,10 +38,10 @@ internal sealed class NextRoundSurfaceFight(NextRoundSurfaceFightConfig config) 
 			Elevator.LockAll(); // Obviously pivotal
 			foreach (Player currPlayer in Player.GetAll()) {
 				if (_teamDeterminer % 2 == 0) {
-					currPlayer.SetRoleDelay(chaosRoles[Random.Range(0, chaosRoles.Length)], RoleChangeReason.RemoteAdmin, RoleSpawnFlags.UseSpawnpoint);
+					currPlayer.SetRoleDelay(chaosRoles.RandomItem(), RoleChangeReason.RemoteAdmin, RoleSpawnFlags.UseSpawnpoint);
 				}
 				else {
-					currPlayer.SetRoleDelay(mtfRoles[Random.Range(0, chaosRoles.Length)], RoleChangeReason.RemoteAdmin, RoleSpawnFlags.UseSpawnpoint);
+					currPlayer.SetRoleDelay(mtfRoles.RandomItem(), RoleChangeReason.RemoteAdmin, RoleSpawnFlags.UseSpawnpoint);
 				}
 				_teamDeterminer++;
 				currPlayer.ClearInventory();

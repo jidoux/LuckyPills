@@ -25,8 +25,7 @@ internal sealed class PermanentPlayerChanges(PermanentPlayerChangesConfig config
 			Logger.Warn("There are no pills enabled which qualify for PermanentPlayerChanges. Aborting pill...");
 			return;
 		}
-		// IPillEffect randomlySelectedEffect = candidates.ElementAt(Random.Range(0, candidates.Count));
-		IPillEffect randomlySelectedEffect = enabledCandidates[Random.Range(0, enabledCandidates.Length)];
+		IPillEffect randomlySelectedEffect = enabledCandidates.RandomItem();
 		randomlySelectedEffect.OnEnabled(player, 3600f);
 		// yeahhh this is kinda bad/scary approach, but its simplest.
 		string hintToSend = randomlySelectedEffect.DisplayText.Replace("for {duration} seconds", "permanently", StringComparison.Ordinal);

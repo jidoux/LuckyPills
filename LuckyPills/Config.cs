@@ -33,6 +33,7 @@ internal sealed class Config {
 	public FutureDeathRiskConfig FutureDeathRisk { get; set; } = new();
 	public GhostConfig Ghost { get; set; } = new();
 	public GiantConfig Giant { get; set; } = new();
+	public GiveEveryonePillsConfig GiveEveryonePills { get; set; } = new();
 	public GiveEveryoneBallVomitConfig GiveEveryoneBallVomit { get; set; } = new();
 	public GiveO5KeycardConfig GiveO5Keycard { get; set; } = new();
 	public GiveOPItemConfig GiveOPItem { get; set; } = new();

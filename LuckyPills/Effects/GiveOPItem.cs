@@ -14,7 +14,7 @@ internal sealed class GiveOPItem(GiveOPItemConfig config) : IPillEffect {
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, float duration) {
-		player.ForceEquip(_itemPool[Random.Range(0, _itemPool.Length)]);
+		player.ForceEquip(_itemPool.RandomItem());
 	}
 }
 

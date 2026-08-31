@@ -14,5 +14,5 @@ internal sealed class Explode(ExplodeConfig config) : IPillEffect {
 
 internal sealed class ExplodeConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.9f;
+	public float RarityMultiplier { get; set; } = 0.85f;
 }

@@ -54,7 +54,7 @@ internal sealed class RoomWhichKillsYou(RoomWhichKillsYouConfig config) : IPillE
 	// Looked like the LabApi version of this method was quite unoptimized. At least, the version in open source control was.
 	private static Room? GetRandomRoom(FacilityZone zoneToUse) {
 		Room[] rooms = Map.Rooms.Where(x => x.Zone == zoneToUse).ToArray();
-		return rooms.Length == 0 ? null : rooms[Random.Range(0, rooms.Length)];
+		return rooms.Length == 0 ? null : rooms.RandomItem();
 	}
 
 
