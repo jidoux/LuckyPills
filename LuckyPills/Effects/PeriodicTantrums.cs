@@ -5,10 +5,10 @@ internal sealed class PeriodicTantrums(PeriodicTantrumsConfig config) : IPillEff
 
 	public bool IsEnabled(Player player) => !_allTantrumPeriodicSpawns.Contains(player) && config.IsEnabled;
 	public string DisplayText { get; } = "Your stomach begins to quake...";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		if (_allTantrumPeriodicSpawns.Add(player)) {
 			MEC.Timing.RunCoroutine(SpawnTantrums(player, config.IntervalLowerBound, config.IntervalUpperBound));
 		}
@@ -40,7 +40,7 @@ internal sealed class PeriodicTantrums(PeriodicTantrumsConfig config) : IPillEff
 
 internal sealed class PeriodicTantrumsConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.5f;
+	public ushort RarityWeight { get; set; } = 50;
 	public float IntervalLowerBound { get; set; } = 30f;
 	public float IntervalUpperBound { get; set; } = 90f;
 }

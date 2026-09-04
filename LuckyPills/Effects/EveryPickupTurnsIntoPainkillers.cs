@@ -7,10 +7,10 @@ internal sealed class EveryPickupTurnsIntoPainkillers(EveryPickupTurnsIntoPainki
 	public bool IsEnabled(Player player) =>
 		!_playersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Contains(player) && config.IsEnabled;
 	public string DisplayText { get; } = "Every item you pick up until the end of the game will turn into painkillers";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		_playersWhoCanOnlyPickUpPillsForTheRestOfTheGame.Add(player);
 	}
 
@@ -26,5 +26,5 @@ internal sealed class EveryPickupTurnsIntoPainkillers(EveryPickupTurnsIntoPainki
 
 internal sealed class EveryPickupTurnsIntoPainkillersConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	public ushort RarityWeight { get; set; } = 100;
 }

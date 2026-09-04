@@ -11,10 +11,10 @@ internal sealed class NextRoundSurfaceFight(NextRoundSurfaceFightConfig config) 
 	public bool IsEnabled(Player player) => !IsSpecialEventHappeningNextRound &&
 		!_nextRoundSurfaceFight && Player.ReadyList.Count() > 2 && config.IsEnabled;
 	public string DisplayText { get; } = "Something special will happen next round...";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		IsSpecialEventHappeningNextRound = true;
 		_nextRoundSurfaceFight = true;
 	}
@@ -69,5 +69,5 @@ internal sealed class NextRoundSurfaceFight(NextRoundSurfaceFightConfig config) 
 
 internal sealed class NextRoundSurfaceFightConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.25f;
+	public ushort RarityWeight { get; set; } = 25;
 }

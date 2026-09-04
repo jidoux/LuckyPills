@@ -12,8 +12,8 @@ internal sealed class NextRoundEveryPillIsBallVomit(NextRoundEveryPillIsBallVomi
 	// I was told to give them god mode as well... maybe this is a bad idea idk
 	private static readonly Lazy<God> _godModeInstance = new(() => {
 		return new God(new GodConfig {
-			MinDuration = 5f,
-			MaxDuration = 6f,
+			MinDuration = 5,
+			MaxDuration = 6,
 		});
 	});
 
@@ -24,10 +24,10 @@ internal sealed class NextRoundEveryPillIsBallVomit(NextRoundEveryPillIsBallVomi
 		!_nextRoundEveryPillIsBalls && _ballVomitInstance.Value.IsEnabled(player)
 		&& _bombVomitInstance.Value.IsEnabled(player) && config.IsEnabled;
 	public string DisplayText { get; } = "Something special will happen next round...";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		IsSpecialEventHappeningNextRound = true;
 		_nextRoundEveryPillIsBalls = true;
 	}
@@ -60,5 +60,5 @@ internal sealed class NextRoundEveryPillIsBallVomit(NextRoundEveryPillIsBallVomi
 
 internal sealed class NextRoundEveryPillIsBallVomitConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.1f; // Probably should be rarer than all the other "next round" ones.
+	public ushort RarityWeight { get; set; } = 10; // Probably should be rarer than all the other "next round" ones.
 }

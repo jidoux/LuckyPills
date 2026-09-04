@@ -29,10 +29,10 @@ internal sealed class TurnIntoComputer(TurnIntoComputerConfig config) : IPillEff
 	}
 
 	public string DisplayText { get; } = "You've turned into SCP-079";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		player.SetRoleDelay(RoleTypeId.Scp079, RoleChangeReason.ItemUsage, RoleSpawnFlags.All);
 		if (TryGetScp079TierManager(player.RoleBase, out Scp079TierManager? tierManager)) {
 			SetScp079ExpLevel(tierManager, 10000);
@@ -42,5 +42,5 @@ internal sealed class TurnIntoComputer(TurnIntoComputerConfig config) : IPillEff
 
 internal sealed class TurnIntoComputerConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.2f;
+	public ushort RarityWeight { get; set; } = 20;
 }

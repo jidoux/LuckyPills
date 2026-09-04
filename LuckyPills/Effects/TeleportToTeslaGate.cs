@@ -3,10 +3,10 @@ namespace LuckyPills.Effects;
 internal sealed class TeleportToTeslaGate(TeleportToTeslaGateConfig config) : IPillEffect {
 	public bool IsEnabled(Player player) => Map.Teslas.Count > 0 && config.IsEnabled;
 	public string DisplayText { get; } = "You've been sent to a tesla gate";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		Tesla? tesla = Map.GetRandomTesla();
 		if (tesla is null) {
 			// May be possible with some crazy timing where this gets executed right when the map ends, but idk.
@@ -19,5 +19,5 @@ internal sealed class TeleportToTeslaGate(TeleportToTeslaGateConfig config) : IP
 
 internal sealed class TeleportToTeslaGateConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	public ushort RarityWeight { get; set; } = 100;
 }

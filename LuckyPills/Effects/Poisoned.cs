@@ -4,17 +4,17 @@ internal sealed class Poisoned(PoisonedConfig config) : IPillEffect {
 	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "You've poisoned yourself for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		player.EnableEffect<CustomPlayerEffects.Poisoned>(intensity: byte.MaxValue, duration: duration, addDuration: true);
 	}
 }
 
 internal sealed class PoisonedConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 20f;
-	public float MaxDuration { get; set; } = 50f; // TODO experiment with this one
-	public float RarityMultiplier { get; set; } = 1f;
+	public int MinDuration { get; set; } = 20;
+	public int MaxDuration { get; set; } = 50; // TODO experiment with this one
+	public ushort RarityWeight { get; set; } = 100;
 }

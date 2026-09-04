@@ -4,10 +4,10 @@ internal sealed class Giant(GiantConfig config) : IPillEffect {
 	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "You've been turned into a giant for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		player.Scale = new Vector3(2f, 2f, 2f);
 	}
 
@@ -18,7 +18,7 @@ internal sealed class Giant(GiantConfig config) : IPillEffect {
 
 internal sealed class GiantConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 8f;
-	public float MaxDuration { get; set; } = 15f;
-	public float RarityMultiplier { get; set; } = 0.8f;
+	public int MinDuration { get; set; } = 8;
+	public int MaxDuration { get; set; } = 18;
+	public ushort RarityWeight { get; set; } = 80;
 }

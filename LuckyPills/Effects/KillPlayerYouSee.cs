@@ -5,10 +5,10 @@ namespace LuckyPills.Effects;
 internal sealed class KillPlayerYouSee(KillPlayerYouSeeConfig config) : IPillEffect, IDebugPickPills {
 	public bool IsEnabled(Player player) => config.IsEnabled && TryGetLookedAtPlayer(player, out Player? _);
 	public string DisplayText { get; } = "You've killed whoever you're looking at";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		if (player.Camera is null) {
 			Logger.Error("Player has no camera transform, somehow.");
 			return;
@@ -45,5 +45,5 @@ internal sealed class KillPlayerYouSee(KillPlayerYouSeeConfig config) : IPillEff
 
 internal sealed class KillPlayerYouSeeConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	public ushort RarityWeight { get; set; } = 100;
 }

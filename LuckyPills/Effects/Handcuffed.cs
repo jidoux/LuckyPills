@@ -6,10 +6,10 @@ internal sealed class Handcuffed(HandcuffedConfig config) : IPillEffect {
 	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "You've been handcuffed for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		if (player.IsDisarmed || !player.IsAlive) {
 			// Just being defensive... not sure if these are even possible tbh.
 			return;
@@ -33,7 +33,7 @@ internal sealed class Handcuffed(HandcuffedConfig config) : IPillEffect {
 
 internal sealed class HandcuffedConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 35f;
-	public float MaxDuration { get; set; } = 70f;
-	public float RarityMultiplier { get; set; } = 0.5f;
+	public int MinDuration { get; set; } = 35;
+	public int MaxDuration { get; set; } = 70;
+	public ushort RarityWeight { get; set; } = 50;
 }

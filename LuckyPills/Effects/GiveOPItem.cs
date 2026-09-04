@@ -10,15 +10,15 @@ internal sealed class GiveOPItem(GiveOPItemConfig config) : IPillEffect {
 
 	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "You've been given an OP item";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		player.ForceEquip(_itemPool.RandomItem());
 	}
 }
 
 internal sealed class GiveOPItemConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.9f;
+	public ushort RarityWeight { get; set; } = 90;
 }

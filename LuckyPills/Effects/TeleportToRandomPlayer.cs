@@ -14,10 +14,10 @@ internal sealed class TeleportToRandomPlayer(TeleportToRandomPlayerConfig config
 		return false;
 	}
 	public string DisplayText { get; } = "You've been teleported to a random non-SCP";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		Player? randomPlayer = Player.ReadyList
 			.Where(currPlayer => currPlayer.IsInNonScpTeam())
 			.OrderBy(_ => Random.value)
@@ -32,5 +32,5 @@ internal sealed class TeleportToRandomPlayer(TeleportToRandomPlayerConfig config
 
 internal sealed class TeleportToRandomPlayerConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	public ushort RarityWeight { get; set; } = 100;
 }

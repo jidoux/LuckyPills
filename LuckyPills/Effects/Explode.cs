@@ -3,10 +3,10 @@ namespace LuckyPills.Effects;
 internal sealed class Explode(ExplodeConfig config) : IPillEffect {
 	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "You've spontaneously combusted";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		player.BlowUp();
 		ExplosiveGrenadeProjectile.SpawnActive(player.Position, ItemType.SCP2176, owner: player, timeOverride: 0f);
 	}
@@ -14,5 +14,5 @@ internal sealed class Explode(ExplodeConfig config) : IPillEffect {
 
 internal sealed class ExplodeConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.85f;
+	public ushort RarityWeight { get; set; } = 85;
 }

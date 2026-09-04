@@ -12,6 +12,7 @@ internal sealed class Config {
 	public AustralianConfig Australian { get; set; } = new();
 	public AntiColaEffectConfig AntiColaEffect { get; set; } = new();
 	public BallVomitConfig BallVomit { get; set; } = new();
+	public BecomeABombConfig BecomeABomb { get; set; } = new();
 	public BecomeGuardConfig BecomeGuard { get; set; } = new();
 	public BleedingConfig Bleeding { get; set; } = new();
 	public BlindedConfig Blinded { get; set; } = new();

@@ -4,10 +4,10 @@ internal sealed class Paper(PaperConfig config) : IPillEffect {
 	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "You've been turned into paper for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect | EffectCapabilities.GoodAsPermanent;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		player.Scale = new Vector3(1f, 1f, 0.01f);
 	}
 
@@ -18,7 +18,7 @@ internal sealed class Paper(PaperConfig config) : IPillEffect {
 
 internal sealed class PaperConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 10f;
-	public float MaxDuration { get; set; } = 100f;
-	public float RarityMultiplier { get; set; } = 0.95f;
+	public int MinDuration { get; set; } = 10;
+	public int MaxDuration { get; set; } = 100;
+	public ushort RarityWeight { get; set; } = 95;
 }

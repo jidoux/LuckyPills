@@ -21,10 +21,10 @@ internal sealed class ReviveTheDead(ReviveTheDeadConfig config) : IPillEffect, I
 		return false;
 	}
 	public string DisplayText { get; } = "You've revived the dead";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		IEnumerable<Player> playersToRevive = Player.ReadyList
 			.Where(currPlayer => !currPlayer.IsAlive)
 			.OrderBy(_ => Random.value)
@@ -43,7 +43,7 @@ internal sealed class ReviveTheDead(ReviveTheDeadConfig config) : IPillEffect, I
 
 internal sealed class ReviveTheDeadConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.3f;
+	public ushort RarityWeight { get; set; } = 30;
 	public int NumDeadPlayersNecessaryToBeEnabled { get; set; } = 3;
 	public int MaxDeadPlayersToRevive { get; set; } = 999;
 }

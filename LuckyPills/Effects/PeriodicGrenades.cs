@@ -5,10 +5,10 @@ internal sealed class PeriodicGrenades(PeriodicGrenadesConfig config) : IPillEff
 
 	public bool IsEnabled(Player player) => !_allGrenadePeriodicSpawns.Contains(player) && config.IsEnabled;
 	public string DisplayText { get; } = "You will uncontrollably spew out grenades...";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		if (_allGrenadePeriodicSpawns.Add(player)) {
 			MEC.Timing.RunCoroutine(SpawnGrenades(player, config.IntervalLowerBound, config.IntervalUpperBound));
 		}
@@ -40,7 +40,7 @@ internal sealed class PeriodicGrenades(PeriodicGrenadesConfig config) : IPillEff
 
 internal sealed class PeriodicGrenadesConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.5f;
+	public ushort RarityWeight { get; set; } = 50;
 	public float IntervalLowerBound { get; set; } = 5f;
-	public float IntervalUpperBound { get; set; } = 30f;
+	public float IntervalUpperBound { get; set; } = 25f;
 }

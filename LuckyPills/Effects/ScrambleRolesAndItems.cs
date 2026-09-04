@@ -20,10 +20,10 @@ internal sealed class ScrambleRolesAndItems(ScrambleRolesAndItemsConfig config) 
 		}
 		return false;
 	}
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		PreviousPlayer prevPlayer = new(
 			player.Items.Select(x => x.Base.ItemTypeId).ToArray(),
 			new Dictionary<ItemType, ushort>(player.Ammo),
@@ -113,5 +113,5 @@ internal sealed class ScrambleRolesAndItemsConfig {
 	public bool IsEnabled { get; set; } = true;
 	// My friends felt like it was not really great to lose all your items and progress in your current life... so I'll just
 	// default this to be extremely rare, so that its genuinely crazy when it happens.
-	public float RarityMultiplier { get; set; } = 0.01f;
+	public ushort RarityWeight { get; set; } = 1;
 }

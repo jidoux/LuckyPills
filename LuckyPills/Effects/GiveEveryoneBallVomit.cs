@@ -10,10 +10,10 @@ internal sealed class GiveEveryoneBallVomit(GiveEveryoneBallVomitConfig config) 
 		&& config.IsEnabled;
 	public string DisplayText { get; } = "You've given everyone ball vomit";
 	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		foreach (Player anyPlayerInMap in Player.ReadyList.Where(x => x.IsAlive)) {
 			anyPlayerInMap.SendHint("You've been given ball vomit by someone else's Painkillers", duration: 4);
 			EnablePillEffect(_ballVomitInstance.Value, anyPlayerInMap, duration);
@@ -23,8 +23,8 @@ internal sealed class GiveEveryoneBallVomit(GiveEveryoneBallVomitConfig config) 
 
 internal sealed class GiveEveryoneBallVomitConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 10f;
-	public float MaxDuration { get; set; } = 20f;
-	public float RarityMultiplier { get; set; } = 0.2f;
+	public int MinDuration { get; set; } = 10;
+	public int MaxDuration { get; set; } = 20;
+	public ushort RarityWeight { get; set; } = 20;
 	public int RoundDurationMinutesUntilThisCanBeEnabled = 10;
 }

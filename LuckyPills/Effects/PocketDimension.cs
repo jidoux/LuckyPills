@@ -3,13 +3,13 @@ namespace LuckyPills.Effects;
 internal sealed class PocketDimension(PocketDimensionConfig config) : IPillEffect, IDebugPickPills {
 	public bool IsEnabled(Player player) => config.IsEnabled;
 	// No DisplayText here, I display it manually.
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		// When this effect is enabled it checks if pocket dimension's room identifier can be found, then teleports the player to it's position.
 		// I was previously finding the room manually, which had some freaky issue where players could just have a permanent black screen, idk why.
-		if (Random.value > config.OddsFromZeroToOneToSendEveryPlayerThere) {
+		if (Random.Range(0, 100) < config.PercentChanceToSendEveryPlayerThere) {
 			player.SendHint("You've been sent to the pocket dimension");
 			player.EnableEffect<CustomPlayerEffects.PocketCorroding>();
 		}
@@ -26,6 +26,6 @@ internal sealed class PocketDimension(PocketDimensionConfig config) : IPillEffec
 
 internal sealed class PocketDimensionConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.85f;
-	public float OddsFromZeroToOneToSendEveryPlayerThere = 0.1f;
+	public ushort RarityWeight { get; set; } = 85;
+	public byte PercentChanceToSendEveryPlayerThere { get; set; } = 10;
 }

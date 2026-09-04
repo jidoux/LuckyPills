@@ -16,10 +16,10 @@ internal sealed class TeleportTo096(TeleportTo096Config config) : IPillEffect, I
 	}
 
 	public string DisplayText { get; } = "You've been teleported to SCP-096";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		foreach (Player currPlayer in Player.ReadyList) {
 			if (currPlayer.Role == RoleTypeId.Scp096) {
 				player.Position = currPlayer.Position + Vector3.up; // not sure if the +1 is needed for this.. some other teleports sent you thru the floor.
@@ -32,5 +32,5 @@ internal sealed class TeleportTo096(TeleportTo096Config config) : IPillEffect, I
 
 internal sealed class TeleportTo096Config {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	public ushort RarityWeight { get; set; } = 100;
 }

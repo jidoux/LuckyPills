@@ -18,10 +18,10 @@ internal sealed class SwapPositions(SwapPositionsConfig config) : IPillEffect, I
 	}
 
 	public string DisplayText { get; } = "You've swapped positions with another random player";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		Player? randomPlayer = Player.ReadyList
 			.Where(x => x.IsAlive && x != player && x.Role != PlayerRoles.RoleTypeId.Scp079)
 			.OrderBy(_ => Random.value)
@@ -39,5 +39,5 @@ internal sealed class SwapPositions(SwapPositionsConfig config) : IPillEffect, I
 
 internal sealed class SwapPositionsConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.8f;
+	public ushort RarityWeight { get; set; } = 80;
 }

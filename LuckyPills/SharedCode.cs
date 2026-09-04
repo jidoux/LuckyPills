@@ -31,9 +31,7 @@ internal static class SharedCode {
 		}
 
 		Scp244Pickup? pickup = (Scp244Pickup?)Pickup.Create(type: itemType, position: positionToSpawnIt, rotation: rotation, scale: scale);
-		if (pickup is not null) {
-			pickup.State = InventorySystem.Items.Usables.Scp244.Scp244State.Active;
-		}
+		pickup?.State = InventorySystem.Items.Usables.Scp244.Scp244State.Active;
 	}
 
 	public static IEnumerator<float> RunGrenadeVomit(Player player, float duration, float grenadesPerSecond, ItemType itemType) {
@@ -78,7 +76,7 @@ internal static class SharedCode {
 		thrownProjectile.ServerActivate();
 	}
 
-	public static void EnablePillEffect(IPillEffect effect, Player player, float duration) {
+	public static void EnablePillEffect(IPillEffect effect, Player player, int duration) {
 		effect.OnEnabled(player, duration);
 		MEC.Timing.CallDelayed(duration, () => effect.OnDisabled(player));
 	}

@@ -5,10 +5,10 @@ namespace LuckyPills.Effects;
 internal sealed class SodaEffect(SodaEffectConfig config) : IPillEffect {
 	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "You've been given the soda effect";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		byte currentPlayerIntensity = 0;
 		if (player.TryGetEffect<Scp207>(out Scp207? effect)) {
 			currentPlayerIntensity = effect?.Intensity ?? 0; // my ide says this can return null somehow...
@@ -24,5 +24,5 @@ internal sealed class SodaEffect(SodaEffectConfig config) : IPillEffect {
 
 internal sealed class SodaEffectConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	public ushort RarityWeight { get; set; } = 100;
 }

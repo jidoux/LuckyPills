@@ -3,10 +3,10 @@ namespace LuckyPills.Effects;
 internal sealed class DeathCounter(DeathCounterConfig config) : IPillEffect {
 	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText => $"You will die in {config.SecondsToDeath} seconds";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		MEC.Timing.RunCoroutine(DeathCountdown(player, config.SecondsToDeath));
 	}
 
@@ -26,6 +26,6 @@ internal sealed class DeathCounter(DeathCounterConfig config) : IPillEffect {
 
 internal sealed class DeathCounterConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.9f;
+	public ushort RarityWeight { get; set; } = 90;
 	public int SecondsToDeath { get; set; } = 30;
 }

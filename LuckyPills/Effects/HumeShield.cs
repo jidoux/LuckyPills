@@ -3,10 +3,10 @@ namespace LuckyPills.Effects;
 internal sealed class HumeShield(HumeShieldConfig config) : IPillEffect, IDebugPickPills {
 	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "You've been given some shield";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		if (player.MaxHumeShield > 1f) {
 			player.MaxHumeShield += config.AmountOfShieldToGive;
 		}
@@ -21,6 +21,6 @@ internal sealed class HumeShield(HumeShieldConfig config) : IPillEffect, IDebugP
 
 internal sealed class HumeShieldConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	public ushort RarityWeight { get; set; } = 100;
 	public int AmountOfShieldToGive { get; set; } = 100;
 }

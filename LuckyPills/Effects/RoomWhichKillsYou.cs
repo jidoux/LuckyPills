@@ -7,10 +7,10 @@ internal sealed class RoomWhichKillsYou(RoomWhichKillsYouConfig config) : IPillE
 
 	public bool IsEnabled(Player player) => !_playersAndRoomsWhichKillThem.ContainsKey(player) && config.IsEnabled;
 	// No DisplayText because I want to display the zone as well, so I just display it in OnEnabled
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		FacilityZone zoneToUse = GetZoneToUse();
 		Room roomToUse = GetRoomToUse(player.Room, zoneToUse);
 		player.SendHint(GetHintText(roomToUse));
@@ -30,10 +30,7 @@ internal sealed class RoomWhichKillsYou(RoomWhichKillsYouConfig config) : IPillE
 	private static Room GetRoomToUse(Room? playerCurrentRoom, FacilityZone zoneToUse) {
 		Room? roomToUse;
 		do { // I don't want to roll the player's current room...
-			roomToUse = GetRandomRoom(zoneToUse);
-			if (roomToUse is null) {
-				throw new InvalidOperationException("RoomWhichKillsYou effect activated with NO ROOMS IN THE MAP??? HCOW???");
-			}
+			roomToUse = GetRandomRoom(zoneToUse) ?? throw new InvalidOperationException("RoomWhichKillsYou effect activated with NO ROOMS IN THE MAP??? HCOW???");
 		} while (playerCurrentRoom == roomToUse);
 		return roomToUse;
 	}
@@ -76,5 +73,5 @@ internal sealed class RoomWhichKillsYou(RoomWhichKillsYouConfig config) : IPillE
 
 internal sealed class RoomWhichKillsYouConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	public ushort RarityWeight { get; set; } = 100;
 }

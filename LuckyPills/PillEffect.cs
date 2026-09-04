@@ -14,12 +14,12 @@ internal interface IDebugPickPills;
 internal interface IPillEffect {
 	public bool IsEnabled(Player player);
 	public virtual string DisplayText => "";
-	public virtual Duration PossibleDurationRangeInclusive => new(float.MaxValue, float.MaxValue); // Default to max duration.
+	public virtual Duration PossibleDurationRangeInclusive => new(int.MaxValue, int.MaxValue); // Default to max duration.
 	/// <summary>
-	/// 1 is the base priority, 0.1 would be 10 times rarer than base, etc.
+	/// 100 is the base priority, 10 would be 10 times rarer than base, etc.
 	/// </summary>
-	public float RarityMultiplier => 1f;
-	public void OnEnabled(Player player, float duration);
+	public ushort RarityWeight => throw new NotImplementedException();
+	public void OnEnabled(Player player, int duration);
 	public virtual void OnDisabled(Player player) { }
 	public virtual void OnRoundEnd() { /*Fairly rare for effects to have this, but its a generic cleanup thing which is sometimes just defensive.*/ }
 	public EffectCapabilities Capabilities { get; }
@@ -58,11 +58,11 @@ internal static class PillEffectOrchestrator {
 	}
 
 	private static IPillEffect? GetRandomPillEffect(Player player) {
-		float totalWeight = 0f;
-		int totalEnabledPills = 0;
+		ushort totalWeight = 0;
+		ushort totalEnabledPills = 0;
 		foreach (IPillEffect effect in AllPillEffects) {
 			if (effect.IsEnabled(player)) {
-				totalWeight += effect.RarityMultiplier;
+				totalWeight += effect.RarityWeight;
 				_enabledEffects[totalEnabledPills] = effect;
 				totalEnabledPills++;
 			}
@@ -70,10 +70,10 @@ internal static class PillEffectOrchestrator {
 		if (totalEnabledPills == 0) {
 			return null; // Signal to the caller that some error occurred - think Result<T>
 		}
-		float randomRoll = Random.Range(0f, totalWeight);
-		float cumulativeWeightSum = 0f;
+		int randomRoll = Random.Range(0, totalWeight);
+		uint cumulativeWeightSum = 0;
 		for (int i = 0; i < totalEnabledPills; i++) {
-			cumulativeWeightSum += _enabledEffects[i].RarityMultiplier;
+			cumulativeWeightSum += _enabledEffects[i].RarityWeight;
 			if (randomRoll < cumulativeWeightSum) {
 				return _enabledEffects[i];
 			}
@@ -83,13 +83,13 @@ internal static class PillEffectOrchestrator {
 	}
 
 	public static void ActivateEffect(Player player, IPillEffect selectedEffect) {
-		float duration = selectedEffect.PossibleDurationRangeInclusive.Random;
+		int duration = selectedEffect.PossibleDurationRangeInclusive.Random;
 		selectedEffect.OnEnabled(player, duration);
 		string textToDisplay = AddDurationToHintText(selectedEffect.DisplayText, duration);
 		if (textToDisplay.Length > 0) { // Some effects have no DisplayText because I needed better control.
 			player.SendHint(textToDisplay);
 		}
-		if (duration < float.MaxValue - 1) {
+		if (duration != int.MaxValue) { // its default value is MaxValue which effectively means its nothing/I don't care.
 			MEC.Timing.CallDelayed(duration, () => selectedEffect.OnDisabled(player)); // Can sometimes just do nothing if OnDisabled isn't overriden.
 		}
 	}
@@ -115,8 +115,8 @@ internal static class PillEffectOrchestrator {
 		GoodAsPermanent = 1 << 3,
 	}
 
-	internal readonly struct Duration(float minimum, float maximum) {
-		public float Random => UnityEngine.Random.Range(minimum, maximum);
+	internal readonly struct Duration(int minimum, int maximum) {
+		public int Random => UnityEngine.Random.Range(minimum, maximum);
 	}
 }
 

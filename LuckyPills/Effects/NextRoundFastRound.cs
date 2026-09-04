@@ -7,10 +7,10 @@ internal sealed class NextRoundFastRound(NextRoundFastRoundConfig config) : IPil
 	public bool IsEnabled(Player player) => !IsSpecialEventHappeningNextRound &&
 		!_nextRoundFastRound && config.IsEnabled;
 	public string DisplayText { get; } = "Something special will happen next round...";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		IsSpecialEventHappeningNextRound = true;
 		_nextRoundFastRound = true;
 	}
@@ -36,5 +36,5 @@ internal sealed class NextRoundFastRound(NextRoundFastRoundConfig config) : IPil
 
 internal sealed class NextRoundFastRoundConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.25f;
+	public ushort RarityWeight { get; set; } = 25;
 }

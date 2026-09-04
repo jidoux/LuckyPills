@@ -34,10 +34,10 @@ internal sealed class ResurrectTeamMember(ResurrectTeamMemberConfig config) : IP
 		return false;
 	}
 	public string DisplayText { get; } = "You've resurrected a fallen team member";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.GoodEffect;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		KeyValuePair<Player, RoleAndTeamInfo> respawnPlayerInfo = _killedPlayers
 			.Where(x => x.Value.Team == player.Team && !x.Key.IsAlive)
 			.OrderBy(_ => Random.value)
@@ -71,5 +71,5 @@ internal sealed class ResurrectTeamMember(ResurrectTeamMemberConfig config) : IP
 
 internal sealed class ResurrectTeamMemberConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	public ushort RarityWeight { get; set; } = 100;
 }

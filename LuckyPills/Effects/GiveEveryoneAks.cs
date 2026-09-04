@@ -5,10 +5,10 @@ namespace LuckyPills.Effects;
 internal sealed class GiveEveryoneAks(GiveEveryoneAksConfig config) : IPillEffect, IDebugPickPills {
 	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "You've given every player an AK";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		foreach (Player anyPlayerInMap in Player.ReadyList.Where(x => x.IsAlive && x.Team != Team.SCPs)) {
 			if (anyPlayerInMap.Items.Count() >= 8) {
 				//SpawnFirearmBelow(player.Position, ItemType.GunAK);
@@ -32,5 +32,5 @@ internal sealed class GiveEveryoneAks(GiveEveryoneAksConfig config) : IPillEffec
 
 internal sealed class GiveEveryoneAksConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.8f;
+	public ushort RarityWeight { get; set; } = 80;
 }

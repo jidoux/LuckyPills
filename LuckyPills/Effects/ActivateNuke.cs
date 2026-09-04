@@ -5,10 +5,10 @@ internal sealed class ActivateNuke(ActivateNukeConfig config) : IPillEffect {
 	// it happens (and makes more sense to me, personally).
 	public bool IsEnabled(Player player) => !Warhead.LeverStatus && !Warhead.IsAuthorized && config.IsEnabled;
 	public string DisplayText { get; } = "You've activated the nuclear warhead";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		Warhead.LeverStatus = true; // Turning on the nuke in nuke room
 		Warhead.IsAuthorized = true; // Unlocking the surface panel
 		Warhead.Start(isAutomatic: false, suppressSubtitles: false, activator: player);
@@ -17,5 +17,5 @@ internal sealed class ActivateNuke(ActivateNukeConfig config) : IPillEffect {
 
 internal sealed class ActivateNukeConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.4f;
+	public ushort RarityWeight { get; set; } = 40;
 }

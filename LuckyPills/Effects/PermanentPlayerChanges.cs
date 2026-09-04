@@ -13,10 +13,10 @@ internal sealed class PermanentPlayerChanges(PermanentPlayerChangesConfig config
 	// I'm not letting players get 2 permanent effects at once mostly because I don't feel like
 	// tracking for duplicates.
 	public bool IsEnabled(Player player) => !_playersWithPermanentEffectsThisRound.Contains(player) && config.IsEnabled;
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		_playersWithPermanentEffectsThisRound.Add(player);
 		// Prob should respect the config's enabled settings. The tradeoff being that if enough are disabled
 		// in the config, nothing will happen. Oh well...
@@ -26,7 +26,7 @@ internal sealed class PermanentPlayerChanges(PermanentPlayerChangesConfig config
 			return;
 		}
 		IPillEffect randomlySelectedEffect = enabledCandidates.RandomItem();
-		randomlySelectedEffect.OnEnabled(player, 3600f);
+		randomlySelectedEffect.OnEnabled(player, duration: 3600);
 		// yeahhh this is kinda bad/scary approach, but its simplest.
 		string hintToSend = randomlySelectedEffect.DisplayText.Replace("for {duration} seconds", "permanently", StringComparison.Ordinal);
 		player.SendHint(hintToSend);
@@ -42,5 +42,6 @@ internal sealed class PermanentPlayerChangesConfig {
 	// I lowered most of the effects which are flagged as GoodAsPermanent from 1 to 0.95, so hoping they won't be more common.
 	// I figure since this effect is technically >10 effects, its fine for it to be more common (shouldn't feel more common).
 	// TODO double check this imho
-	public float RarityMultiplier { get; set; } = 1.6f;
+	public ushort RarityWeight { get; set; } = 160;
+
 }

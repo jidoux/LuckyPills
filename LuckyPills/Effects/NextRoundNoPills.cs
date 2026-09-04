@@ -7,10 +7,10 @@ internal sealed class NextRoundNoPills(NextRoundNoPillsConfig config) : IPillEff
 	public bool IsEnabled(Player player) => !IsSpecialEventHappeningNextRound &&
 		!_notSpawningPillsNextRound && config.IsEnabled;
 	public string DisplayText { get; } = "Something special will happen next round...";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		IsSpecialEventHappeningNextRound = true;
 		_notSpawningPillsNextRound = true;
 	}
@@ -33,5 +33,5 @@ internal sealed class NextRoundNoPills(NextRoundNoPillsConfig config) : IPillEff
 
 internal sealed class NextRoundNoPillsConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.25f;
+	public ushort RarityWeight { get; set; } = 25;
 }

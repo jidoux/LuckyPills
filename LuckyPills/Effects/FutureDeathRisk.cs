@@ -9,10 +9,10 @@ internal sealed class FutureDeathRisk(FutureDeathRiskConfig config) : IPillEffec
 	// The amount is arbitrary.
 	public bool IsEnabled(Player player) => _relevantEventHandlers.Count > 20 && !_playersToDie.ContainsKey(player) && config.IsEnabled;
 	public string DisplayText { get; } = "One randomly-selected action you take will kill you";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		_playersToDie.Add(player, GetRandomEventHandler());
 	}
 
@@ -49,5 +49,5 @@ internal sealed class FutureDeathRisk(FutureDeathRiskConfig config) : IPillEffec
 
 internal sealed class FutureDeathRiskConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	public ushort RarityWeight { get; set; } = 100;
 }

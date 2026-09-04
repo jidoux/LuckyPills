@@ -6,10 +6,10 @@ internal sealed class MassFog(MassFogConfig config) : IPillEffect {
 	public bool IsEnabled(Player player) => !_playersSpawningMassFog.Contains(player) && config.IsEnabled;
 	public string DisplayText { get; } = "Fog is spawning under you for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodAsPermanent;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		_playersSpawningMassFog.Add(player);
 		MEC.Timing.RunCoroutine(SpawnMassFog(player, duration, config.Scp244PerSecond));
 	}
@@ -22,7 +22,7 @@ internal sealed class MassFog(MassFogConfig config) : IPillEffect {
 		_playersSpawningMassFog.Clear();
 	}
 
-	private static IEnumerator<float> SpawnMassFog(Player player, float duration, float scp244PerSecond) {
+	private static IEnumerator<float> SpawnMassFog(Player player, float duration, int scp244PerSecond) {
 		float delayTime = 1f / scp244PerSecond;
 		for (int i = 0; i < duration * scp244PerSecond; i++) {
 			if (!_playersSpawningMassFog.Contains(player)) {
@@ -36,8 +36,8 @@ internal sealed class MassFog(MassFogConfig config) : IPillEffect {
 
 internal sealed class MassFogConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float MinDuration { get; set; } = 15f;
-	public float MaxDuration { get; set; } = 38f;
-	public float RarityMultiplier { get; set; } = 1f;
-	public float Scp244PerSecond { get; set; } = 2f;
+	public int MinDuration { get; set; } = 15;
+	public int MaxDuration { get; set; } = 38;
+	public ushort RarityWeight { get; set; } = 100;
+	public int Scp244PerSecond { get; set; } = 2;
 }

@@ -9,7 +9,7 @@ internal sealed class BecomeGuard(BecomeGuardConfig config) : IPillEffect {
 		if (!config.IsEnabled) {
 			return false;
 		}
-		if (Round.Duration.TotalSeconds > 35f) {
+		if (Round.Duration.TotalSeconds > 35d) {
 			return false;
 		}
 		byte eligibleCandidates = 0;
@@ -21,10 +21,10 @@ internal sealed class BecomeGuard(BecomeGuardConfig config) : IPillEffect {
 		return eligibleCandidates > 3;
 	}
 	public string DisplayText { get; } = "You and someone else have became Facility Guards";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		Player guardBuddy = Player.ReadyList
 			.Where(x => x != player && (x.Role == RoleTypeId.Scientist || x.Role == RoleTypeId.ClassD))
 			.OrderBy(_ => Random.value)
@@ -43,5 +43,5 @@ internal sealed class BecomeGuard(BecomeGuardConfig config) : IPillEffect {
 
 internal sealed class BecomeGuardConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.45f;
+	public ushort RarityWeight { get; set; } = 45;
 }

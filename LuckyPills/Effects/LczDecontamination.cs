@@ -7,10 +7,10 @@ internal sealed class LczDecontamination(LczDecontaminationConfig config) : IPil
 	public bool IsEnabled(Player player) =>
 		player.Zone == FacilityZone.LightContainment && DecontaminationController.Singleton.TimeOffset < 600f && config.IsEnabled;
 	public string DisplayText { get; } = "You've triggered Light Containment Zone decontamination";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		// must be below 666 and above 660... I didn't test 665. Just an arbitrary offset to trigger 30 second countdown.
 		float timeUntilDecontam = 663f;
 		float offsetFromStartTime = timeUntilDecontam - (float)Round.Duration.TotalSeconds;
@@ -20,5 +20,5 @@ internal sealed class LczDecontamination(LczDecontaminationConfig config) : IPil
 
 internal sealed class LczDecontaminationConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.4f;
+	public ushort RarityWeight { get; set; } = 40;
 }

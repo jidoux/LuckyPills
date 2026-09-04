@@ -9,10 +9,10 @@ internal sealed class NextRoundLogicers(NextRoundLogicersConfig config) : IPillE
 	public bool IsEnabled(Player player) => !IsSpecialEventHappeningNextRound &&
 		!_giveDClassLogicersNextRound && config.IsEnabled;
 	public string DisplayText { get; } = "Something special will happen next round...";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		IsSpecialEventHappeningNextRound = true;
 		_giveDClassLogicersNextRound = true;
 	}
@@ -38,5 +38,5 @@ internal sealed class NextRoundLogicers(NextRoundLogicersConfig config) : IPillE
 
 internal sealed class NextRoundLogicersConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 0.25f;
+	public ushort RarityWeight { get; set; } = 25;
 }

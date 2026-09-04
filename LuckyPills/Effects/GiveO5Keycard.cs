@@ -17,15 +17,15 @@ internal sealed class GiveO5Keycard(GiveO5KeycardConfig config) : IPillEffect {
 		return true;
 	}
 	public string DisplayText { get; } = "You've been given an 05 keycard";
-	public float RarityMultiplier => config.RarityMultiplier;
+	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
-	public void OnEnabled(Player player, float duration) {
+	public void OnEnabled(Player player, int duration) {
 		player.ForceEquip(ItemType.KeycardO5);
 	}
 }
 
 internal sealed class GiveO5KeycardConfig {
 	public bool IsEnabled { get; set; } = true;
-	public float RarityMultiplier { get; set; } = 1f;
+	public ushort RarityWeight { get; set; } = 100;
 }
