@@ -5,7 +5,8 @@ internal sealed class FlashVomit(FlashVomitConfig config) : IPillEffect {
 	public string DisplayText { get; } = "You've been given flash vomit for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
 	public ushort RarityWeight => config.RarityWeight;
-	public EffectCapabilities Capabilities { get; } = EffectCapabilities.VomitEffect | EffectCapabilities.CandidateForGiveAll;
+	// Removed from EffectCapabilities.CandidateForGiveAll because people didn't think it was adding to the fun.
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.VomitEffect;
 
 	public void OnEnabled(Player player, int duration) {
 		MEC.Timing.RunCoroutine(RunGrenadeVomit(player, duration, config.GrenadesPerSecond, ItemType.GrenadeFlash));

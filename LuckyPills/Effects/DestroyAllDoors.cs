@@ -39,5 +39,5 @@ internal sealed class DestroyAllDoors(DestroyAllDoorsConfig config) : IPillEffec
 
 internal sealed class DestroyAllDoorsConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 60;
+	public ushort RarityWeight { get; set; } = 55;
 }

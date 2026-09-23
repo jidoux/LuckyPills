@@ -42,5 +42,5 @@ internal sealed class TurnIntoComputer(TurnIntoComputerConfig config) : IPillEff
 
 internal sealed class TurnIntoComputerConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 20;
+	public ushort RarityWeight { get; set; } = 10;
 }

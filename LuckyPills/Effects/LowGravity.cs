@@ -1,10 +1,11 @@
 namespace LuckyPills.Effects;
 
 internal sealed class LowGravity(LowGravityConfig config) : IPillEffect {
-	public bool IsEnabled(Player player) => config.IsEnabled;
+	public bool IsEnabled(Player player) => config.IsEnabled && player.HasDefaultScaleAndGravity();
 	public string DisplayText { get; } = "You've been given low gravity for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
 	public ushort RarityWeight => config.RarityWeight;
+	// Should not have EffectCapabilities.CandidateForGiveAll or anything like that as giving them this and adjusting their size is problematic.
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.GoodAsPermanent;
 
 	public void OnEnabled(Player player, int duration) {
@@ -12,7 +13,7 @@ internal sealed class LowGravity(LowGravityConfig config) : IPillEffect {
 	}
 
 	public void OnDisabled(Player player) {
-		player.Gravity = new Vector3(0f, -19.6f, 0f);
+		player.Gravity = DefaultPlayerGravity;
 	}
 }
 

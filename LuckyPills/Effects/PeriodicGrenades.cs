@@ -40,7 +40,7 @@ internal sealed class PeriodicGrenades(PeriodicGrenadesConfig config) : IPillEff
 
 internal sealed class PeriodicGrenadesConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 50;
+	public ushort RarityWeight { get; set; } = 65;
 	public float IntervalLowerBound { get; set; } = 5f;
 	public float IntervalUpperBound { get; set; } = 25f;
 }

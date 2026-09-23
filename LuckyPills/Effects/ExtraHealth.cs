@@ -7,7 +7,11 @@ internal sealed class ExtraHealth(ExtraHealthConfig config) : IPillEffect {
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect;
 
 	public void OnEnabled(Player player, int duration) {
-		player.MaxHealth += config.AmountOfHealthToGive;
+		int healthAmountToGive = config.AmountOfHealthToGive;
+		if (Random.value <= 0.01) {
+			healthAmountToGive *= 2; // Why not give them a bit more.
+		}
+		player.MaxHealth += healthAmountToGive;
 		player.Heal(player.MaxHealth);
 	}
 }

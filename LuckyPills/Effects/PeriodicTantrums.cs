@@ -40,7 +40,7 @@ internal sealed class PeriodicTantrums(PeriodicTantrumsConfig config) : IPillEff
 
 internal sealed class PeriodicTantrumsConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 50;
+	public ushort RarityWeight { get; set; } = 55;
 	public float IntervalLowerBound { get; set; } = 30f;
 	public float IntervalUpperBound { get; set; } = 90f;
 }

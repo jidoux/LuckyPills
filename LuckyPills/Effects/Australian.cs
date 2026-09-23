@@ -1,7 +1,7 @@
 namespace LuckyPills.Effects;
 
 internal sealed class Australian(AustralianConfig config) : IPillEffect {
-	public bool IsEnabled(Player player) => config.IsEnabled;
+	public bool IsEnabled(Player player) => config.IsEnabled && player.HasDefaultScaleAndGravity();
 	public string DisplayText { get; } = "You've been converted to australian for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
 	public ushort RarityWeight => config.RarityWeight;
@@ -12,7 +12,7 @@ internal sealed class Australian(AustralianConfig config) : IPillEffect {
 	}
 
 	public void OnDisabled(Player player) {
-		player.Scale = Vector3.one;
+		player.Scale = DefaultPlayerScale;
 	}
 }
 

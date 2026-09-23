@@ -18,12 +18,13 @@ namespace LuckyPills;
 /// Just a dump of any shared helper methods... I prefer this over separate files due to small scale.
 /// </summary>
 internal static class SharedCode {
+
 	/// <summary>
 	/// Generally should just pass in the player.position - will spawn an active Scp244 of random type.
 	/// </summary>
 	public static void SpawnScp244(Vector3 positionToSpawnIt, Quaternion? rotationInput = null, Vector3? scaleInput = null) {
 		Quaternion rotation = rotationInput ?? Quaternion.identity;
-		Vector3 scale = scaleInput ?? Vector3.one;
+		Vector3 scale = scaleInput ?? DefaultPlayerScale;
 
 		ItemType itemType = ItemType.SCP244a;
 		if (Random.Range(0, 2) == 1) { // not sure the cleanest way to write 50% chances but this is 50% chance
@@ -164,6 +165,16 @@ internal static class SharedCode {
 
 	public static void BlowUp(this Player player) {
 		ExplosiveGrenadeProjectile.SpawnActive(player.Position, ItemType.GrenadeHE, owner: player, timeOverride: 0f);
+	}
+
+	public static readonly Vector3 DefaultPlayerGravity = new(0f, -19.6f, 0f);
+	public static readonly Vector3 DefaultPlayerScale = Vector3.one;
+	/// <summary>
+	/// I noticed an issue where someone had low gravity AND was small, where they got stuck somewhere, so I want to
+	/// prevent that combination.
+	/// </summary>
+	public static bool HasDefaultScaleAndGravity(this Player player) {
+		return player.Gravity == DefaultPlayerGravity && player.Scale == DefaultPlayerScale;
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]

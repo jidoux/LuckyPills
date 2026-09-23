@@ -15,6 +15,6 @@ internal sealed class SuperSpeed(SuperSpeedConfig config) : IPillEffect {
 internal sealed class SuperSpeedConfig {
 	public bool IsEnabled { get; set; } = true;
 	public int MinDuration { get; set; } = 15;
-	public int MaxDuration { get; set; } = 45;
+	public int MaxDuration { get; set; } = 80;
 	public ushort RarityWeight { get; set; } = 95;
 }

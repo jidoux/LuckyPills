@@ -38,8 +38,8 @@ internal sealed class BecomeABomb(BecomeABombConfig config) : IPillEffect, IDebu
 
 internal sealed class BecomeABombConfig {
 	public bool IsEnabled { get; set; } = true;
-	public int MinDuration { get; set; } = 15;
-	public int MaxDuration { get; set; } = 38;
-	public ushort RarityWeight { get; set; } = 85;
+	public int MinDuration { get; set; } = 10;
+	public int MaxDuration { get; set; } = 15;
+	public ushort RarityWeight { get; set; } = 80;
 	public int ExplosionsPerSecond { get; set; } = 2;
 }

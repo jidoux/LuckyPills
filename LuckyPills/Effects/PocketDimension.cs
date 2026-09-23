@@ -27,5 +27,5 @@ internal sealed class PocketDimension(PocketDimensionConfig config) : IPillEffec
 internal sealed class PocketDimensionConfig {
 	public bool IsEnabled { get; set; } = true;
 	public ushort RarityWeight { get; set; } = 85;
-	public byte PercentChanceToSendEveryPlayerThere { get; set; } = 10;
+	public byte PercentChanceToSendEveryPlayerThere { get; set; } = 6;
 }
