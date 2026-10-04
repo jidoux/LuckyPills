@@ -33,5 +33,5 @@ internal sealed class NextRoundNoPills(NextRoundNoPillsConfig config) : IPillEff
 
 internal sealed class NextRoundNoPillsConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 25;
+	public ushort RarityWeight { get; set; } = 20;
 }

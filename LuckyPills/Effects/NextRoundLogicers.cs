@@ -38,5 +38,5 @@ internal sealed class NextRoundLogicers(NextRoundLogicersConfig config) : IPillE
 
 internal sealed class NextRoundLogicersConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 25;
+	public ushort RarityWeight { get; set; } = 20;
 }

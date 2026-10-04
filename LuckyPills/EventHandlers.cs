@@ -96,10 +96,11 @@ internal sealed class EventHandlers : CustomEventsHandler {
 
 	public override void OnPlayerSpawned(PlayerSpawnedEventArgs ev) {
 		LogCallIfDebug();
-		// This event needs to be delayed a few frames, my source is someone in the discord + it doesn't work otherwise.
+		// This event needs to be delayed a few frames, my source is someone in the discord + it doesn't work otherwise. Unsure if 0.05f is the correct timing window. TODO investigate.
 		MEC.Timing.CallDelayed(0.05f, () => {
 			NextRoundLogicers.NextRoundLogicersBehavior(ev.Player);
 			NextRoundFastRound.NextRoundFastRoundBehavior(ev.Player);
+			NextRoundTinyRound.NextRoundTinyRoundBehavior(ev.Player);
 		});
 	}
 

@@ -9,7 +9,7 @@ internal sealed class GiveEveryonePills(GiveEveryonePillsConfig config) : IPillE
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, int duration) {
-		foreach (Player anyPlayerInMap in Player.ReadyList.Where(x => x.IsAlive || (config.GiveToScpsAlso && x.Team == Team.SCPs))) {
+		foreach (Player anyPlayerInMap in Player.ReadyList.Where(x => x.IsAlive || (config.GiveToScpsAlso && x.Team == Team.SCPs && x.Role != RoleTypeId.Scp079))) {
 			if (anyPlayerInMap.Items.Count() >= 8) {
 				Pickup.Create(ItemType.Painkillers, player.Position);
 				if (anyPlayerInMap != player) {

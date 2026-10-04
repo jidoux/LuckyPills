@@ -14,5 +14,5 @@ internal sealed class Dismemberment(DismembermentConfig config) : IPillEffect {
 
 internal sealed class DismembermentConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 40; // I think this effect is just lame, so it should be kinda rare.
+	public ushort RarityWeight { get; set; } = 10; // I think this effect is just lame, so it should be extremely rare. Kinda wish I never added, to be honest.
 }

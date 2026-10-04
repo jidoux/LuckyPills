@@ -17,5 +17,5 @@ internal sealed class OneHealth(OneHealthConfig config) : IPillEffect {
 
 internal sealed class OneHealthConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 80;
+	public ushort RarityWeight { get; set; } = 70;
 }

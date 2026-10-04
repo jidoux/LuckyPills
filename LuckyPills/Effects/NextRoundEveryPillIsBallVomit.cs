@@ -36,13 +36,14 @@ internal sealed class NextRoundEveryPillIsBallVomit(NextRoundEveryPillIsBallVomi
 		if (!_thisRoundEveryPillIsBalls) {
 			return false;
 		}
+		// TODO - test this, make sure it doesn't show the god mode message. ALso validate that the duration is acceptable.
+		ActivateEffect(player, _godModeInstance.Value, showPillMessage: false);
 		if (Random.Range(0, 2) == 1) { // not sure the cleanest way to write 50% chances but this is 50% chance
 			ActivateEffect(player, _ballVomitInstance.Value);
 		}
 		else {
 			ActivateEffect(player, _bombVomitInstance.Value);
 		}
-		ActivateEffect(player, _godModeInstance.Value);
 		return true;
 	}
 

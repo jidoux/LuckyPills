@@ -10,15 +10,23 @@ internal sealed class PocketDimension(PocketDimensionConfig config) : IPillEffec
 		// When this effect is enabled it checks if pocket dimension's room identifier can be found, then teleports the player to it's position.
 		// I was previously finding the room manually, which had some freaky issue where players could just have a permanent black screen, idk why.
 		if (Random.Range(0, 100) < config.PercentChanceToSendEveryPlayerThere) {
-			player.SendHint("You've been sent to the pocket dimension");
-			player.EnableEffect<CustomPlayerEffects.PocketCorroding>();
+			SendPlayerToPocketDimension(player);
 		}
 		else {
-			foreach (Player currPlayer in Player.ReadyList) {
-				if (currPlayer.IsAlive && currPlayer.Role != PlayerRoles.RoleTypeId.Scp079) {
-					currPlayer.EnableEffect<CustomPlayerEffects.PocketCorroding>();
-					currPlayer.SendHint("Someone's Painkillers have sent everyone to the Pocket Dimension", duration: 4);
-				}
+			SendEveryoneToPocketDimension();
+		}
+	}
+
+	private static void SendPlayerToPocketDimension(Player player) {
+		player.SendHint("You've been sent to the pocket dimension");
+		player.EnableEffect<CustomPlayerEffects.PocketCorroding>();
+	}
+
+	private static void SendEveryoneToPocketDimension() {
+		foreach (Player currPlayer in Player.ReadyList) {
+			if (currPlayer.IsAlive && currPlayer.Role != PlayerRoles.RoleTypeId.Scp079) {
+				currPlayer.EnableEffect<CustomPlayerEffects.PocketCorroding>();
+				currPlayer.SendHint("Someone's Painkillers have sent everyone to the Pocket Dimension", duration: 4);
 			}
 		}
 	}
@@ -27,5 +35,5 @@ internal sealed class PocketDimension(PocketDimensionConfig config) : IPillEffec
 internal sealed class PocketDimensionConfig {
 	public bool IsEnabled { get; set; } = true;
 	public ushort RarityWeight { get; set; } = 85;
-	public byte PercentChanceToSendEveryPlayerThere { get; set; } = 6;
+	public byte PercentChanceToSendEveryPlayerThere { get; set; } = 5;
 }

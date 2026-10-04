@@ -82,11 +82,12 @@ internal static class PillEffectOrchestrator {
 		return _enabledEffects[totalEnabledPills - 1];
 	}
 
-	public static void ActivateEffect(Player player, IPillEffect selectedEffect) {
+	public static void ActivateEffect(Player player, IPillEffect selectedEffect, bool showPillMessage = true) {
 		int duration = selectedEffect.PossibleDurationRangeInclusive.Random;
 		selectedEffect.OnEnabled(player, duration);
 		string textToDisplay = AddDurationToHintText(selectedEffect.DisplayText, duration);
-		if (textToDisplay.Length > 0) { // Some effects have no DisplayText because I needed better control.
+		// Some effects have no DisplayText because I needed better control, plus had one where I simply didn't want to send the hint text.
+		if (textToDisplay.Length > 0 && showPillMessage) {
 			player.SendHint(textToDisplay);
 		}
 		if (duration != int.MaxValue) { // its default value is MaxValue which effectively means its nothing/I don't care.

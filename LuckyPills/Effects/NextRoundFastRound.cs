@@ -36,5 +36,5 @@ internal sealed class NextRoundFastRound(NextRoundFastRoundConfig config) : IPil
 
 internal sealed class NextRoundFastRoundConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 25;
+	public ushort RarityWeight { get; set; } = 20;
 }

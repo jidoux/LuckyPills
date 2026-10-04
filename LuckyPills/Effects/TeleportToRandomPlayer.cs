@@ -19,7 +19,7 @@ internal sealed class TeleportToRandomPlayer(TeleportToRandomPlayerConfig config
 
 	public void OnEnabled(Player player, int duration) {
 		Player? randomPlayer = Player.ReadyList
-			.Where(currPlayer => currPlayer.IsInNonScpTeam())
+			.Where(currPlayer => currPlayer.IsInNonScpTeam() && currPlayer != player)
 			.OrderBy(_ => Random.value)
 			.FirstOrDefault();
 		if (randomPlayer is null) {

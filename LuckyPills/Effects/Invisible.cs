@@ -8,6 +8,7 @@ internal sealed class Invisible(InvisibleConfig config) : IPillEffect {
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None; // Not having this in good effects since it was more fun when the good effect player was visible.
 
 	public void OnEnabled(Player player, int duration) {
+		// It doesn't do the hat effect so I believe they are still visible somewhat, TODO investigate if this can be improved ok?
 		player.EnableEffect<CustomPlayerEffects.Fade>(intensity: byte.MaxValue, duration: duration, addDuration: true);
 	}
 }
