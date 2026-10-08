@@ -6,7 +6,7 @@ internal sealed class Mutate(MutateConfig config) : IPillEffect {
 	private readonly Dictionary<Player, RoleTypeId> _cachedRoles = [];
 
 	public bool IsEnabled(Player player) {
-		if (!config.IsEnabled) {
+		if (!config.IsEnabled || player.Team == Team.SCPs) {
 			return false;
 		}
 		byte counter = 0;
@@ -34,9 +34,13 @@ internal sealed class Mutate(MutateConfig config) : IPillEffect {
 	}
 
 	public void OnDisabled(Player player) {
-		if (player.IsAlive && _cachedRoles.TryGetValue(player, out RoleTypeId role)) {
-			player.SetRoleDelay(role, RoleChangeReason.ItemUsage, RoleSpawnFlags.None);
+		if (_cachedRoles.TryGetValue(player, out RoleTypeId role)) {
+			// Always remove them from the role cache, but if they are dead or became someone other than SCP-049-2,
+			// then just dont touch their role.
 			_cachedRoles.Remove(player);
+			if (player.IsAlive && player.Role == RoleTypeId.Scp0492) {
+				player.SetRoleDelay(role, RoleChangeReason.ItemUsage, RoleSpawnFlags.None);
+			}
 		}
 	}
 }

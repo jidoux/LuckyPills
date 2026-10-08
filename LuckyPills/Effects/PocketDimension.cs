@@ -9,7 +9,7 @@ internal sealed class PocketDimension(PocketDimensionConfig config) : IPillEffec
 	public void OnEnabled(Player player, int duration) {
 		// When this effect is enabled it checks if pocket dimension's room identifier can be found, then teleports the player to it's position.
 		// I was previously finding the room manually, which had some freaky issue where players could just have a permanent black screen, idk why.
-		if (Random.Range(0, 100) < config.PercentChanceToSendEveryPlayerThere) {
+		if (Random.Range(0, 101) > config.PercentChanceToSendEveryPlayerThere) {
 			SendPlayerToPocketDimension(player);
 		}
 		else {

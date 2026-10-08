@@ -40,6 +40,6 @@ internal sealed class BecomeABombConfig {
 	public bool IsEnabled { get; set; } = true;
 	public int MinDuration { get; set; } = 10;
 	public int MaxDuration { get; set; } = 15;
-	public ushort RarityWeight { get; set; } = 80;
+	public ushort RarityWeight { get; set; } = 40; // This pill is currently the strongest one by far, so I'm making it fairly rare.
 	public int ExplosionsPerSecond { get; set; } = 2;
 }
