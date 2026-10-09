@@ -91,7 +91,7 @@ internal static class PillEffectOrchestrator {
 			player.SendHint(textToDisplay);
 		}
 		if (duration != int.MaxValue) { // its default value is MaxValue which effectively means its nothing/I don't care.
-			MEC.Timing.CallDelayed(duration, () => selectedEffect.OnDisabled(player)); // Can sometimes just do nothing if OnDisabled isn't overriden.
+			Timing.CallDelayed(duration, () => selectedEffect.OnDisabled(player)); // Can sometimes just do nothing if OnDisabled isn't overriden.
 		}
 	}
 

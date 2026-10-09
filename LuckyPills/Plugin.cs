@@ -4,6 +4,7 @@ global using UnityEngine;
 global using Random = UnityEngine.Random;
 global using static LuckyPills.PillEffectOrchestrator;
 global using static LuckyPills.SharedCode;
+global using MEC;
 using LabApi.Events.CustomHandlers;
 using LabApi.Features;
 using LabApi.Loader.Features.Plugins;

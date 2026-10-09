@@ -8,7 +8,7 @@ internal sealed class LightBulbVomit(LightBulbVomitConfig config) : IPillEffect 
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.VomitEffect;
 
 	public void OnEnabled(Player player, int duration) {
-		MEC.Timing.RunCoroutine(RunGrenadeVomit(player, duration, config.GrenadesPerSecond, ItemType.SCP2176));
+		Timing.RunCoroutine(RunGrenadeVomit(player, duration, config.GrenadesPerSecond, ItemType.SCP2176));
 	}
 }
 

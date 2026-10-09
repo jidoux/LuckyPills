@@ -12,7 +12,7 @@ internal sealed class TurnOffLights(TurnOffLightsConfig config) : IPillEffect {
 	public void OnEnabled(Player player, int duration) {
 		_lightsAreOff = true;
 		Map.TurnOffLights(duration);
-		MEC.Timing.CallDelayed(duration, () => _lightsAreOff = false);
+		Timing.CallDelayed(duration, () => _lightsAreOff = false);
 	}
 }
 

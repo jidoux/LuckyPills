@@ -34,7 +34,7 @@ internal sealed class ReviveTheDead(ReviveTheDeadConfig config) : IPillEffect, I
 			playerToRevive.Position = player.Position;
 			// Delaying since some "next round" things can also show hint text upon respawn,
 			// but this is significantly more important to display.
-			MEC.Timing.CallDelayed(0.15f, () => {
+			Timing.CallDelayed(0.15f, () => {
 				playerToRevive.SendHint("Someone's Painkillers have revived the dead", duration: 5);
 			});
 		}

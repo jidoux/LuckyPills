@@ -10,7 +10,7 @@ internal sealed class PeriodicGrenades(PeriodicGrenadesConfig config) : IPillEff
 
 	public void OnEnabled(Player player, int duration) {
 		if (_allGrenadePeriodicSpawns.Add(player)) {
-			MEC.Timing.RunCoroutine(SpawnGrenades(player, config.IntervalLowerBound, config.IntervalUpperBound));
+			Timing.RunCoroutine(SpawnGrenades(player, config.IntervalLowerBound, config.IntervalUpperBound));
 		}
 		else {
 			Logger.Error("Error with PeriodicGrenades: player is already in the _allGrenadePeriodicSpawns set.");
@@ -27,12 +27,12 @@ internal sealed class PeriodicGrenades(PeriodicGrenadesConfig config) : IPillEff
 	}
 
 	private static IEnumerator<float> SpawnGrenades(Player player, float intervalLowBound, float intervalUpperBound) {
-		yield return MEC.Timing.WaitForSeconds(Random.Range(intervalLowBound, intervalUpperBound));
+		yield return Timing.WaitForSeconds(Random.Range(intervalLowBound, intervalUpperBound));
 		// Stop it if player dies, or the HashSet doesn't have player. The HashSet gets the player
 		// removed if the player dies, escapes, or round ends.
 		while (_allGrenadePeriodicSpawns.Contains(player)) {
 			SpawnThrownExplosive(player.ReferenceHub, ItemType.GrenadeHE);
-			yield return MEC.Timing.WaitForSeconds(Random.Range(intervalLowBound, intervalUpperBound));
+			yield return Timing.WaitForSeconds(Random.Range(intervalLowBound, intervalUpperBound));
 		}
 		_allGrenadePeriodicSpawns.Remove(player); // I think its unnecessary, but its defensive.
 	}

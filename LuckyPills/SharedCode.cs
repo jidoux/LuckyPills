@@ -43,7 +43,7 @@ internal static class SharedCode {
 			}
 
 			SpawnThrownExplosive(player.ReferenceHub, itemType);
-			yield return MEC.Timing.WaitForSeconds(delayTime);
+			yield return Timing.WaitForSeconds(delayTime);
 		}
 	}
 
@@ -79,7 +79,7 @@ internal static class SharedCode {
 
 	public static void EnablePillEffect(IPillEffect effect, Player player, int duration) {
 		effect.OnEnabled(player, duration);
-		MEC.Timing.CallDelayed(duration, () => effect.OnDisabled(player));
+		Timing.CallDelayed(duration, () => effect.OnDisabled(player));
 	}
 
 	public static bool TryGetScp079TierManager(PlayerRoleBase playerRoleBase, [NotNullWhen(true)] out Scp079TierManager? scp079TierManager) {
@@ -157,10 +157,10 @@ internal static class SharedCode {
 			player.Team == Team.Scientists;
 	}
 
-	// Avoiding any issues where stuff isn't properly initialized. 0.05f is arbitrary time and probably is too long.
 	public static void SetRoleDelay(this Player player, RoleTypeId newRole, RoleChangeReason reason = RoleChangeReason.RemoteAdmin, RoleSpawnFlags flags = RoleSpawnFlags.All) {
 		player.SetRole(newRole, reason, flags);
-		MEC.Timing.WaitForSeconds(0.05f);
+		// Avoiding any issues where stuff isn't properly initialized.
+		Timing.WaitForSeconds(Timing.WaitForOneFrame); // TODO test this.
 	}
 
 	public static void BlowUp(this Player player) {

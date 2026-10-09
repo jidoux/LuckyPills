@@ -9,7 +9,7 @@ internal sealed class FlashVomit(FlashVomitConfig config) : IPillEffect {
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.VomitEffect;
 
 	public void OnEnabled(Player player, int duration) {
-		MEC.Timing.RunCoroutine(RunGrenadeVomit(player, duration, config.GrenadesPerSecond, ItemType.GrenadeFlash));
+		Timing.RunCoroutine(RunGrenadeVomit(player, duration, config.GrenadesPerSecond, ItemType.GrenadeFlash));
 	}
 }
 

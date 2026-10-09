@@ -12,7 +12,7 @@ internal sealed class BecomeABomb(BecomeABombConfig config) : IPillEffect, IDebu
 	public void OnEnabled(Player player, int duration) {
 		_playersSpawningBombs.Add(player);
 		player.IsGodModeEnabled = true;
-		MEC.Timing.RunCoroutine(SpawnBombs(player, duration, config.ExplosionsPerSecond));
+		Timing.RunCoroutine(SpawnBombs(player, duration, config.ExplosionsPerSecond));
 	}
 
 	public void OnDisabled(Player player) {
@@ -31,7 +31,7 @@ internal sealed class BecomeABomb(BecomeABombConfig config) : IPillEffect, IDebu
 				yield break;
 			}
 			player.BlowUp();
-			yield return MEC.Timing.WaitForSeconds(delayTime);
+			yield return Timing.WaitForSeconds(delayTime);
 		}
 	}
 }

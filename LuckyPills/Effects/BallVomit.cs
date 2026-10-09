@@ -12,7 +12,7 @@ internal sealed class BallVomit(BallVomitConfig config) : IPillEffect {
 		if (Random.Range(0, 100) == 1) { // Rare chance to spawn a whole lot more
 			grenadesPerSecond *= 10;
 		}
-		MEC.Timing.RunCoroutine(RunGrenadeVomit(player, duration, grenadesPerSecond, ItemType.SCP018));
+		Timing.RunCoroutine(RunGrenadeVomit(player, duration, grenadesPerSecond, ItemType.SCP018));
 	}
 }
 

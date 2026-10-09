@@ -7,7 +7,7 @@ internal sealed class DeathCounter(DeathCounterConfig config) : IPillEffect {
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, int duration) {
-		MEC.Timing.RunCoroutine(DeathCountdown(player, config.SecondsToDeath));
+		Timing.RunCoroutine(DeathCountdown(player, config.SecondsToDeath));
 	}
 
 	private static IEnumerator<float> DeathCountdown(Player player, int secondsToDeath) {
@@ -17,7 +17,7 @@ internal sealed class DeathCounter(DeathCounterConfig config) : IPillEffect {
 				yield break;
 			}
 			player.SendHint($"{i}...", duration: 1f);
-			yield return MEC.Timing.WaitForSeconds(1);
+			yield return Timing.WaitForSeconds(1);
 		}
 		// I experimented with Player.Kill() and actually blowing them up, and they preferred the explosive grenade.
 		player.BlowUp();

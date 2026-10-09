@@ -52,7 +52,7 @@ internal sealed class ResurrectTeamMember(ResurrectTeamMemberConfig config) : IP
 		playerToRespawn.Position = player.Position;
 		// Delaying since some "next round" things can also show hint text upon respawn,
 		// but this is significantly more important to display.
-		MEC.Timing.CallDelayed(0.15f, () => {
+		Timing.CallDelayed(0.15f, () => {
 			playerToRespawn.SendHint("You've been resurrected by someone's Painkillers", duration: 5);
 		});
 	}

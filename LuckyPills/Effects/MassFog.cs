@@ -11,7 +11,7 @@ internal sealed class MassFog(MassFogConfig config) : IPillEffect {
 
 	public void OnEnabled(Player player, int duration) {
 		_playersSpawningMassFog.Add(player);
-		MEC.Timing.RunCoroutine(SpawnMassFog(player, duration, config.Scp244PerSecond));
+		Timing.RunCoroutine(SpawnMassFog(player, duration, config.Scp244PerSecond));
 	}
 
 	public void OnDisabled(Player player) {
@@ -29,7 +29,7 @@ internal sealed class MassFog(MassFogConfig config) : IPillEffect {
 				yield break;
 			}
 			SpawnScp244(player.Position);
-			yield return MEC.Timing.WaitForSeconds(delayTime);
+			yield return Timing.WaitForSeconds(delayTime);
 		}
 	}
 }
