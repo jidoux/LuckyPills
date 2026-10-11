@@ -11,7 +11,7 @@ internal sealed class GiveEveryoneAks(GiveEveryoneAksConfig config) : IPillEffec
 	public void OnEnabled(Player player, int duration) {
 		foreach (Player anyPlayerInMap in Player.ReadyList.Where(x => x.IsAlive && x.Team != Team.SCPs)) {
 			if (anyPlayerInMap.Items.Count() >= 8) {
-				//SpawnFirearmBelow(player.Position, ItemType.GunAK);
+				//SpawnFirearmBelow(player.Position, ItemType.GunAK); // TODO need to do this still
 			}
 			else {
 				if (anyPlayerInMap != player) {
@@ -22,11 +22,31 @@ internal sealed class GiveEveryoneAks(GiveEveryoneAksConfig config) : IPillEffec
 		}
 	}
 
-	// TODO - in the future, fix this to handle full inventories. Unsure how to do it yet... spawning the gun
-	// is ez but how to make it spawn with ammo idk lol
+	// TODO - I have no idea what im doing LOL. In theory I'd think the ServerModifyAmmo should work but clearly that din't happen soooo idk
+
 	//private static void SpawnFirearmBelow(Vector3 position, ItemType itemType) {
-	//	FirearmPickup? item = (FirearmPickup)FirearmPickup.Create(itemType, position);
-	//	item.Base.
+	//	FirearmPickup? firearm = (FirearmPickup?)FirearmPickup.Create(itemType, position);
+	//	Logger.Debug("is firearm null? " + firearm is null);
+	//	//if (firearm is not null && firearm.Base.Template.TryGetModule<IPrimaryAmmoContainerModule>(out IPrimaryAmmoContainerModule? ammoModule)) {
+	//	//	Logger.Debug("We got into the cond so we have ammo module" + ammoModule.AmmoType + ammoModule.AmmoMax);
+	//	//	ammoModule.ServerModifyAmmo(5);
+	//	//}
+	//	if (firearm is not null) {
+	//		Logger.Debug("Firearm is not null ok? lets co ntinue");
+	//		InventorySystem.Items.Firearms.FirearmWorldmodel worldModel = firearm.Base.Template.WorldModel;
+	//		var extensions = worldModel.Extensions;
+	//		Logger.Debug("Extensions len: " + extensions.Length);
+	//		foreach (var extension in extensions) {
+	//			Logger.Debug("extension info: " + extension.name);
+	//		}
+	//		Logger.Debug("Firearm is not null ok? lets co ntinue");
+	//		InventorySystem.Items.Firearms.FirearmWorldmodel worldModel1 = firearm.Base.Worldmodel;
+	//		var extensions1 = worldModel.Extensions;
+	//		Logger.Debug("Extensions len: " + extensions1.Length);
+	//		foreach (var extension1 in extensions1) {
+	//			Logger.Debug("extension info: " + extension1.name);
+	//		}
+	//	}
 	//}
 }
 

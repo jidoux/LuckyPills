@@ -20,21 +20,23 @@ internal sealed class NextRoundSurfaceFight(NextRoundSurfaceFightConfig config) 
 	}
 
 	public static void NextRoundSurfaceFightBehavior() {
-		RoleTypeId[] chaosRoles = [
-			RoleTypeId.ChaosConscript,
-			RoleTypeId.ChaosMarauder,
-			RoleTypeId.ChaosRepressor,
-			RoleTypeId.ChaosRifleman,
-		];
-
-		RoleTypeId[] mtfRoles = [
-			RoleTypeId.NtfCaptain,
-			RoleTypeId.NtfPrivate,
-			RoleTypeId.NtfSergeant,
-			RoleTypeId.NtfSpecialist,
-		];
-
 		if (_thisRoundSurfaceFight) {
+			LogCallIfDebug();
+
+			RoleTypeId[] chaosRoles = [
+				RoleTypeId.ChaosConscript,
+				RoleTypeId.ChaosMarauder,
+				RoleTypeId.ChaosRepressor,
+				RoleTypeId.ChaosRifleman,
+			];
+
+			RoleTypeId[] mtfRoles = [
+				RoleTypeId.NtfCaptain,
+				RoleTypeId.NtfPrivate,
+				RoleTypeId.NtfSergeant,
+				RoleTypeId.NtfSpecialist,
+			];
+
 			Elevator.LockAll(); // Obviously pivotal
 			foreach (Player currPlayer in Player.GetAll()) {
 				if (_teamDeterminer % 2 == 0) {
@@ -69,5 +71,5 @@ internal sealed class NextRoundSurfaceFight(NextRoundSurfaceFightConfig config) 
 
 internal sealed class NextRoundSurfaceFightConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 20;
+	public ushort RarityWeight { get; set; } = 10;
 }

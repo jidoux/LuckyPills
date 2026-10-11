@@ -17,6 +17,7 @@ internal sealed class NextRoundTinyRound(NextRoundTinyRoundConfig config) : IPil
 
 	public static void NextRoundTinyRoundBehavior(Player player) {
 		if (_thisRoundTinyRound) {
+			LogCallIfDebug();
 			player.SendHint("Someone's Painkillers from last round has triggered a tiny round", duration: 5f);
 			player.Scale = new Vector3(0.2f, 0.2f, 0.2f);
 		}
@@ -36,5 +37,5 @@ internal sealed class NextRoundTinyRound(NextRoundTinyRoundConfig config) : IPil
 
 internal sealed class NextRoundTinyRoundConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 20;
+	public ushort RarityWeight { get; set; } = 5; // this one is kinda absurd LOL
 }

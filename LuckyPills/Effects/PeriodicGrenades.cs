@@ -1,6 +1,6 @@
 namespace LuckyPills.Effects;
 
-internal sealed class PeriodicGrenades(PeriodicGrenadesConfig config) : IPillEffect, IDebugPickPills {
+internal sealed class PeriodicGrenades(PeriodicGrenadesConfig config) : IPillEffect {
 	private static readonly HashSet<Player> _allGrenadePeriodicSpawns = [];
 
 	public bool IsEnabled(Player player) => !_allGrenadePeriodicSpawns.Contains(player) && config.IsEnabled;

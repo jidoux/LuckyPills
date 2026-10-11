@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 
 namespace LuckyPills.Effects;
 
-internal sealed class FutureDeathRisk(FutureDeathRiskConfig config) : IPillEffect, IDebugPickPills {
+internal sealed class FutureDeathRisk(FutureDeathRiskConfig config) : IPillEffect {
 	private static readonly Dictionary<Player, string> _playersToDie = [];
 	private static readonly HashSet<string> _relevantEventHandlers = [];
 

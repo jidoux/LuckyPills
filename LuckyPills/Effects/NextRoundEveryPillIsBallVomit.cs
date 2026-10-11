@@ -36,6 +36,7 @@ internal sealed class NextRoundEveryPillIsBallVomit(NextRoundEveryPillIsBallVomi
 		if (!_thisRoundEveryPillIsBalls) {
 			return false;
 		}
+		LogCallIfDebug();
 		// TODO - test this, make sure it doesn't show the god mode message. ALso validate that the duration is acceptable.
 		ActivateEffect(player, _godModeInstance.Value, showPillMessage: false);
 		if (Random.Range(0, 2) == 1) { // not sure the cleanest way to write 50% chances but this is 50% chance
@@ -61,5 +62,5 @@ internal sealed class NextRoundEveryPillIsBallVomit(NextRoundEveryPillIsBallVomi
 
 internal sealed class NextRoundEveryPillIsBallVomitConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 10; // Probably should be rarer than all the other "next round" ones.
+	public ushort RarityWeight { get; set; } = 5; // Probably should be rarer than all the other "next round" ones.
 }

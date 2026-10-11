@@ -1,6 +1,6 @@
 namespace LuckyPills.Effects;
 
-internal sealed class BecomeABomb(BecomeABombConfig config) : IPillEffect, IDebugPickPills {
+internal sealed class BecomeABomb(BecomeABombConfig config) : IPillEffect {
 	private static readonly HashSet<Player> _playersSpawningBombs = [];
 
 	public bool IsEnabled(Player player) => !_playersSpawningBombs.Contains(player) && config.IsEnabled;

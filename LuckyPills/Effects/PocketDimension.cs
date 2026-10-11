@@ -1,6 +1,6 @@
 namespace LuckyPills.Effects;
 
-internal sealed class PocketDimension(PocketDimensionConfig config) : IPillEffect, IDebugPickPills {
+internal sealed class PocketDimension(PocketDimensionConfig config) : IPillEffect {
 	public bool IsEnabled(Player player) => config.IsEnabled;
 	// No DisplayText here, I display it manually.
 	public ushort RarityWeight => config.RarityWeight;

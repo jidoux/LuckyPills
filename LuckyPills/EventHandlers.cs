@@ -1,4 +1,9 @@
 using LabApi.Events.Arguments.PlayerEvents;
+using LabApi.Events.Arguments.Scp0492Events;
+using LabApi.Events.Arguments.Scp096Events;
+using LabApi.Events.Arguments.Scp127Events;
+using LabApi.Events.Arguments.Scp173Events;
+using LabApi.Events.Arguments.Scp914Events;
 using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Events.CustomHandlers;
 using LuckyPills.Effects;
@@ -96,11 +101,12 @@ internal sealed class EventHandlers : CustomEventsHandler {
 
 	public override void OnPlayerSpawned(PlayerSpawnedEventArgs ev) {
 		LogCallIfDebug();
-		// This event needs to be delayed a few frames, my source is someone in the discord + it doesn't work otherwise. Unsure if 0.05f is the correct timing window. TODO investigate.
+		// TODO this did not work for minions, unsure why.
 		Timing.CallDelayed(Timing.WaitForOneFrame, () => {
 			NextRoundLogicers.NextRoundLogicersBehavior(ev.Player);
 			NextRoundFastRound.NextRoundFastRoundBehavior(ev.Player);
 			NextRoundTinyRound.NextRoundTinyRoundBehavior(ev.Player);
+			NextRoundTrippyRound.NextRoundTrippyRoundBehavior(ev.Player);
 		});
 	}
 
@@ -120,7 +126,11 @@ internal sealed class EventHandlers : CustomEventsHandler {
 
 	public override void OnServerRoundStarted() {
 		LogCallIfDebug();
-		NextRoundSurfaceFight.NextRoundSurfaceFightBehavior();
+		// I'm not 100% sure, but I think this does need to be delayed by a frame.
+		Timing.CallDelayed(Timing.WaitForOneFrame, () => {
+			NextRoundSurfaceFight.NextRoundSurfaceFightBehavior();
+			NextRoundInstaDeadman.NextRoundInstaDeadmanBehavior();
+		});
 	}
 
 	public override void OnPlayerRoomChanged(PlayerRoomChangedEventArgs ev) {
@@ -159,6 +169,27 @@ internal sealed class EventHandlers : CustomEventsHandler {
 		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
 	}
 	public override void OnPlayerCuffed(PlayerCuffedEventArgs ev) {
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Target); // Target is the player who was detained.
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player); // Player is the player who is detaining another one.
+	}
+	public override void OnPlayerEnteredHazard(PlayerEnteredHazardEventArgs ev) {
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
+	}
+	public override void OnPlayerDetectedByScp1344(PlayerDetectedByScp1344EventArgs ev) {
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Target); // Target is the player who has been detected
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player); // Player is the player who has SCP-1344
+	}
+	public override void OnPlayerProcessedJailbirdMessage(PlayerProcessedJailbirdMessageEventArgs ev) {
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
+	}
+	public override void OnPlayerProcessedScp1509Message(PlayerProcessedScp1509MessageEventArgs ev) {
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
+	}
+	// Okay I just couldn't resist; this is just too funny lol
+	public override void OnPlayerReportedPlayer(PlayerReportedPlayerEventArgs ev) {
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player); // Player is the player who sent reported
+	}
+	public override void OnPlayerUnloadedWeapon(PlayerUnloadedWeaponEventArgs ev) {
 		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
 	}
 	public override void OnPlayerEnteredPocketDimension(PlayerEnteredPocketDimensionEventArgs ev) {
@@ -252,6 +283,32 @@ internal sealed class EventHandlers : CustomEventsHandler {
 		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
 	}
 	public override void OnPlayerSpinnedRevolver(PlayerSpinnedRevolverEventArgs ev) {
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
+	}
+	public override void OnScp914ProcessedPlayer(Scp914ProcessedPlayerEventArgs ev) {
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
+	}
+	public override void OnScp914KnobChanged(Scp914KnobChangedEventArgs ev) {
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
+	}
+	// I figure it would be so funny that it happens that I'm fine keeping the next few in even though its likely never gonna happen lol
+	// There is a pill which can give SCPs pills (if its enabled, plus admins can just spawn them in, so I think its fine, wahtevs.
+	public override void OnScp0492StartedConsumingCorpse(Scp0492StartedConsumingCorpseEventArgs ev) {
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
+	}
+	public override void OnScp096TryingNotToCry(Scp096TryingNotToCryEventArgs ev) {
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
+	}
+	public override void OnScp096PriedGate(Scp096PriedGateEventArgs ev) {
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
+	}
+	public override void OnScp173CreatedTantrum(Scp173CreatedTantrumEventArgs ev) {
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
+	}
+	public override void OnScp127LevelUp(Scp127LevelUpEventArgs ev) {
+		FutureDeathRisk.FutureDeathRiskBehavior(ev.Scp127Item.CurrentOwner);
+	}
+	public override void OnScp914Activated(Scp914ActivatedEventArgs ev) {
 		FutureDeathRisk.FutureDeathRiskBehavior(ev.Player);
 	}
 	//public override void OnPlayerMovementStateChanged(PlayerMovementStateChangedEventArgs ev) {

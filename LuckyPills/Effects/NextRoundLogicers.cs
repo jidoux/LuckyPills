@@ -19,6 +19,7 @@ internal sealed class NextRoundLogicers(NextRoundLogicersConfig config) : IPillE
 
 	public static void NextRoundLogicersBehavior(Player player) {
 		if (_givingLogicersThisRound && player.Role == RoleTypeId.ClassD) {
+			LogCallIfDebug();
 			player.SendHint("Someone's Painkillers from last round has given you this Logicer", duration: 5f);
 			player.ForceEquip(ItemType.GunLogicer);
 		}
@@ -38,5 +39,5 @@ internal sealed class NextRoundLogicers(NextRoundLogicersConfig config) : IPillE
 
 internal sealed class NextRoundLogicersConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 20;
+	public ushort RarityWeight { get; set; } = 10;
 }

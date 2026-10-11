@@ -17,6 +17,7 @@ internal sealed class NextRoundFastRound(NextRoundFastRoundConfig config) : IPil
 
 	public static void NextRoundFastRoundBehavior(Player player) {
 		if (_thisRoundFastRound) {
+			LogCallIfDebug();
 			player.SendHint("Someone's Painkillers from last round has triggered a fast round", duration: 5f);
 			player.EnableEffect<CustomPlayerEffects.MovementBoost>(intensity: 50, duration: 3600f, addDuration: true);
 		}
@@ -36,5 +37,5 @@ internal sealed class NextRoundFastRound(NextRoundFastRoundConfig config) : IPil
 
 internal sealed class NextRoundFastRoundConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 20;
+	public ushort RarityWeight { get; set; } = 10;
 }
