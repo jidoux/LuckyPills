@@ -15,6 +15,6 @@ internal sealed class Invigorated(InvigoratedConfig config) : IPillEffect {
 internal sealed class InvigoratedConfig {
 	public bool IsEnabled { get; set; } = true;
 	public int MinDuration { get; set; } = 120;
-	public int MaxDuration { get; set; } = 300;
+	public int MaxDuration { get; set; } = 240;
 	public ushort RarityWeight { get; set; } = 95;
 }

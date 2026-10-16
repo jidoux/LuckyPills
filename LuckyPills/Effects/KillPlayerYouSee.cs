@@ -45,5 +45,5 @@ internal sealed class KillPlayerYouSee(KillPlayerYouSeeConfig config) : IPillEff
 
 internal sealed class KillPlayerYouSeeConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 100;
+	public ushort RarityWeight { get; set; } = 90;
 }
