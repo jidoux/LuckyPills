@@ -24,9 +24,10 @@ internal sealed class NextRoundTrippyRound(NextRoundTrippyRoundConfig config) : 
 		if (_thisRoundTrippyRound) {
 			LogCallIfDebug();
 			player.SendHint("Someone's Painkillers from last round has triggered a trippy round", duration: 5f);
-			// See InvertedMovement.cs for explanation on why this works
+			// Gives inverted movement... see InvertedMovement.cs for explanation on why this works (might break in future).
 			player.EnableEffect<CustomPlayerEffects.Slowness>(intensity: 200, duration: 3600f, addDuration: true);
 			player.Gravity = new Vector3(0f, -2f, -0f);
+			player.Scale = new Vector3(1f, -1f, 1f); // TODO validate that this is fine cuz it might be less fun, idk. Gravity + inverted movement was good
 		}
 	}
 

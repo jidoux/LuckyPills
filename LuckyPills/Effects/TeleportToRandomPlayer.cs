@@ -32,5 +32,5 @@ internal sealed class TeleportToRandomPlayer(TeleportToRandomPlayerConfig config
 
 internal sealed class TeleportToRandomPlayerConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 100;
+	public ushort RarityWeight { get; set; } = 102;
 }

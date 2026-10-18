@@ -7,7 +7,7 @@ internal sealed class MassFog(MassFogConfig config) : IPillEffect {
 	public string DisplayText { get; } = "Fog is spawning under you for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
 	public ushort RarityWeight => config.RarityWeight;
-	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodAsPermanent;
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
 
 	public void OnEnabled(Player player, int duration) {
 		_playersSpawningMassFog.Add(player);
@@ -39,5 +39,5 @@ internal sealed class MassFogConfig {
 	public int MinDuration { get; set; } = 15;
 	public int MaxDuration { get; set; } = 38;
 	public ushort RarityWeight { get; set; } = 100;
-	public int Scp244PerSecond { get; set; } = 2;
+	public int Scp244PerSecond { get; set; } = 1;
 }

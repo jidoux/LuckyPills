@@ -1,5 +1,6 @@
 namespace LuckyPills.Effects;
 
+// TODO this effect sucks, remove at osme point id say.
 internal sealed class NextRoundTinyRound(NextRoundTinyRoundConfig config) : IPillEffect {
 	private static bool _nextRoundTinyRound = false;
 	private static bool _thisRoundTinyRound = false;

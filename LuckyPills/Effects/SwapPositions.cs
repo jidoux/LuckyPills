@@ -39,5 +39,5 @@ internal sealed class SwapPositions(SwapPositionsConfig config) : IPillEffect, I
 
 internal sealed class SwapPositionsConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 80;
+	public ushort RarityWeight { get; set; } = 90;
 }
