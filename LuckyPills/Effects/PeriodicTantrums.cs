@@ -26,6 +26,7 @@ internal sealed class PeriodicTantrums(PeriodicTantrumsConfig config) : IPillEff
 		_allTantrumPeriodicSpawns.Clear();
 	}
 
+	// lower and upper bound need to be a float because I want inclusive range checks.
 	private static IEnumerator<float> SpawnTantrums(Player player, float intervalLowBound, float intervalUpperBound) {
 		yield return Timing.WaitForSeconds(Random.Range(intervalLowBound, intervalUpperBound));
 		// Stop it if player dies, or the HashSet doesn't have player. The HashSet gets the player
@@ -41,6 +42,6 @@ internal sealed class PeriodicTantrums(PeriodicTantrumsConfig config) : IPillEff
 internal sealed class PeriodicTantrumsConfig {
 	public bool IsEnabled { get; set; } = true;
 	public ushort RarityWeight { get; set; } = 55;
-	public float IntervalLowerBound { get; set; } = 30f;
-	public float IntervalUpperBound { get; set; } = 90f;
+	public int IntervalLowerBound { get; set; } = 30;
+	public int IntervalUpperBound { get; set; } = 90;
 }

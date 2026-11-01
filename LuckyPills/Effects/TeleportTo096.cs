@@ -7,8 +7,8 @@ internal sealed class TeleportTo096(TeleportTo096Config config) : IPillEffect, I
 		if (!config.IsEnabled) {
 			return false;
 		}
-		foreach (Player currPlayer in Player.ReadyList) {
-			if (currPlayer.Role == RoleTypeId.Scp096) {
+		foreach (Player currPlayer in GetAllPlayers()) {
+			if (currPlayer.Role == RoleTypeId.Scp096 && currPlayer != player && IsFarAway(player.Position, currPlayer.Position)) {
 				return true;
 			}
 		}
@@ -20,8 +20,9 @@ internal sealed class TeleportTo096(TeleportTo096Config config) : IPillEffect, I
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, int duration) {
-		foreach (Player currPlayer in Player.ReadyList) {
-			if (currPlayer.Role == RoleTypeId.Scp096) {
+		foreach (Player currPlayer in GetAllPlayers()) {
+			// I figure no need to check if 096 is far away from the player here.
+			if (currPlayer.Role == RoleTypeId.Scp096 && currPlayer != player) {
 				player.Position = currPlayer.Position + Vector3.up; // not sure if the +1 is needed for this.. some other teleports sent you thru the floor.
 				return; // I want to early exit + log when we somehow cant meet this condition.
 			}

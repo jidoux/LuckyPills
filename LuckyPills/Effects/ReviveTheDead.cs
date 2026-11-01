@@ -10,7 +10,7 @@ internal sealed class ReviveTheDead(ReviveTheDeadConfig config) : IPillEffect, I
 			return false;
 		}
 		ushort counter = 0;
-		foreach (Player currPlayer in Player.ReadyList) {
+		foreach (Player currPlayer in GetAllPlayers()) {
 			if (!currPlayer.IsAlive) {
 				counter++;
 			}
@@ -25,7 +25,7 @@ internal sealed class ReviveTheDead(ReviveTheDeadConfig config) : IPillEffect, I
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, int duration) {
-		IEnumerable<Player> playersToRevive = Player.ReadyList
+		IEnumerable<Player> playersToRevive = GetAllPlayers()
 			.Where(currPlayer => !currPlayer.IsAlive)
 			.OrderBy(_ => Random.value)
 			.Take(config.MaxDeadPlayersToRevive);

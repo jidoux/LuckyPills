@@ -13,7 +13,7 @@ internal sealed class BecomeGuard(BecomeGuardConfig config) : IPillEffect {
 			return false;
 		}
 		byte eligibleCandidates = 0;
-		foreach (Player currPlayer in Player.ReadyList) {
+		foreach (Player currPlayer in GetAllPlayers()) {
 			if (eligibleCandidates < 4 && (currPlayer.Role == RoleTypeId.ClassD || currPlayer.Role == RoleTypeId.Scientist)) {
 				eligibleCandidates++;
 			}
@@ -25,7 +25,7 @@ internal sealed class BecomeGuard(BecomeGuardConfig config) : IPillEffect {
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, int duration) {
-		Player guardBuddy = Player.ReadyList
+		Player guardBuddy = GetAllPlayers()
 			.Where(x => x != player && (x.Role == RoleTypeId.Scientist || x.Role == RoleTypeId.ClassD))
 			.OrderBy(_ => Random.value)
 			.FirstOrDefault();

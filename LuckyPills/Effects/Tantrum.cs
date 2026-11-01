@@ -13,5 +13,5 @@ internal sealed class Tantrum(TantrumConfig config) : IPillEffect {
 
 internal sealed class TantrumConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 80;
+	public ushort RarityWeight { get; set; } = 85;
 }

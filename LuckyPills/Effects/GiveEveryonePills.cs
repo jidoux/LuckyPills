@@ -2,7 +2,7 @@ using PlayerRoles;
 
 namespace LuckyPills.Effects;
 
-internal sealed class GiveEveryonePills(GiveEveryonePillsConfig config) : IPillEffect, IDebugPickPills {
+internal sealed class GiveEveryonePills(GiveEveryonePillsConfig config) : IPillEffect {
 	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "You've given every player Painkillers";
 	public ushort RarityWeight => config.RarityWeight;
@@ -12,7 +12,7 @@ internal sealed class GiveEveryonePills(GiveEveryonePillsConfig config) : IPillE
 		Func<Player, bool> predicate = config.GiveToScpsAlso
 			? (x => x.IsAlive && x.Role != RoleTypeId.Scp079)
 			: (x => x.IsAlive && x.Team != Team.SCPs);
-		foreach (Player anyPlayerInMap in Player.ReadyList.Where(predicate)) {
+		foreach (Player anyPlayerInMap in GetAllPlayers().Where(predicate)) {
 			if (anyPlayerInMap.Items.Count() >= 8) {
 				Pickup.Create(ItemType.Painkillers, player.Position);
 				if (anyPlayerInMap != player) {

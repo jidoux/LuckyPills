@@ -16,7 +16,7 @@ internal sealed class ResurrectTeamMember(ResurrectTeamMemberConfig config) : IP
 			// I noticed that leaving the server triggers OnPlayerDying, and either way if someone dies and then leaves
 			// the server, they should no longer be eligible for resurrection.
 			bool playerStillInServer = false;
-			foreach (Player currPlayer in Player.ReadyList) {
+			foreach (Player currPlayer in GetAllPlayers()) {
 				if (currPlayer == item.Key) {
 					playerStillInServer = true;
 					break;

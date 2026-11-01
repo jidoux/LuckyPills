@@ -6,7 +6,7 @@ internal sealed class SwapPositions(SwapPositionsConfig config) : IPillEffect, I
 			return false;
 		}
 		byte counter = 0;
-		foreach (Player currPlayer in Player.ReadyList) {
+		foreach (Player currPlayer in GetAllPlayers()) {
 			if (currPlayer.IsAlive && currPlayer.Role != PlayerRoles.RoleTypeId.Scp079) {
 				counter++;
 			}
@@ -22,7 +22,7 @@ internal sealed class SwapPositions(SwapPositionsConfig config) : IPillEffect, I
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, int duration) {
-		Player? randomPlayer = Player.ReadyList
+		Player? randomPlayer = GetAllPlayers()
 			.Where(x => x.IsAlive && x != player && x.Role != PlayerRoles.RoleTypeId.Scp079)
 			.OrderBy(_ => Random.value)
 			.FirstOrDefault();

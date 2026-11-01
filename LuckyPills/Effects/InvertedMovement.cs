@@ -18,6 +18,6 @@ internal sealed class InvertedMovement(InvertedMovementConfig config) : IPillEff
 internal sealed class InvertedMovementConfig {
 	public bool IsEnabled { get; set; } = true;
 	public int MinDuration { get; set; } = 20;
-	public int MaxDuration { get; set; } = 140;
+	public int MaxDuration { get; set; } = 90;
 	public ushort RarityWeight { get; set; } = 95;
 }

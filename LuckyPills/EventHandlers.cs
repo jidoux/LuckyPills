@@ -48,8 +48,10 @@ internal sealed class EventHandlers : CustomEventsHandler {
 			// This gets triggered no matter what role you are.
 			if (ev.Player.Role == PlayerRoles.RoleTypeId.ClassD || ev.Player.Role == PlayerRoles.RoleTypeId.Scientist) {
 				// Need to disable any possible active effects here as well.
-				foreach (IPillEffect effect in AllPillEffects) {
-					effect.OnDisabled(ev.Player);
+				for (int i = 0; i < AllPillEffects.Length; i++) {
+					if (AllPillEffects[i] is not PeriodicGrenades && AllPillEffects[i] is not PeriodicTantrums) {
+						AllPillEffects[i].OnDisabled(ev.Player);
+					}
 				}
 			}
 		}
@@ -105,7 +107,6 @@ internal sealed class EventHandlers : CustomEventsHandler {
 		Timing.CallDelayed(Timing.WaitForOneFrame, () => {
 			NextRoundLogicers.NextRoundLogicersBehavior(ev.Player);
 			NextRoundFastRound.NextRoundFastRoundBehavior(ev.Player);
-			NextRoundTinyRound.NextRoundTinyRoundBehavior(ev.Player);
 			NextRoundTrippyRound.NextRoundTrippyRoundBehavior(ev.Player);
 		});
 	}

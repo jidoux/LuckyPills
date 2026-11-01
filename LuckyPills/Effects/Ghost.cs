@@ -5,7 +5,7 @@ internal sealed class Ghost(GhostConfig config) : IPillEffect {
 	public string DisplayText { get; } = "You've become a ghost for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
 	public ushort RarityWeight => config.RarityWeight;
-	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect | EffectCapabilities.GoodAsPermanent; // TODO making this goodaspermanent maybe crazy broken idk
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll | EffectCapabilities.GoodEffect | EffectCapabilities.GoodAsPermanent;
 
 	public void OnEnabled(Player player, int duration) {
 		player.EnableEffect<CustomPlayerEffects.Ghostly>(intensity: 1, duration: duration, addDuration: true);

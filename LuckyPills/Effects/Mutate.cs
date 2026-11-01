@@ -10,7 +10,7 @@ internal sealed class Mutate(MutateConfig config) : IPillEffect {
 			return false;
 		}
 		byte counter = 0;
-		foreach (Player currPlayer in Player.ReadyList) {
+		foreach (Player currPlayer in GetAllPlayers()) {
 			if (currPlayer.IsInNonScpTeam()) {
 				counter++;
 			}

@@ -1,6 +1,6 @@
 namespace LuckyPills.Effects;
 
-internal sealed class FillInventoryWithPills(FillInventoryWithPillsConfig config) : IPillEffect, IDebugPickPills {
+internal sealed class FillInventoryWithPills(FillInventoryWithPillsConfig config) : IPillEffect {
 	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "Your inventory has been topped off with more pills";
 	public ushort RarityWeight => config.RarityWeight;

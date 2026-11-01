@@ -1,4 +1,5 @@
 
+using LuckyPills.Effects;
 using System.Reflection;
 
 namespace LuckyPills;
@@ -58,12 +59,15 @@ internal static class PillEffectOrchestrator {
 	}
 
 	private static IPillEffect? GetRandomPillEffect(Player player) {
+		if (NextRoundDummyPillRound.ShouldSpawnADummy()) {
+			return new DummyPills(Plugin.Singleton.Config.DummyPills);
+		}
 		ushort totalWeight = 0;
 		ushort totalEnabledPills = 0;
-		foreach (IPillEffect effect in AllPillEffects) {
-			if (effect.IsEnabled(player)) {
-				totalWeight += effect.RarityWeight;
-				_enabledEffects[totalEnabledPills] = effect;
+		for (int i = 0; i < AllPillEffects.Length; i++) {
+			if (AllPillEffects[i].IsEnabled(player)) {
+				totalWeight += AllPillEffects[i].RarityWeight;
+				_enabledEffects[totalEnabledPills] = AllPillEffects[i];
 				totalEnabledPills++;
 			}
 		}

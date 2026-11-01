@@ -15,6 +15,6 @@ internal sealed class VisibleToScps(VisibleToScpsConfig config) : IPillEffect {
 internal sealed class VisibleToScpsConfig {
 	public bool IsEnabled { get; set; } = true;
 	public int MinDuration { get; set; } = 30;
-	public int MaxDuration { get; set; } = 60;
+	public int MaxDuration { get; set; } = 120;
 	public ushort RarityWeight { get; set; } = 95;
 }

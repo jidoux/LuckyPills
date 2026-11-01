@@ -9,7 +9,7 @@ internal sealed class NextRoundSurfaceFight(NextRoundSurfaceFightConfig config) 
 
 	// The Player.List count will work for 2 player lobbies (at least in my testing there was a 3rd npc or something... idk)
 	public bool IsEnabled(Player player) => !IsSpecialEventHappeningNextRound &&
-		!_nextRoundSurfaceFight && Player.ReadyList.Count() > 2 && config.IsEnabled;
+		!_nextRoundSurfaceFight && GetAllPlayers().Count > 2 && config.IsEnabled;
 	public string DisplayText { get; } = "Something special will happen next round...";
 	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
@@ -71,5 +71,5 @@ internal sealed class NextRoundSurfaceFight(NextRoundSurfaceFightConfig config) 
 
 internal sealed class NextRoundSurfaceFightConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 10;
+	public ushort RarityWeight { get; set; } = 2;
 }

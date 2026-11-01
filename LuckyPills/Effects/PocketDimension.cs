@@ -23,7 +23,7 @@ internal sealed class PocketDimension(PocketDimensionConfig config) : IPillEffec
 	}
 
 	private static void SendEveryoneToPocketDimension() {
-		foreach (Player currPlayer in Player.ReadyList) {
+		foreach (Player currPlayer in GetAllPlayers()) {
 			if (currPlayer.IsAlive && currPlayer.Role != PlayerRoles.RoleTypeId.Scp079) {
 				currPlayer.EnableEffect<CustomPlayerEffects.PocketCorroding>();
 				currPlayer.SendHint("Someone's Painkillers have sent everyone to the Pocket Dimension", duration: 4);

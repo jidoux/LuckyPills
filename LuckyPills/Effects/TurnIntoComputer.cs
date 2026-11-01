@@ -11,7 +11,7 @@ internal sealed class TurnIntoComputer(TurnIntoComputerConfig config) : IPillEff
 		}
 		// At least 3 class D/scientists
 		byte relevantPlayers = 0;
-		foreach (Player currPlayer in Player.ReadyList) {
+		foreach (Player currPlayer in GetAllPlayers()) {
 			if (currPlayer.Role == RoleTypeId.Scp079) {
 				return false;
 			}

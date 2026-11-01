@@ -12,6 +12,7 @@ internal sealed class Config {
 	public AustralianConfig Australian { get; set; } = new();
 	public AntiColaEffectConfig AntiColaEffect { get; set; } = new();
 	public BallVomitConfig BallVomit { get; set; } = new();
+	public BeAHeroConfig BeAHero { get; set; } = new();
 	public BecomeABombConfig BecomeABomb { get; set; } = new();
 	public BecomeGuardConfig BecomeGuard { get; set; } = new();
 	public BleedingConfig Bleeding { get; set; } = new();
@@ -22,6 +23,7 @@ internal sealed class Config {
 	public DeathCounterConfig DeathCounter { get; set; } = new();
 	public DestroyAllDoorsConfig DestroyAllDoors { get; set; } = new();
 	public DismembermentConfig Dismemberment { get; set; } = new();
+	public DummyPillsConfig DummyPills { get; set; } = new();
 	public EnsnaredConfig Ensnared { get; set; } = new();
 	public ExtraHealthConfig ExtraHealth { get; set; } = new();
 	public ExhaustedConfig Exhausted { get; set; } = new();
@@ -58,13 +60,13 @@ internal sealed class Config {
 	public NextRoundLogicersConfig NextRoundLogicers { get; set; } = new();
 	public NextRoundNoPillsConfig NextRoundNoPills { get; set; } = new();
 	public NextRoundSurfaceFightConfig NextRoundSurfaceFight { get; set; } = new();
-	public NextRoundTinyRoundConfig NextRoundTinyRound { get; set; } = new();
 	public NextRoundTrippyRoundConfig NextRoundTrippyRound { get; set; } = new();
 	public NoClipConfig NoClip { get; set; } = new();
 	public NoJumpingConfig NoJumping { get; set; } = new();
 	public OneHealthConfig OneHealth { get; set; } = new();
 	public PaperConfig Paper { get; set; } = new();
 	public PeriodicGrenadesConfig PeriodicGrenades { get; set; } = new();
+	public PeriodicPainkillersConfig PeriodicPainkillers { get; set; } = new();
 	public PeriodicTantrumsConfig PeriodicTantrums { get; set; } = new();
 	public PermanentPlayerChangesConfig PermanentPlayerChanges { get; set; } = new();
 	public PocketDimensionConfig PocketDimension { get; set; } = new();
@@ -77,6 +79,7 @@ internal sealed class Config {
 	public SinkholeConfig Sinkhole { get; set; } = new();
 	public SlownessConfig Slowness { get; set; } = new();
 	public SodaEffectConfig SodaEffect { get; set; } = new();
+	public SpinnerConfig Spinner { get; set; } = new();
 	public SuperSpeedConfig SuperSpeed { get; set; } = new();
 	public SwapPositionsConfig SwapPositions { get; set; } = new();
 	public TantrumConfig Tantrum { get; set; } = new();

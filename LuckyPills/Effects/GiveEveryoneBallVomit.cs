@@ -14,7 +14,7 @@ internal sealed class GiveEveryoneBallVomit(GiveEveryoneBallVomitConfig config) 
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, int duration) {
-		foreach (Player anyPlayerInMap in Player.ReadyList.Where(x => x.IsAlive)) {
+		foreach (Player anyPlayerInMap in GetAllPlayers().Where(x => x.IsAlive)) {
 			anyPlayerInMap.SendHint("You've been given ball vomit by someone else's Painkillers", duration: 4);
 			EnablePillEffect(_ballVomitInstance.Value, anyPlayerInMap, duration);
 		}

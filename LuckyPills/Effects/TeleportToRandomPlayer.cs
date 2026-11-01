@@ -6,8 +6,8 @@ internal sealed class TeleportToRandomPlayer(TeleportToRandomPlayerConfig config
 		if (!config.IsEnabled) {
 			return false;
 		}
-		foreach (Player currPlayer in Player.ReadyList) {
-			if (currPlayer.IsInNonScpTeam() && currPlayer != player) {
+		foreach (Player currPlayer in GetAllPlayers()) {
+			if (currPlayer.IsInNonScpTeam() && currPlayer != player && IsFarAway(player.Position, currPlayer.Position)) {
 				return true;
 			}
 		}
@@ -18,10 +18,12 @@ internal sealed class TeleportToRandomPlayer(TeleportToRandomPlayerConfig config
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, int duration) {
-		Player? randomPlayer = Player.ReadyList
-			.Where(currPlayer => currPlayer.IsInNonScpTeam() && currPlayer != player)
+		Player? randomPlayer = GetAllPlayers()
+			.Where(currPlayer => currPlayer.IsInNonScpTeam() && currPlayer != player && IsFarAway(player.Position, currPlayer.Position))
 			.OrderBy(_ => Random.value)
 			.FirstOrDefault();
+		// Trying again without the IsFarAway check just in case
+		randomPlayer ??= GetAllPlayers().FirstOrDefault(x => x.IsInNonScpTeam() && x != player);
 		if (randomPlayer is null) {
 			Logger.Warn("TeleportToRandomPlayer pill triggered when there is no player. Could be because the other/last player just died, or an error in the code.");
 			return;

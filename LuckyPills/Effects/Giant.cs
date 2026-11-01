@@ -19,6 +19,6 @@ internal sealed class Giant(GiantConfig config) : IPillEffect {
 internal sealed class GiantConfig {
 	public bool IsEnabled { get; set; } = true;
 	public int MinDuration { get; set; } = 8;
-	public int MaxDuration { get; set; } = 18;
+	public int MaxDuration { get; set; } = 20;
 	public ushort RarityWeight { get; set; } = 80;
 }

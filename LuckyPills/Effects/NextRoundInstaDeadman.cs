@@ -25,7 +25,14 @@ internal sealed class NextRoundInstaDeadman(NextRoundInstaDeadmanConfig config) 
 		if (_instaDeadmanThisRound) {
 			LogCallIfDebug();
 			Timing.CallDelayed(1.5f, () => {
-				DeadmanSwitch.InitiateProtocol(); // TODO unsure if this is best way to do it, seems problematic due to bug I mentioned in other TODOs on this page.
+				try {
+					LogCallIfDebug("Trying to do deamdna protocol");
+					DeadmanSwitch.InitiateProtocol(); // TODO unsure if this is best way to do it, seems problematic due to bug I mentioned in other TODOs on this page.
+					LogCallIfDebug("Done with deamdna protocol");
+				}
+				catch (Exception ex) {
+					Logger.Error(ex);
+				}
 			});
 		}
 	}
@@ -45,5 +52,5 @@ internal sealed class NextRoundInstaDeadman(NextRoundInstaDeadmanConfig config) 
 
 internal sealed class NextRoundInstaDeadmanConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 5;
+	public ushort RarityWeight { get; set; } = 2; // TODO CHANGEME
 }

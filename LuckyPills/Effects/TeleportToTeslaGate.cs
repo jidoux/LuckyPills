@@ -9,7 +9,7 @@ internal sealed class TeleportToTeslaGate(TeleportToTeslaGateConfig config) : IP
 	public void OnEnabled(Player player, int duration) {
 		Tesla? tesla = Map.GetRandomTesla();
 		if (tesla is null) {
-			// May be possible with some crazy timing where this gets executed right when the map ends, but idk.
+			// Yeah I don't see how this is possible...
 			Logger.Warn("No tesla gates found in the map. Odds are this should have been prevented before this point.");
 			return;
 		}

@@ -10,7 +10,7 @@ internal sealed class ScrambleRolesAndItems(ScrambleRolesAndItemsConfig config) 
 			return false;
 		}
 		byte counter = 0;
-		foreach (Player currPlayer in Player.ReadyList) {
+		foreach (Player currPlayer in GetAllPlayers()) {
 			if (currPlayer.IsAlive) {
 				counter++;
 			}
@@ -38,7 +38,7 @@ internal sealed class ScrambleRolesAndItems(ScrambleRolesAndItemsConfig config) 
 		);
 		PreviousPlayer nextPrevPlayer;
 		Player currPlayer;
-		Player[] playerArray = Player.ReadyList.Where(x => x.IsAlive && x != player).ToArray();
+		Player[] playerArray = GetAllPlayers().Where(x => x.IsAlive && x != player).ToArray();
 		for (int i = 0; i < playerArray.Length; i++) {
 			// The strategy is to cache the prevPlayer/firstPlayer and do operations on currPlayer.
 			// then at the very end, do operations on player itself on the very last player.

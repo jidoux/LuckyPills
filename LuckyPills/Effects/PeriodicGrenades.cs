@@ -26,6 +26,7 @@ internal sealed class PeriodicGrenades(PeriodicGrenadesConfig config) : IPillEff
 		_allGrenadePeriodicSpawns.Clear();
 	}
 
+	// lower and upper bound need to be a float because I want inclusive range checks.
 	private static IEnumerator<float> SpawnGrenades(Player player, float intervalLowBound, float intervalUpperBound) {
 		yield return Timing.WaitForSeconds(Random.Range(intervalLowBound, intervalUpperBound));
 		// Stop it if player dies, or the HashSet doesn't have player. The HashSet gets the player
@@ -41,6 +42,6 @@ internal sealed class PeriodicGrenades(PeriodicGrenadesConfig config) : IPillEff
 internal sealed class PeriodicGrenadesConfig {
 	public bool IsEnabled { get; set; } = true;
 	public ushort RarityWeight { get; set; } = 70;
-	public float IntervalLowerBound { get; set; } = 5f;
-	public float IntervalUpperBound { get; set; } = 25f;
+	public int IntervalLowerBound { get; set; } = 5;
+	public int IntervalUpperBound { get; set; } = 25;
 }

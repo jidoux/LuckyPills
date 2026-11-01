@@ -16,6 +16,6 @@ internal sealed class Concussed(ConcussedConfig config) : IPillEffect {
 internal sealed class ConcussedConfig {
 	public bool IsEnabled { get; set; } = true;
 	public int MinDuration { get; set; } = 15;
-	public int MaxDuration { get; set; } = 30; // TODO experiment with this one
+	public int MaxDuration { get; set; } = 30;
 	public ushort RarityWeight { get; set; } = 100;
 }

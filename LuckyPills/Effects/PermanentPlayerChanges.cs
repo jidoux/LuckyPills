@@ -39,9 +39,6 @@ internal sealed class PermanentPlayerChanges(PermanentPlayerChangesConfig config
 
 internal sealed class PermanentPlayerChangesConfig {
 	public bool IsEnabled { get; set; } = true;
-	// I lowered most of the effects which are flagged as GoodAsPermanent from 1 to 0.95, so hoping they won't be more common.
-	// I figure since this effect is technically >10 effects, its fine for it to be more common (shouldn't feel more common).
-	// TODO double check this imho
-	public ushort RarityWeight { get; set; } = 170;
+	public ushort RarityWeight { get; set; } = 200;
 
 }

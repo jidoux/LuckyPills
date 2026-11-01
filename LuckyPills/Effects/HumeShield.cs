@@ -1,6 +1,6 @@
 namespace LuckyPills.Effects;
 
-internal sealed class HumeShield(HumeShieldConfig config) : IPillEffect, IDebugPickPills {
+internal sealed class HumeShield(HumeShieldConfig config) : IPillEffect {
 	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "You've been given some shield";
 	public ushort RarityWeight => config.RarityWeight;

@@ -9,13 +9,12 @@ using PlayerRoles.PlayableScps.Scp079;
 using RelativePositioning;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using ThrowableItem = InventorySystem.Items.ThrowableProjectiles.ThrowableItem;
 
 namespace LuckyPills;
 
 /// <summary>
-/// Just a dump of any shared helper methods... I prefer this over separate files due to small scale.
+/// Just a dump of any shared helper methods...
 /// </summary>
 internal static class SharedCode {
 
@@ -55,7 +54,7 @@ internal static class SharedCode {
 		float forceAmount = grenadeTemplate.FullThrowSettings.StartVelocity * forceMultiplier;
 		float upwardFactor = grenadeTemplate.FullThrowSettings.UpwardsFactor * upwardMultiplier;
 		Vector3 startTorque = grenadeTemplate.FullThrowSettings.StartTorque;
-		Vector3 startVel = ThrowableNetworkHandler.GetLimitedVelocity(new Vector3(0, 0, 0));
+		Vector3 startVel = ThrowableNetworkHandler.GetLimitedVelocity(Vector3.zero);
 
 		ThrownProjectile thrownProjectile = UnityEngine.Object.Instantiate(grenadeTemplate.Projectile, thrower.PlayerCameraReference.position, thrower.PlayerCameraReference.rotation);
 		PickupSyncInfo info = new() {
@@ -138,14 +137,15 @@ internal static class SharedCode {
 		NetworkServer.Spawn(tantrum.gameObject);
 	}
 
-	public static void ForceEquip(this Player? player, ItemType itemType, ItemAddReason itemAddReason = ItemAddReason.AdminCommand) {
+	public static Item? ForceEquip(this Player? player, ItemType itemType, ItemAddReason itemAddReason = ItemAddReason.AdminCommand) {
 		if (player is null) {
-			return;
+			return null;
 		}
 		Item? item = player.AddItem(itemType, itemAddReason);
 		if (item is not null) {
 			player.CurrentItem = item;
 		}
+		return item;
 	}
 
 	public static bool IsInTeam(this Player player, params Team[] teams) => teams.Any(team => team == player.Team);
@@ -157,10 +157,18 @@ internal static class SharedCode {
 			player.Team == Team.Scientists;
 	}
 
+	public static List<Player> GetAllPlayers() {
+		List<Player> allPlayers = new(8);
+		foreach (Player currPlayer in Player.ReadyList) {
+			if (!currPlayer.IsDummy) {
+				allPlayers.Add(currPlayer);
+			}
+		}
+		return allPlayers;
+	}
+
 	public static void SetRoleDelay(this Player player, RoleTypeId newRole, RoleChangeReason reason = RoleChangeReason.RemoteAdmin, RoleSpawnFlags flags = RoleSpawnFlags.All) {
 		player.SetRole(newRole, reason, flags);
-		// Avoiding any issues where stuff isn't properly initialized.
-		Timing.WaitForSeconds(Timing.WaitForOneFrame); // TODO test this.
 	}
 
 	public static void BlowUp(this Player player) {
@@ -177,7 +185,10 @@ internal static class SharedCode {
 		return player.Gravity == DefaultPlayerGravity && player.Scale == DefaultPlayerScale;
 	}
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static bool IsFarAway(Vector3 position1, Vector3 position2, float distance = 40f) {
+		return Vector3.Distance(position1, position2) > distance;
+	}
+
 	public static string AddDurationToHintText(string displayText, float duration) =>
 		displayText.Replace("{duration}", ((int)Math.Floor(duration)).ToString(CultureInfo.InvariantCulture), StringComparison.Ordinal);
 
