@@ -6,7 +6,7 @@ internal sealed class AntiColaEffect(AntiColaEffectConfig config) : IPillEffect 
 	public bool IsEnabled(Player player) => config.IsEnabled;
 	public string DisplayText { get; } = "You've been given the anti-cola effect";
 	public ushort RarityWeight => config.RarityWeight;
-	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None; // can't be anything since the cola is "good effects" and "all effects" so player will die
+	public EffectCapabilities Capabilities { get; } = EffectCapabilities.GoodEffect; // Note: AntiColaEffect is GoodEffect, SodaEffect is CandidateForGiveAll.
 
 	public void OnEnabled(Player player, int duration) {
 		byte currentPlayerIntensity = 0;

@@ -3,7 +3,7 @@ namespace LuckyPills.Effects;
 internal sealed class Spinner(SpinnerConfig config) : IPillEffect {
 	private static readonly HashSet<Player> _allSpinningPlayers = [];
 
-	public bool IsEnabled(Player player) => config.IsEnabled && !_allSpinningPlayers.Contains(player) && player.HasDefaultScaleAndGravity();
+	public bool IsEnabled(Player player) => config.IsEnabled && !_allSpinningPlayers.Contains(player);
 	public string DisplayText { get; } = "You're gonna be spinning for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
 	public ushort RarityWeight => config.RarityWeight;

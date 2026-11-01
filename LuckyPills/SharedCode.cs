@@ -169,6 +169,7 @@ internal static class SharedCode {
 
 	public static void SetRoleDelay(this Player player, RoleTypeId newRole, RoleChangeReason reason = RoleChangeReason.RemoteAdmin, RoleSpawnFlags flags = RoleSpawnFlags.All) {
 		player.SetRole(newRole, reason, flags);
+		Timing.WaitForSeconds(0.15f); // TODO idek of this works, likely does not but i need some kind of blocking async or smth idk
 	}
 
 	public static void BlowUp(this Player player) {

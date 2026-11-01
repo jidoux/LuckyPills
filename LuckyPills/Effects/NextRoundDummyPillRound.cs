@@ -17,7 +17,7 @@ internal sealed class NextRoundDummyPillRound(NextRoundDummyPillRoundConfig conf
 
 	public static bool ShouldSpawnADummy() {
 		// Technically this checks if the effect is enabled since _thisRoundDummyPillRound is only true if its enabled.
-		return _thisRoundDummyPillRound && Random.Range(1, 3) == 2;
+		return _thisRoundDummyPillRound && Random.Range(1, 3) == 2; // 50% chance
 	}
 
 	public void OnRoundEnd() {
@@ -34,5 +34,5 @@ internal sealed class NextRoundDummyPillRound(NextRoundDummyPillRoundConfig conf
 
 internal sealed class NextRoundDummyPillRoundConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 250;// TODO CHANGEME
+	public ushort RarityWeight { get; set; } = 2;
 }
