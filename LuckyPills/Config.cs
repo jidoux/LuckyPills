@@ -54,6 +54,7 @@ internal sealed class Config {
 	public LowGravityConfig LowGravity { get; set; } = new();
 	public MassFogConfig MassFog { get; set; } = new();
 	public MutateConfig Mutate { get; set; } = new();
+	public NextRoundDummyPillRoundConfig NextRoundDummyPillRound { get; set; } = new();
 	public NextRoundEveryPillIsBallVomitConfig NextRoundEveryPillIsBallVomit { get; set; } = new();
 	public NextRoundFastRoundConfig NextRoundFastRound { get; set; } = new();
 	public NextRoundInstaDeadmanConfig NextRoundInstaDeadman { get; set; } = new();

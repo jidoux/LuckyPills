@@ -13,17 +13,14 @@ internal sealed class GiveEveryonePills(GiveEveryonePillsConfig config) : IPillE
 			? (x => x.IsAlive && x.Role != RoleTypeId.Scp079)
 			: (x => x.IsAlive && x.Team != Team.SCPs);
 		foreach (Player anyPlayerInMap in GetAllPlayers().Where(predicate)) {
-			if (anyPlayerInMap.Items.Count() >= 8) {
+			if (anyPlayerInMap.IsInventoryFull) {
 				Pickup.Create(ItemType.Painkillers, player.Position);
-				if (anyPlayerInMap != player) {
-					anyPlayerInMap.SendHint("You've been given Painkillers by someone else's Painkillers", duration: 4);
-				}
 			}
 			else {
-				if (anyPlayerInMap != player) {
-					anyPlayerInMap.SendHint("You've been given Painkillers by someone else's Painkillers", duration: 4);
-				}
 				anyPlayerInMap.ForceEquip(ItemType.Painkillers);
+			}
+			if (anyPlayerInMap != player) {
+				anyPlayerInMap.SendHint("You've been given Painkillers by someone else's Painkillers", duration: 4);
 			}
 		}
 	}

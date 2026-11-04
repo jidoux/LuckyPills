@@ -4,8 +4,15 @@ namespace LuckyPills.Effects;
 
 internal sealed class BeAHero(BeAHeroConfig config) : IPillEffect, IDebugPickPills {
 	public bool IsEnabled(Player player) {
-		if (!config.IsEnabled || player.Team == Team.SCPs || player.Items.Any()) {
+		if (!config.IsEnabled || player.Team == Team.SCPs) {
 			return false;
+		}
+		byte arbitraryCount = 0;
+		foreach (Item item in player.Items) {
+			if (item.Type != ItemType.Painkillers || arbitraryCount > 3) {
+				return false;
+			}
+			arbitraryCount++;
 		}
 		foreach (Player currPlayer in GetAllPlayers()) {
 			if (currPlayer.Team == Team.SCPs && currPlayer.Role != RoleTypeId.Scp079) {
@@ -38,5 +45,5 @@ internal sealed class BeAHero(BeAHeroConfig config) : IPillEffect, IDebugPickPil
 
 internal sealed class BeAHeroConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 40;
+	public ushort RarityWeight { get; set; } = 90;
 }

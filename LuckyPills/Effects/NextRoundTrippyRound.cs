@@ -43,5 +43,5 @@ internal sealed class NextRoundTrippyRound(NextRoundTrippyRoundConfig config) : 
 
 internal sealed class NextRoundTrippyRoundConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 1;
+	public ushort RarityWeight { get; set; } = 2;
 }

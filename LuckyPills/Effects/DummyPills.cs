@@ -137,5 +137,5 @@ internal sealed class DummyPills(DummyPillsConfig config) : IPillEffect, IDebugP
 internal sealed class DummyPillsConfig {
 	public bool IsEnabled { get; set; } = true;
 	public int EatIntervalSeconds { get; set; } = 5;
-	public ushort RarityWeight { get; set; } = 50;
+	public ushort RarityWeight { get; set; } = 70;
 }

@@ -1,11 +1,7 @@
 namespace LuckyPills.Effects;
 
 internal sealed class GiveEveryoneBallVomit(GiveEveryoneBallVomitConfig config) : IPillEffect {
-	private static readonly Lazy<BallVomit> _ballVomitInstance = new(() => {
-		return new BallVomit(Plugin.Singleton.Config.BallVomit); // Doing this to ensure it pulls the up-to-date config value.
-	});
-
-	public bool IsEnabled(Player player) => _ballVomitInstance.Value.IsEnabled(player)
+	public bool IsEnabled(Player player) => Plugin.Singleton.Config.BallVomit.IsEnabled
 		&& Round.Duration > TimeSpan.FromMinutes(config.RoundDurationMinutesUntilThisCanBeEnabled)
 		&& config.IsEnabled;
 	public string DisplayText { get; } = "You've given everyone ball vomit";
@@ -14,9 +10,11 @@ internal sealed class GiveEveryoneBallVomit(GiveEveryoneBallVomitConfig config) 
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.None;
 
 	public void OnEnabled(Player player, int duration) {
+		BallVomit ballVomitInstance = new(Plugin.Singleton.Config.BallVomit);
+
 		foreach (Player anyPlayerInMap in GetAllPlayers().Where(x => x.IsAlive)) {
 			anyPlayerInMap.SendHint("You've been given ball vomit by someone else's Painkillers", duration: 4);
-			EnablePillEffect(_ballVomitInstance.Value, anyPlayerInMap, duration);
+			EnablePillEffect(ballVomitInstance, anyPlayerInMap, duration);
 		}
 	}
 }

@@ -30,7 +30,7 @@ internal sealed class PeriodicPainkillers(PeriodicPainkillersConfig config) : IP
 		// Stop it if player dies, or the HashSet doesn't have player. The HashSet gets the player
 		// removed if the player dies, escapes, or round ends.
 		while (_allPeriodicPainkillerReceivers.Contains(player)) {
-			if (player.Items.Count() >= 8) {
+			if (player.IsInventoryFull) {
 				Pickup.Create(ItemType.Painkillers, player.Position);
 			}
 			else {

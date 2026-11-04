@@ -71,5 +71,5 @@ internal sealed class NextRoundSurfaceFight(NextRoundSurfaceFightConfig config) 
 
 internal sealed class NextRoundSurfaceFightConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 2;
+	public ushort RarityWeight { get; set; } = 5;
 }

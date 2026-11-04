@@ -25,6 +25,9 @@ internal sealed class DestroyAllDoors(DestroyAllDoorsConfig config) : IPillEffec
 			else if (doorVariant is Interactables.Interobjects.CheckpointDoor checkpointDoor) {
 				checkpointDoor.ServerDamage(float.MaxValue, DoorDamageType.ServerCommand);
 			}
+			if (doorVariant is Interactables.Interobjects.PryableDoor pryableDoor) {
+				// TODO add this for the surface gates open and destroy them also 914 and 2 peanut spawns
+			}
 		}
 	}
 

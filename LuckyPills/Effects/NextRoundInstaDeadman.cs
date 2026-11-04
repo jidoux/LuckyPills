@@ -52,5 +52,5 @@ internal sealed class NextRoundInstaDeadman(NextRoundInstaDeadmanConfig config) 
 
 internal sealed class NextRoundInstaDeadmanConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 2;
+	public ushort RarityWeight { get; set; } = 5;
 }

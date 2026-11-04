@@ -10,7 +10,7 @@ internal sealed class GiveEveryoneAks(GiveEveryoneAksConfig config) : IPillEffec
 
 	public void OnEnabled(Player player, int duration) {
 		foreach (Player anyPlayerInMap in GetAllPlayers().Where(x => x.IsAlive && x.Team != Team.SCPs)) {
-			if (anyPlayerInMap.Items.Count() >= 8) {
+			if (anyPlayerInMap.IsInventoryFull) {
 				// Yeah I have no clue how to spawn a loaded gun on the ground :)
 				Pickup.Create(ItemType.GunAK, anyPlayerInMap.Position);
 				anyPlayerInMap.AddAmmo(ItemType.Ammo762x39, 30);

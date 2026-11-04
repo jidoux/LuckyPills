@@ -34,5 +34,5 @@ internal sealed class NextRoundDummyPillRound(NextRoundDummyPillRoundConfig conf
 
 internal sealed class NextRoundDummyPillRoundConfig {
 	public bool IsEnabled { get; set; } = true;
-	public ushort RarityWeight { get; set; } = 2;
+	public ushort RarityWeight { get; set; } = 5;
 }

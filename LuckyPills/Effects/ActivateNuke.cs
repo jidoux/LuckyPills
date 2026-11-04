@@ -3,7 +3,7 @@ namespace LuckyPills.Effects;
 internal sealed class ActivateNuke(ActivateNukeConfig config) : IPillEffect {
 	// Arbitrary choice to make it only active if nothing for nuke was activated... makes it more exciting when
 	// it happens (and makes more sense to me, personally).
-	public bool IsEnabled(Player player) => !Warhead.LeverStatus && !Warhead.IsAuthorized && config.IsEnabled;
+	public bool IsEnabled(Player player) => !Warhead.LeverStatus && !Warhead.IsAuthorized && !Warhead.IsDetonated && config.IsEnabled;
 	public string DisplayText { get; } = "You've activated the nuclear warhead";
 	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll;
