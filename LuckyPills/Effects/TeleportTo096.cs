@@ -4,7 +4,7 @@ namespace LuckyPills.Effects;
 
 internal sealed class TeleportTo096(TeleportTo096Config config) : IPillEffect, IDebugPickPills {
 	public bool IsEnabled(Player player) {
-		if (!config.IsEnabled) {
+		if (!config.IsEnabled || player.Team == Team.SCPs) {
 			return false;
 		}
 		foreach (Player currPlayer in GetAllPlayers()) {

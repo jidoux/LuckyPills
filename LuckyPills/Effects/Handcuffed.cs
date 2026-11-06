@@ -3,7 +3,7 @@ namespace LuckyPills.Effects;
 internal sealed class Handcuffed(HandcuffedConfig config) : IPillEffect {
 	private readonly HashSet<Player> _cachedHandcuffedPlayers = [];
 
-	public bool IsEnabled(Player player) => config.IsEnabled;
+	public bool IsEnabled(Player player) => config.IsEnabled && player.Team != PlayerRoles.Team.SCPs;
 	public string DisplayText { get; } = "You've been handcuffed for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
 	public ushort RarityWeight => config.RarityWeight;

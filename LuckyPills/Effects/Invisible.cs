@@ -1,7 +1,7 @@
 namespace LuckyPills.Effects;
 
 internal sealed class Invisible(InvisibleConfig config) : IPillEffect {
-	public bool IsEnabled(Player player) => config.IsEnabled;
+	public bool IsEnabled(Player player) => config.IsEnabled && player.Team != PlayerRoles.Team.SCPs;
 	public string DisplayText { get; } = "You've been turned invisible for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
 	public ushort RarityWeight => config.RarityWeight;

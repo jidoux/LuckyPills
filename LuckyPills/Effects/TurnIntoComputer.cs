@@ -6,7 +6,7 @@ namespace LuckyPills.Effects;
 internal sealed class TurnIntoComputer(TurnIntoComputerConfig config) : IPillEffect, IDebugPickPills {
 	// TODO I am moderately unsure if I want to swap one of the SCPs to a D-Class when this gets activated, like idk man.
 	public bool IsEnabled(Player player) {
-		if (!config.IsEnabled) {
+		if (!config.IsEnabled || player.Team == Team.SCPs) {
 			return false;
 		}
 		// At least 3 class D/scientists

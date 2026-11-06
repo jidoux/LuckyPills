@@ -3,7 +3,7 @@ namespace LuckyPills.Effects;
 internal sealed class TeleportToRandomPlayer(TeleportToRandomPlayerConfig config) : IPillEffect {
 	// TODO continue testing this as its pretty iffy
 	public bool IsEnabled(Player player) {
-		if (!config.IsEnabled) {
+		if (!config.IsEnabled || player.Team == PlayerRoles.Team.SCPs) {
 			return false;
 		}
 		foreach (Player currPlayer in GetAllPlayers()) {

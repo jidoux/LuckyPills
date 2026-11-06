@@ -1,7 +1,7 @@
 namespace LuckyPills.Effects;
 
 internal sealed class God(GodConfig config) : IPillEffect {
-	public bool IsEnabled(Player player) => config.IsEnabled;
+	public bool IsEnabled(Player player) => config.IsEnabled && !Warhead.IsDetonated && !Warhead.IsDetonationInProgress;
 	public string DisplayText { get; } = "You've been given god mode for {duration} seconds";
 	public Duration PossibleDurationRangeInclusive => new(config.MinDuration, config.MaxDuration);
 	public ushort RarityWeight => config.RarityWeight;

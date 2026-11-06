@@ -8,7 +8,7 @@ internal sealed class DummyPills(DummyPillsConfig config) : IPillEffect, IDebugP
 	private static readonly Dictionary<Player, DummyInfo> _dummies = [];
 
 	public bool IsEnabled(Player player) => config.IsEnabled && !_dummies.ContainsKey(player);
-	public string DisplayText { get; } = $"A dummy will eat a Painkiller behind you every {config.EatIntervalSeconds} seconds until one of you die";
+	public string DisplayText { get; } = $"A dummy will eat Painkillers behind you every {config.EatIntervalSeconds} seconds until one of you die";
 	public ushort RarityWeight => config.RarityWeight;
 	public EffectCapabilities Capabilities { get; } = EffectCapabilities.CandidateForGiveAll; // currently its permanent already
 

@@ -2,7 +2,7 @@ namespace LuckyPills.Effects;
 
 internal sealed class GiveO5Keycard(GiveO5KeycardConfig config) : IPillEffect {
 	public bool IsEnabled(Player player) {
-		if (!config.IsEnabled) {
+		if (!config.IsEnabled || player.Team == PlayerRoles.Team.SCPs) {
 			return false;
 		}
 		foreach (Item item in player.Items) {
